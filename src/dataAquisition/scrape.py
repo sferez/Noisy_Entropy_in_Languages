@@ -18,7 +18,7 @@ def scrape(since, until=None, words=None, to_account=None, from_account=None, me
            lang=None,
            headless=True, limit=float("inf"), display_type="Top", resume=False, proxy=None, hashtag=None,
            save_dir="outputs", filter_replies=False, proximity=False,
-           geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=".env", only_id=False):
+           geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=".env", only_id=False, Class=""):
     """
     scrape data from twitter using requests, starting from <since> until <until>. The program make a search between each <since> and <until_local>
     until it reaches the <until> date if it's given, else it stops at the actual date.
@@ -31,9 +31,9 @@ def scrape(since, until=None, words=None, to_account=None, from_account=None, me
     # ------------------------- Variables :
     # header of csv
     if only_id:
-        header = ['Tweet_ID']
+        header = ['Tweet_ID', 'Class']
     else:
-        header = ['Tweet_ID', 'UserName', "User_ID", 'Timestamp', 'Text', 'Emojis']
+        header = ['Tweet_ID', "User_ID", 'Timestamp', 'Text', 'Emojis', 'Class']
     # list that contains all data
     data = []
     # unique tweet ids
@@ -98,6 +98,7 @@ def scrape(since, until=None, words=None, to_account=None, from_account=None, me
         # log search page for a specific <interval> of time and keep scrolling unltil scrolling stops or reach the <until>
         while until_local <= datetime.datetime.strptime(until, '%Y-%m-%d'):
             # number of scrolls
+            sleep(random.uniform(1, 3))
             scroll = 0
             # convert <since> and <until_local> to str
             if type(since) != str:
@@ -128,7 +129,7 @@ def scrape(since, until=None, words=None, to_account=None, from_account=None, me
             # start scrolling and get tweets
             driver, data, writer, tweet_ids, scrolling, tweet_parsed, scroll, last_position = \
                 keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limit, scroll, last_position,
-                              only_id=only_id)
+                              only_id=only_id, Class=Class)
 
             # keep updating <start date> and <end date> for every search
             if type(since) == str:
@@ -143,9 +144,9 @@ def scrape(since, until=None, words=None, to_account=None, from_account=None, me
             print(f'Nb of Tweets : {tweet_parsed}')
 
     if only_id:
-        data = pd.DataFrame(data, columns=['Tweet_ID'])
+        data = pd.DataFrame(data, columns=['Tweet_ID', 'Class'])
     else:
-        data = pd.DataFrame(data, columns=['Tweet_ID', 'UserName', "User_ID", 'Timestamp', 'Text', 'Emojis'])
+        data = pd.DataFrame(data, columns=['Tweet_ID', "User_ID", 'Timestamp', 'Text', 'Emojis', 'Class'])
 
     # close the web driver
     driver.close()

@@ -23,7 +23,7 @@ green = "\033[0;92m"
 yellow = "\033[0;93m"
 blue = "\033[0;94m"
 
-def get_data(card, only_id=False):
+def get_data(card, only_id=False, Class=""):
     """Extract data from tweet card"""
 
     # try:
@@ -45,7 +45,7 @@ def get_data(card, only_id=False):
         tweet_id = ""
 
     if only_id:
-        return (tweet_id)
+        return (tweet_id, Class)
 
     try:
         handle = card.find_element(by=By.XPATH, value='.//span[contains(text(), "@")]').text
@@ -69,6 +69,9 @@ def get_data(card, only_id=False):
                 text = card.find_element(by=By.XPATH, value='.//div[2]/div[2]/div[3]').text
             except:
                 return
+        # Flatten the text
+        text = text.replace('\n', ' ')
+
     except:
         text = ""
 
@@ -103,7 +106,7 @@ def get_data(card, only_id=False):
             emoji_list.append(emoji)
     emojis = ' '.join(emoji_list)
 
-    tweet = (tweet_id, handle, user_id, postdate, text, emojis)
+    tweet = (tweet_id, user_id, postdate, text, emojis, Class)
     return tweet
 
 
@@ -257,7 +260,7 @@ def log_in(driver, env, timeout=20, wait=4):
 
 
 def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limit, scroll, last_position,
-                  only_id=False):
+                  only_id=False, Class=""):
     """ scrolling function for tweets crawling"""
 
     while scrolling and tweet_parsed < limit:
@@ -265,14 +268,14 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
         # get the card of tweets
         page_cards = driver.find_elements(by=By.XPATH, value='//article[@data-testid="tweet"]')  # changed div by article
         for card in page_cards:
-            tweet = get_data(card, only_id)
+            tweet = get_data(card, only_id=only_id, Class=Class)
             if tweet:
                 # check if the tweet is unique
-                tweet_id = tweet if only_id else tweet[0]
+                tweet_id = tweet[0]
                 if tweet_id not in tweet_ids:
                     tweet_ids.add(tweet_id)
                     data.append(tweet)
-                    writer.writerow(tweet) if not only_id else writer.writerow([tweet])
+                    writer.writerow(tweet)
                     tweet_parsed += 1
                     if tweet_parsed >= limit:
                         break
