@@ -14,11 +14,11 @@ import pandas as pd
 from .utils import init_driver, get_last_date_from_csv, log_search_page, keep_scroling, log_in
 
 
-def scrape(since, until=None, words=None, to_account=None, from_account=None, mention_account=None, interval=5,
-           lang=None,
-           headless=True, limit=float("inf"), display_type="Top", resume=False, proxy=None, hashtag=None,
-           save_dir="outputs", filter_replies=False, proximity=False,
-           geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=".env", only_id=False, Class=""):
+def scraping(since, until=None, words=None, to_account=None, from_account=None, mention_account=None, interval=5,
+             lang=None,
+             headless=True, limit=float("inf"), display_type="Top", resume=False, proxy=None, hashtag=None,
+             save_dir="outputs", filter_replies=False, proximity=False,
+             geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=".env", only_id=False, Class=""):
     """
     scrape data from twitter using requests, starting from <since> until <until>. The program make a search between each <since> and <until_local>
     until it reaches the <until> date if it's given, else it stops at the actual date.
