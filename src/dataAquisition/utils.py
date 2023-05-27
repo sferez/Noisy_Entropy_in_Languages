@@ -6,7 +6,7 @@ Customized for the purpose of this project
 import re
 from time import sleep
 import random
-from _md5 import md5
+from hashlib import md5
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
