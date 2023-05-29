@@ -4,10 +4,11 @@ Customized for the purpose of this project
 """
 
 import re
+import time
 from time import sleep
 import random
 from hashlib import md5
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import datetime
@@ -22,6 +23,15 @@ red = "\033[0;91m"
 green = "\033[0;92m"
 yellow = "\033[0;93m"
 blue = "\033[0;94m"
+
+
+def check_for_error(driver):
+    try:
+        driver.find_element(By.XPATH, './/span[contains(text(), "Something went wrong")]')
+        return True
+    except NoSuchElementException:
+        return False
+
 
 def get_data(card, only_id=False, Class=""):
     """Extract data from tweet card"""
@@ -91,22 +101,22 @@ def get_data(card, only_id=False, Class=""):
     #     like_cnt = 0
 
     # get a string of all emojis contained in the tweet
-    try:
-        emoji_tags = card.find_elements(by=By.XPATH, value='.//img[contains(@src, "emoji")]')
-    except:
-        emoji_tags = ""
-    emoji_list = []
-    for tag in emoji_tags:
-        try:
-            filename = tag.get_attribute('src')
-            emoji = chr(int(re.search(r'svg\/([a-z0-9]+)\.svg', filename).group(1), base=16))
-        except AttributeError:
-            continue
-        if emoji:
-            emoji_list.append(emoji)
-    emojis = ' '.join(emoji_list)
+    # try:
+    #     emoji_tags = card.find_elements(by=By.XPATH, value='.//img[contains(@src, "emoji")]')
+    # except:
+    #     emoji_tags = ""
+    # emoji_list = []
+    # for tag in emoji_tags:
+    #     try:
+    #         filename = tag.get_attribute('src')
+    #         emoji = chr(int(re.search(r'svg\/([a-z0-9]+)\.svg', filename).group(1), base=16))
+    #     except AttributeError:
+    #         continue
+    #     if emoji:
+    #         emoji_list.append(emoji)
+    # emojis = ' '.join(emoji_list)
 
-    tweet = (tweet_id, user_id, postdate, text, emojis, Class)
+    tweet = (tweet_id, user_id, postdate, text, 'und', Class)
     return tweet
 
 
@@ -146,6 +156,17 @@ def init_driver(headless=True, proxy=None, show_images=False, option=None, env=N
 
     driver.set_page_load_timeout(100)
     return driver
+
+
+def get_page(driver, path, retries=3, wait_time=10):
+    for _ in range(retries):
+        try:
+            driver.get(path)
+            return path
+        except TimeoutException:
+            print(f"Timeout exception, waiting for {wait_time} seconds before retrying.")
+            time.sleep(wait_time)
+    raise TimeoutException(f"Failed to load page after {retries} attempts.")
 
 
 def log_search_page(driver, since, until_local, lang, display_type, words, to_account, from_account, mention_account,
@@ -214,9 +235,8 @@ def log_search_page(driver, since, until_local, lang, display_type, words, to_ac
         proximity = ""
 
     path = 'https://twitter.com/search?q=' + words + from_account + to_account + mention_account + hash_tags + until_local + since + lang + filter_replies + geocode + minreplies + minlikes + minretweets + '&src=typed_query' + display_type + proximity
-    driver.get(path)
+    get_page(driver, path)
     return path
-
 
 def get_last_date_from_csv(path):
     df = pd.read_csv(path)
@@ -227,6 +247,7 @@ def log_in(driver, env, timeout=20, wait=4):
     email = get_email(env)  # const.EMAIL
     password = get_password(env)  # const.PASSWORD
     username = get_username(env)  # const.USERNAME
+    print(f'Logging in with {username}')
 
     driver.get('https://twitter.com/i/flow/login')
 
@@ -266,6 +287,11 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
     while scrolling and tweet_parsed < limit:
         sleep(random.uniform(0.5, 1.5))
         # get the card of tweets
+        while check_for_error(driver):
+            print("Rate limit exceeded, waiting ...")
+            time.sleep(30)
+            driver.refresh()
+            sleep(random.uniform(0.5, 1.5))
         page_cards = driver.find_elements(by=By.XPATH, value='//article[@data-testid="tweet"]')  # changed div by article
         for card in page_cards:
             tweet = get_data(card, only_id=only_id, Class=Class)

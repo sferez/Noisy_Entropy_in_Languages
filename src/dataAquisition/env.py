@@ -32,6 +32,11 @@ def get_username(env):
     return load_env_variable("USERNAME", none_allowed=True)
 
 
+def get_bearer_token(env):
+    dotenv.load_dotenv(env, verbose=True)
+    return load_env_variable("BEARER_TOKEN", none_allowed=True)
+
+
 def get_chromedriver_path(env):
     dotenv.load_dotenv(env, verbose=True)
     return load_env_variable("CHROME_DRIVER_PATH", none_allowed=True)

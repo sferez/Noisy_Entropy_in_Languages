@@ -11,7 +11,7 @@ from time import sleep
 import random
 import pandas as pd
 
-from .utils import init_driver, get_last_date_from_csv, log_search_page, keep_scroling, log_in
+from .utils import init_driver, get_last_date_from_csv, log_search_page, keep_scroling, log_in, check_for_error
 
 
 def scraping(since, until=None, words=None, to_account=None, from_account=None, mention_account=None, interval=5,
@@ -31,9 +31,9 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
     # ------------------------- Variables :
     # header of csv
     if only_id:
-        header = ['Tweet_ID', 'Class']
+        header = ['tweet_id', 'class']
     else:
-        header = ['Tweet_ID', "User_ID", 'Timestamp', 'Text', 'Emojis', 'Class']
+        header = ['tweet_id', "user_id", 'timestamp', 'text', 'class']
     # list that contains all data
     data = []
     # unique tweet ids
@@ -82,6 +82,9 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
             print(f'Error while logging in. Retrying... ({t + 1}/5)')
             sleep(2)
             t += 1
+            if t == 5:
+                print('Failed to log in. Exiting...')
+                raise Exception('Failed to log in.')
             continue
 
     # resume scraping from previous work
@@ -144,9 +147,9 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
             print(f'Nb of Tweets : {tweet_parsed}')
 
     if only_id:
-        data = pd.DataFrame(data, columns=['Tweet_ID', 'Class'])
+        data = pd.DataFrame(data, columns=['tweet_id', 'class'])
     else:
-        data = pd.DataFrame(data, columns=['Tweet_ID', "User_ID", 'Timestamp', 'Text', 'Emojis', 'Class'])
+        data = pd.DataFrame(data, columns=['tweet_id', "user_id", 'timestamp', 'text', 'lang', 'class'])
 
     # close the web driver
     driver.close()
