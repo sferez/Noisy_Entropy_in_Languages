@@ -1,20 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# Class:
-# 1 - Personality
-# 2 - News and Media
-# 3 - Company
-# 
-
-# In[1]:
-
-
-from dataAquisition.scraping import scraping, init_driver
-
-
-# In[4]:
-
+from scraping import scraping, init_driver
+import argparse
 
 scrape_accounts = [
     # Personality
@@ -60,13 +45,13 @@ scrape_accounts = [
     # {
     #     "user": "barackobama",
     #     "dates": [
-    #         ["2007-01-01", "2008-01-01"],
-    #         ["2008-01-01", "2009-01-01"],
-    #         ["2009-01-01", "2010-01-01"],
-    #         ["2010-01-01", "2011-01-01"],
-    #         ["2011-01-01", "2012-01-01"],
-    #         ["2012-01-01", "2013-01-01"],
-    #         ["2013-01-01", "2014-01-01"],
+    #         # ["2007-01-01", "2008-01-01"],
+    #         # ["2008-01-01", "2009-01-01"],
+    #         # ["2009-01-01", "2010-01-01"],
+    #         # ["2010-01-01", "2011-01-01"],
+    #         # ["2011-01-01", "2012-01-01"],
+    #         # ["2012-01-01", "2013-01-01"],
+    #         # ["2013-01-01", "2014-01-01"],
     #         ["2014-01-01", "2015-01-01"],
     #         ["2015-01-01", "2016-01-01"],
     #         ["2016-01-01", "2017-01-01"],
@@ -116,28 +101,28 @@ scrape_accounts = [
     #     "class": '1'
     # },
     # Press EN
-    # {
-    #     "user": "BBCNews",
-    #     "dates": [
-    #         ["2007-01-01", "2008-01-01"],
-    #         ["2008-01-01", "2009-01-01"],
-    #         ["2009-01-01", "2010-01-01"],
-    #         ["2010-01-01", "2011-01-01"],
-    #         ["2011-01-01", "2012-01-01"],
-    #         ["2012-01-01", "2013-01-01"],
-    #         ["2013-01-01", "2014-01-01"],
-    #         ["2014-01-01", "2015-01-01"],
-    #         ["2015-01-01", "2016-01-01"],
-    #         ["2016-01-01", "2017-01-01"],
-    #         ["2017-01-01", "2018-01-01"],
-    #         ["2018-01-01", "2019-01-01"],
-    #         ["2019-01-01", "2020-01-01"],
-    #         ["2020-01-01", "2021-01-01"],
-    #         ["2021-01-01", "2022-01-01"],
-    #         ["2022-01-01", "2023-01-01"]
-    #     ],
-    #     "class": '2'
-    # },
+    {
+        "user": "BBCNews",
+        "dates": [
+            # ["2007-01-01", "2008-01-01"],
+            # ["2008-01-01", "2009-01-01"],
+            # ["2009-01-01", "2010-01-01"],
+            # ["2010-01-01", "2011-01-01"],
+            # ["2011-01-01", "2012-01-01"],
+            # ["2012-01-01", "2013-01-01"],
+            # ["2013-01-01", "2014-01-01"],
+            # ["2014-01-01", "2015-01-01"],
+            # ["2015-01-01", "2016-01-01"],
+            # ["2016-01-01", "2017-01-01"],
+            # ["2017-01-01", "2018-01-01"],
+            # ["2018-01-01", "2019-01-01"],
+            # ["2019-01-01", "2020-01-01"],
+            ["2020-01-01", "2021-01-01"],
+            ["2021-01-01", "2022-01-01"],
+            ["2022-01-01", "2023-01-01"]
+        ],
+        "class": '2'
+    },
     # {
     #     "user": "CNN",
     #     "dates": [
@@ -226,26 +211,40 @@ scrape_accounts = [
     # },
     # Press FR
 
-
 ]
 
 
-# In[ ]:
+def main():
+    print(f'Scraping from {start} to {end} for {from_account}')
+    driver = init_driver(headless=headless, show_images=False, env="fj.env")
+    data = scraping(start, until=end, interval=1, from_account=from_account,
+                    save_dir=f"../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
+                    only_id=False, Class=class_)
+
+    driver.close()
+    driver.quit()
 
 
-for scrape in scrape_accounts:
-    for date in scrape["dates"]:
-        print(f'Scraping from {date[0]} to {date[1]} for {scrape["user"]}')
-        driver = init_driver(headless=False, show_images=False, env=".env")
-        data = scraping(date[0], until=date[1], interval=1, from_account=scrape["user"], save_dir=f"../data/raw/{scrape['user']}", driver=driver, env=".env", headless=False, only_id=False, Class=scrape["class"])
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Scraping Twitter')
 
+    parser.add_argument('--start', type=str, help='Start date', required=True)
+    parser.add_argument('--end', type=str, help='End date', required=True)
+    parser.add_argument('--interval', type=int, help='Interval', default=1)
+    parser.add_argument('--from_account', type=str, help='From account', required=True)
+    parser.add_argument('--env', type=str, help='Environment file with Chrome driver path and Twitter credentials',
+                        required=True)
+    parser.add_argument('--headless', type=bool, help='Headless', default=False)
+    parser.add_argument('--class_', type=str, help='Class', default='1')
 
-# In[5]:
+    env = parser.parse_args().env
+    start = parser.parse_args().start
+    end = parser.parse_args().end
+    interval = parser.parse_args().interval
+    from_account = parser.parse_args().from_account
+    headless = parser.parse_args().headless
+    class_ = parser.parse_args().class_
 
+    args = parser.parse_args()
 
-
-# In[ ]:
-
-
-
-
+    main()

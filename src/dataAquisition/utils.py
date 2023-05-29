@@ -4,10 +4,11 @@ Customized for the purpose of this project
 """
 
 import re
+import time
 from time import sleep
 import random
 from hashlib import md5
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 import datetime
@@ -16,12 +17,21 @@ import requests
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-from .env import get_username, get_password, get_email, get_chromedriver_path
+from env import get_username, get_password, get_email, get_chromedriver_path
 
 red = "\033[0;91m"
 green = "\033[0;92m"
 yellow = "\033[0;93m"
 blue = "\033[0;94m"
+
+
+def check_for_error(driver):
+    try:
+        driver.find_element(By.XPATH, './/span[contains(text(), "Something went wrong")]')
+        return True
+    except NoSuchElementException:
+        return False
+
 
 def get_data(card, only_id=False, Class=""):
     """Extract data from tweet card"""
@@ -91,22 +101,22 @@ def get_data(card, only_id=False, Class=""):
     #     like_cnt = 0
 
     # get a string of all emojis contained in the tweet
-    try:
-        emoji_tags = card.find_elements(by=By.XPATH, value='.//img[contains(@src, "emoji")]')
-    except:
-        emoji_tags = ""
-    emoji_list = []
-    for tag in emoji_tags:
-        try:
-            filename = tag.get_attribute('src')
-            emoji = chr(int(re.search(r'svg\/([a-z0-9]+)\.svg', filename).group(1), base=16))
-        except AttributeError:
-            continue
-        if emoji:
-            emoji_list.append(emoji)
-    emojis = ' '.join(emoji_list)
+    # try:
+    #     emoji_tags = card.find_elements(by=By.XPATH, value='.//img[contains(@src, "emoji")]')
+    # except:
+    #     emoji_tags = ""
+    # emoji_list = []
+    # for tag in emoji_tags:
+    #     try:
+    #         filename = tag.get_attribute('src')
+    #         emoji = chr(int(re.search(r'svg\/([a-z0-9]+)\.svg', filename).group(1), base=16))
+    #     except AttributeError:
+    #         continue
+    #     if emoji:
+    #         emoji_list.append(emoji)
+    # emojis = ' '.join(emoji_list)
 
-    tweet = (tweet_id, user_id, postdate, text, emojis, Class)
+    tweet = (tweet_id, user_id, postdate, text, 'und', Class)
     return tweet
 
 
@@ -146,6 +156,17 @@ def init_driver(headless=True, proxy=None, show_images=False, option=None, env=N
 
     driver.set_page_load_timeout(100)
     return driver
+
+
+def get_page(driver, path, retries=3, wait_time=10):
+    for _ in range(retries):
+        try:
+            driver.get(path)
+            return path
+        except TimeoutException:
+            print(f"Timeout exception, waiting for {wait_time} seconds before retrying.")
+            time.sleep(wait_time)
+    raise TimeoutException(f"Failed to load page after {retries} attempts.")
 
 
 def log_search_page(driver, since, until_local, lang, display_type, words, to_account, from_account, mention_account,
@@ -214,7 +235,7 @@ def log_search_page(driver, since, until_local, lang, display_type, words, to_ac
         proximity = ""
 
     path = 'https://twitter.com/search?q=' + words + from_account + to_account + mention_account + hash_tags + until_local + since + lang + filter_replies + geocode + minreplies + minlikes + minretweets + '&src=typed_query' + display_type + proximity
-    driver.get(path)
+    get_page(driver, path)
     return path
 
 
@@ -227,6 +248,7 @@ def log_in(driver, env, timeout=20, wait=4):
     email = get_email(env)  # const.EMAIL
     password = get_password(env)  # const.PASSWORD
     username = get_username(env)  # const.USERNAME
+    print(f'Logging in with {username}')
 
     driver.get('https://twitter.com/i/flow/login')
 
@@ -266,7 +288,13 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
     while scrolling and tweet_parsed < limit:
         sleep(random.uniform(0.5, 1.5))
         # get the card of tweets
-        page_cards = driver.find_elements(by=By.XPATH, value='//article[@data-testid="tweet"]')  # changed div by article
+        while check_for_error(driver):
+            print("Rate limit exceeded, waiting ...")
+            time.sleep(30)
+            driver.refresh()
+            sleep(random.uniform(0.5, 1.5))
+        page_cards = driver.find_elements(by=By.XPATH,
+                                          value='//article[@data-testid="tweet"]')  # changed div by article
         for card in page_cards:
             tweet = get_data(card, only_id=only_id, Class=Class)
             if tweet:
@@ -306,7 +334,7 @@ def get_users_follow(users, headless, env, follow=None, verbose=1, wait=2, limit
     # initiate the driver
     driver = init_driver(headless=headless, env=env, firefox=True)
     sleep(wait)
-    # log in (the .env file should contain the username and password)
+    # log in (the fj.env file should contain the username and password)
     # driver.get('https://www.twitter.com/login')
     log_in(driver, env, wait=wait)
     sleep(wait)
@@ -400,6 +428,7 @@ def check_exists_by_xpath(xpath, driver):
         return False
     return True
 
+
 def memoize(func):
     """
     :Function: Memoize the function to avoid recomputing the same value, leverage the cache
@@ -436,9 +465,9 @@ def memoize(func):
 
     return wrapper
 
+
 @memoize
 def get_user_id(username):
-
     url = "https://tweeterid.com/ajax.php"
 
     payload = f'input={username}'
@@ -461,3 +490,37 @@ def get_user_id(username):
     response = requests.request("POST", url, headers=headers, data=payload)
 
     return response.text
+
+
+def get_metadata(ids, twarc_session):
+    """
+    :Function: Get the metadata of the tweets
+    :param ids:  List of tweet ids
+    :param twarc_session: Twarc session
+    :return: List of tweets
+    """
+    tweet_fields = "lang,created_at,geo"
+    expansions = "author_id,geo.place_id"
+    place_fields = "country_code,geo,id"
+    result = []
+    if len(ids) <= 100:
+        while True:
+            try:
+                r = twarc_session.tweet_lookup(ids,
+                                               tweet_fields=tweet_fields,
+                                               expansions=expansions,
+                                               place_fields=place_fields
+                                               )
+                break
+            except:
+                print("Maybe you have reached the limit of the API, try again later in 1 minute")
+                sleep(60)
+                continue
+
+        tweets = list(r)
+        for batch in tweets:
+            for tweet in batch['data']:
+                result.append(tweet)
+        return result
+    else:
+        raise Exception("Too many ids, max 100")
