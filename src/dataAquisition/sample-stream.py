@@ -8,32 +8,9 @@ import datetime
 import sys
 import flag
 import traceback
+import argparse
 
-bearer_token = get_bearer_token('../botz.env')
-print(bearer_token)
-iter_max = 1_000_000
-languages = ['en', 'fr', 'es', 'de', 'it']
-iter_ = {
-    'en': 0,
-    'fr': 0,
-    'es': 0,
-    'de': 0,
-    'it': 0
-}
 
-date = datetime.datetime.now().strftime("%Y-%m-%d")
-filename = '../../data/sample-stream/' + date + '.csv'
-
-if not os.path.exists('../../data/sample-stream'):
-    os.makedirs('../../data/sample-stream')
-
-if not os.path.exists(filename):
-    csv_file = open(filename, 'w+', encoding='utf-8')
-    csv_writer = csv.writer(csv_file)
-    csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
-else:
-    csv_file = open(filename, 'a+', encoding='utf-8')
-    csv_writer = csv.writer(csv_file)
 
 
 def create_url():
@@ -103,4 +80,34 @@ def main():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Sample Twitter Stream, get 1% of current tweets')
+
+    parser.add_argument('--iter_max', type=int, default=1_000_000, help='Maximum number of tweets to get per language')
+    parser.add_argument('--languages', type=str, nargs='+', default=['en', 'fr', 'es', 'de', 'it'], help='Languages to get')
+    parser.add_argument('--env', type=str, required=True, help='Path to env file, containing bearer token')
+
+    args = parser.parse_args()
+
+    iter_max = args.iter_max
+    languages = args.languages
+    bearer_token = get_bearer_token('../botz.env')
+
+    iter_ = {}
+    for lang in languages:
+        iter_[lang] = 0
+
+    date = datetime.datetime.now().strftime("%Y-%m-%d")
+    filename = '../../data/sample-stream/' + date + '.csv'
+
+    if not os.path.exists('../../data/sample-stream'):
+        os.makedirs('../../data/sample-stream')
+
+    if not os.path.exists(filename):
+        csv_file = open(filename, 'w+', encoding='utf-8')
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
+    else:
+        csv_file = open(filename, 'a+', encoding='utf-8')
+        csv_writer = csv.writer(csv_file)
+
     main()

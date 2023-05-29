@@ -71,9 +71,9 @@ if __name__ == '__main__':
         description='Scrape covid data from github repo https://github.com/thepanacealab/covid19_twitter and '
                     'rehydrate it')
 
-    parser.add_argument('--start_date', type=str, default='2020-05-20',
+    parser.add_argument('--start', type=str, default='2020-05-20',
                         help='Start date for scraping, format YYYY-MM-DD, min 2020-05-20')
-    parser.add_argument('--end_date', type=str, default='2023-04-12',
+    parser.add_argument('--end', type=str, default='2023-04-12',
                         help='End date for scraping, format YYYY-MM-DD, max 2023-04-12')
     parser.add_argument('--env', type=str, help='Environment file to get twitter credentials, '
                         'consumer_key, consumer_secret, access_token, access_token_secret', required=True)
