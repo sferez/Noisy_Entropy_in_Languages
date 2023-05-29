@@ -84,7 +84,7 @@ def connect_to_endpoint(url):
             timestamp = json_response['data']['created_at']
             text = json_response['data']['text']
             text = text.replace('\n', ' ')
-            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang])
+            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang, '3'])
             iter_[lang] += 1
             sys.stdout.write('\r')
             sys.stdout.write(flag.flagize(
