@@ -2,7 +2,7 @@
 # 1 - Personality
 # 2 - News and Media
 # 3 - Stream
-#
+# 4 - Covid-19 Stream
 
 from scraping import scraping, init_driver
 
@@ -221,7 +221,7 @@ scrape_accounts = [
 for scrape in scrape_accounts:
     for date in scrape["dates"]:
         print(f'Scraping from {date[0]} to {date[1]} for {scrape["user"]}')
-        driver = init_driver(headless=False, show_images=False, env=".env")
+        driver = init_driver(headless=False, show_images=False, env="fj.env")
         data = scraping(date[0], until=date[1], interval=1, from_account=scrape["user"],
-                        save_dir=f"../data/scraping/{scrape['user']}", driver=driver, env=".env", headless=False,
+                        save_dir=f"../data/scraping/{scrape['user']}", driver=driver, env="fj.env", headless=False,
                         only_id=False, Class=scrape["class"])

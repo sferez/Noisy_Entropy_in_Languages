@@ -9,7 +9,7 @@ import sys
 import flag
 import traceback
 
-bearer_token = get_bearer_token('../2.env')
+bearer_token = get_bearer_token('../botz.env')
 print(bearer_token)
 iter_max = 1_000_000
 languages = ['en', 'fr', 'es', 'de', 'it']

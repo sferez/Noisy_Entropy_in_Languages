@@ -17,7 +17,7 @@ import requests
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-from .env import get_username, get_password, get_email, get_chromedriver_path
+from env import get_username, get_password, get_email, get_chromedriver_path
 
 red = "\033[0;91m"
 green = "\033[0;92m"
@@ -238,6 +238,7 @@ def log_search_page(driver, since, until_local, lang, display_type, words, to_ac
     get_page(driver, path)
     return path
 
+
 def get_last_date_from_csv(path):
     df = pd.read_csv(path)
     return datetime.datetime.strftime(max(pd.to_datetime(df["Timestamp"])), '%Y-%m-%dT%H:%M:%S.000Z')
@@ -292,7 +293,8 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
             time.sleep(30)
             driver.refresh()
             sleep(random.uniform(0.5, 1.5))
-        page_cards = driver.find_elements(by=By.XPATH, value='//article[@data-testid="tweet"]')  # changed div by article
+        page_cards = driver.find_elements(by=By.XPATH,
+                                          value='//article[@data-testid="tweet"]')  # changed div by article
         for card in page_cards:
             tweet = get_data(card, only_id=only_id, Class=Class)
             if tweet:
@@ -332,7 +334,7 @@ def get_users_follow(users, headless, env, follow=None, verbose=1, wait=2, limit
     # initiate the driver
     driver = init_driver(headless=headless, env=env, firefox=True)
     sleep(wait)
-    # log in (the .env file should contain the username and password)
+    # log in (the fj.env file should contain the username and password)
     # driver.get('https://www.twitter.com/login')
     log_in(driver, env, wait=wait)
     sleep(wait)
@@ -426,6 +428,7 @@ def check_exists_by_xpath(xpath, driver):
         return False
     return True
 
+
 def memoize(func):
     """
     :Function: Memoize the function to avoid recomputing the same value, leverage the cache
@@ -462,9 +465,9 @@ def memoize(func):
 
     return wrapper
 
+
 @memoize
 def get_user_id(username):
-
     url = "https://tweeterid.com/ajax.php"
 
     payload = f'input={username}'
@@ -487,3 +490,37 @@ def get_user_id(username):
     response = requests.request("POST", url, headers=headers, data=payload)
 
     return response.text
+
+
+def get_metadata(ids, twarc_session):
+    """
+    :Function: Get the metadata of the tweets
+    :param ids:  List of tweet ids
+    :param twarc_session: Twarc session
+    :return: List of tweets
+    """
+    tweet_fields = "lang,created_at,geo"
+    expansions = "author_id,geo.place_id"
+    place_fields = "country_code,geo,id"
+    result = []
+    if len(ids) <= 100:
+        while True:
+            try:
+                r = twarc_session.tweet_lookup(ids,
+                                               tweet_fields=tweet_fields,
+                                               expansions=expansions,
+                                               place_fields=place_fields
+                                               )
+                break
+            except:
+                print("Maybe you have reached the limit of the API, try again later in 1 minute")
+                sleep(60)
+                continue
+
+        tweets = list(r)
+        for batch in tweets:
+            for tweet in batch['data']:
+                result.append(tweet)
+        return result
+    else:
+        raise Exception("Too many ids, max 100")

@@ -32,6 +32,26 @@ def get_username(env):
     return load_env_variable("USERNAME", none_allowed=True)
 
 
+def get_consumer_key(env):
+    dotenv.load_dotenv(env, verbose=True)
+    return load_env_variable("CONSUMER_KEY", none_allowed=True)
+
+
+def get_consumer_secret(env):
+    dotenv.load_dotenv(env, verbose=True)
+    return load_env_variable("CONSUMER_SECRET", none_allowed=True)
+
+
+def get_access_token(env):
+    dotenv.load_dotenv(env, verbose=True)
+    return load_env_variable("ACCESS_TOKEN", none_allowed=True)
+
+
+def get_access_token_secret(env):
+    dotenv.load_dotenv(env, verbose=True)
+    return load_env_variable("ACCESS_TOKEN_SECRET", none_allowed=True)
+
+
 def get_bearer_token(env):
     dotenv.load_dotenv(env, verbose=True)
     return load_env_variable("BEARER_TOKEN", none_allowed=True)
