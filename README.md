@@ -16,12 +16,13 @@ With the following arguments:
 
 ```
 --from_account: Account to monitor
---env: Environment to use
+--env: Environment to use with username, password and email
 --start: Start date of the scraping
 --end: End date of the scraping
 --interval: Interval of the scraping (Default: 1 day)
 --headless: Run the scraping in headless mode (Default: False)
 --class_: Flag to indicate if the scraping is for a class (Default: 1)
+--only_id: Flag to indicate if only the tweet id should be scraped (Default: False)
 ```
 
 The data will be saved in the following path:
@@ -52,6 +53,7 @@ With the following arguments:
 --env: Environment to use with bearer token
 --languages: Languages to stream (Default: en, fr, es, de, it)
 --iter_max: Maximum number of iterations for each language (Default: 1_000_000)
+--class_: Flag to indicate if the scraping is for a class (Default: 3)
 ```
 
 The data will be saved in the following path:
@@ -79,9 +81,10 @@ dataAcquisition/scrape-covid-github.py
 With the following arguments:
 
 ```
---env: Environment to use with credentials
---start: Start date of the scraping (Default: 2020-05-20)
+--env: Environment to use with credentials (access_token, access_token_secret, consumer_key, consumer_secret)
+--start: Start date of the scraping (Default: 2020-03-22)
 --end: End date of the scraping (Default: 2023-04-12)
+--class_: Flag to indicate if the scraping is for a class (Default: 4)
 ```
 
 The data will be saved in the following path:
@@ -101,10 +104,7 @@ only keep the tweets in the specified languages (en, fr, es, de, it).
 
 ## Class:
 
-### 1 - Personality
-
-### 2 - News and Media
-
-### 3 - Stream
-
-### 4 - Covid-19
+1 - Personalities
+2 - News and Media
+3 - Stream
+4 - Covid-19

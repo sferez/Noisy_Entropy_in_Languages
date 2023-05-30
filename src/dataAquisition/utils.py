@@ -504,19 +504,11 @@ def get_metadata(ids, twarc_session):
     place_fields = "country_code,geo,id"
     result = []
     if len(ids) <= 100:
-        while True:
-            try:
-                r = twarc_session.tweet_lookup(ids,
-                                               tweet_fields=tweet_fields,
-                                               expansions=expansions,
-                                               place_fields=place_fields
-                                               )
-                break
-            except:
-                print("Maybe you have reached the limit of the API, try again later in 1 minute")
-                sleep(60)
-                continue
-
+        r = twarc_session.tweet_lookup(ids,
+                                       tweet_fields=tweet_fields,
+                                       expansions=expansions,
+                                       place_fields=place_fields
+                                       )
         tweets = list(r)
         for batch in tweets:
             for tweet in batch['data']:

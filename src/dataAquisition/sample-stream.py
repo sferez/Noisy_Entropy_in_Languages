@@ -61,7 +61,7 @@ def connect_to_endpoint(url):
             timestamp = json_response['data']['created_at']
             text = json_response['data']['text']
             text = text.replace('\n', ' ')
-            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang, '3'])
+            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang, class_])
             iter_[lang] += 1
             sys.stdout.write('\r')
             sys.stdout.write(flag.flagize(
@@ -85,12 +85,15 @@ if __name__ == "__main__":
     parser.add_argument('--iter_max', type=int, default=1_000_000, help='Maximum number of tweets to get per language')
     parser.add_argument('--languages', type=str, nargs='+', default=['en', 'fr', 'es', 'de', 'it'], help='Languages to get')
     parser.add_argument('--env', type=str, required=True, help='Path to env file, containing bearer token')
+    parser.add_argument('--class_', type=str, default='3', help='Class of the tweets (Default: 3)')
 
     args = parser.parse_args()
 
     iter_max = args.iter_max
     languages = args.languages
-    bearer_token = get_bearer_token('../botz.env')
+    env = args.env
+    class_ = args.class_
+    bearer_token = get_bearer_token(env)
 
     iter_ = {}
     for lang in languages:
