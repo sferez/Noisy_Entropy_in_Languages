@@ -1,12 +1,10 @@
 import requests
 import os
 import json
-import emoji
 import csv
 from env import get_bearer_token
 import datetime
 import sys
-import flag
 import traceback
 import argparse
 
@@ -64,8 +62,9 @@ def connect_to_endpoint(url):
             csv_writer.writerow([tweet_id, author_id, timestamp, text, lang, class_])
             iter_[lang] += 1
             sys.stdout.write('\r')
-            sys.stdout.write(flag.flagize(
-                f':US: {iter_["en"]}\t:FR: {iter_["fr"]}\t:ES: {iter_["es"]}\t:DE: {iter_["de"]}\t:IT: {iter_["it"]}\t'))
+            msg = f'{" ".join([f"{l}: {iter_[l]}"  for l in iter_])}'
+            sys.stdout.write(msg)
+
 
 
 def main():

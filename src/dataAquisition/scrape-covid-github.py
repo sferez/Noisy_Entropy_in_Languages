@@ -42,6 +42,9 @@ def main():
             # Filter by language with english, french, spanish, german and italian
             df = df[df['lang'].isin(['en', 'fr', 'es', 'de', 'it'])]
             print("Data filtered by language")
+
+        if len(df) > max_:
+            df = df.sample(max_)
         print(f'Getting data for {date} with {len(df)} tweets')
 
         if not os.path.exists(f'../../data/covid-github'):
@@ -78,6 +81,7 @@ if __name__ == '__main__':
     parser.add_argument('--env', type=str, help='Environment file to get twitter credentials, '
                         'consumer_key, consumer_secret, access_token, access_token_secret', required=True)
     parser.add_argument('--class_', type=str, default='4', help='Class of the tweets (Default: 4)')
+    parser.add_argument('--max', type=int, default=500_000, help='Max number of tweets to get (Default: 500_000)')
 
 
     args = parser.parse_args()
@@ -88,6 +92,7 @@ if __name__ == '__main__':
     acces_token = get_access_token(args.env)
     acces_token_secret = get_access_token_secret(args.env)
     class_ = args.class_
+    max_ = args.max
     t = twarc.Twarc2(consumer_key, consumer_secret, acces_token, acces_token_secret)
 
     # Set up dates
