@@ -1,15 +1,26 @@
+"""
+Script to get a sample of the Twitter stream, using the Twitter API v2.
+Gather 1% of the real-time stream of Tweets based on a sample of all Tweets.
+Filter by language and save the data in a csv file.
+"""
+
+# ------------------------------------------- IMPORTS ----------------------------------------------------- #
+
+# External
 import requests
 import os
 import json
 import csv
-from env import get_bearer_token
 import datetime
 import sys
-import traceback
 import argparse
+import time
+
+# Internal
+from env import get_bearer_token
 
 
-
+# ------------------------------------------- FUNCTIONS ------------------------------------------------------ #
 
 def create_url():
     # Add the parameters you want to the URL
@@ -29,6 +40,18 @@ def bearer_oauth(r):
     r.headers["Authorization"] = f"Bearer {bearer_token}"
     r.headers["User-Agent"] = "v2SampledStreamPython"
     return r
+
+
+def check_date():
+    current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+    global date, csv_file, csv_writer
+    if current_date != date:
+        csv_file.close()
+        date = current_date
+        filename = '../../data/sample-stream/' + date + '.csv'
+        csv_file = open(filename, 'a+', encoding='utf-8')
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
 
 
 def connect_to_endpoint(url):
@@ -59,28 +82,44 @@ def connect_to_endpoint(url):
             timestamp = json_response['data']['created_at']
             text = json_response['data']['text']
             text = text.replace('\n', ' ')
+            check_date()
             csv_writer.writerow([tweet_id, author_id, timestamp, text, lang, class_])
             iter_[lang] += 1
             sys.stdout.write('\r')
-            msg = f'{" ".join([f"{l}: {iter_[l]}"  for l in iter_])}'
+            msg = f'{" ".join([f"{l}: {iter_[l]}" for l in iter_])}'
             sys.stdout.write(msg)
 
 
+# ------------------------------------------- MAIN ----------------------------------------------------------- #
 
 def main():
     url = create_url()
     timeout = 0
     while True:
-        connect_to_endpoint(url)
-        timeout += 1
-        print(f'\nTimeout: {timeout}, restarting stream...')
+        try:
+            connect_to_endpoint(url)
+        except KeyboardInterrupt:
+            print("\nReceived interrupt, stopping...")
+            # Perform cleanup here
+            csv_file.close()
+            sys.exit(0)
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            timeout += 1
+            print(f'\nTimeout: {timeout}, restarting stream...')
+            # Add a delay before retrying
+            time.sleep(5)  # adjust this value according to your needs
+
+
+# ------------------------------------------- RUN ----------------------------------------------------------- #
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Sample Twitter Stream, get 1% of current tweets')
 
     parser.add_argument('--iter_max', type=int, default=1_000_000, help='Maximum number of tweets to get per language')
-    parser.add_argument('--languages', type=str, nargs='+', default=['en', 'fr', 'es', 'de', 'it'], help='Languages to get')
+    parser.add_argument('--languages', type=str, nargs='+', default=['en', 'fr', 'es', 'de', 'it'],
+                        help='Languages to get')
     parser.add_argument('--env', type=str, required=True, help='Path to env file, containing bearer token')
     parser.add_argument('--class_', type=str, default='3', help='Class of the tweets (Default: 3)')
 
