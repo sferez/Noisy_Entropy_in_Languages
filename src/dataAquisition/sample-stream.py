@@ -44,7 +44,7 @@ def bearer_oauth(r):
 
 def check_date():
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-    global date, csv_file, csv_writer
+    global date, csv_file, csv_writer, iter_
     if current_date != date:
         csv_file.close()
         date = current_date
@@ -52,6 +52,8 @@ def check_date():
         csv_file = open(filename, 'a+', encoding='utf-8')
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
+        iter_ = {l: 0 for l in languages}
+        print(f'New date: {date}, reseting iter_')
 
 
 def connect_to_endpoint(url):
