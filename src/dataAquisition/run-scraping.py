@@ -62,12 +62,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Scraping Twitter')
 
     parser.add_argument('--start', type=str, help='Start date', required=True)
-    parser.add_argument('--end', type=str, help='End date', required=True, default=datetime.now().strftime("%Y-%m-%d"))
+    parser.add_argument('--end', type=str, help='End date', default=datetime.now().strftime("%Y-%m-%d"))
     parser.add_argument('--interval', type=int, help='Interval', default=1)
     parser.add_argument('--from_account', type=str, help='From account', required=True)
     parser.add_argument('--env', type=str, help='Environment file with Chrome driver path and Twitter credentials',
                         required=True)
-    parser.add_argument('--headless', type=bool, help='Headless', default=True)
+    parser.add_argument('--headless', action=argparse.BooleanOptionalAction, help='Headless mode', default=False)
     parser.add_argument('--class_', type=str, help='Class', default='1')
     parser.add_argument('--only_id', type=bool, help='Save only the tweet_id', default=False)
 
@@ -79,6 +79,7 @@ if __name__ == "__main__":
     interval = args.interval
     from_account = args.from_account
     headless = args.headless
+    print(headless)
     class_ = args.class_
     only_id = args.only_id
 
