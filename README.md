@@ -99,8 +99,7 @@ The data will be saved in the following format:
 tweet_id,user_id,timestamp,text,lang,class
 ```
 
-Note: Class is set to 4 (covid-19), if the language is accessible from the github repository a filter will be applied to
-only keep the tweets in the specified languages (en, fr, es, de, it).
+Note: Class is set to 4 (covid-19), only LANGUAGES = ['en', 'fr', 'es', 'de', 'it'] are kept. You can change the languages in the code.
 
 ## Class:
 

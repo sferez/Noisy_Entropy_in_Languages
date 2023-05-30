@@ -3,6 +3,8 @@ Scrape covid data from github https://github.com/thepanacealab/covid19_twitter
 Scrape the dailies and rehydrate them
 """
 
+LANGUAGES = ['en', 'fr', 'es', 'de', 'it']
+
 # ------------------------------------------- IMPORTS -------------------------------------------
 
 # General imports
@@ -20,6 +22,7 @@ import argparse
 # Local imports
 from utils import get_metadata
 from env import get_consumer_key, get_consumer_secret, get_access_token, get_access_token_secret
+
 
 # ------------------------------------------- SCRIPT -------------------------------------------
 
@@ -40,7 +43,7 @@ def main():
 
         if 'lang' in df.columns:
             # Filter by language with english, french, spanish, german and italian
-            df = df[df['lang'].isin(['en', 'fr', 'es', 'de', 'it'])]
+            df = df[df['lang'].isin(LANGUAGES)]
             print("Data filtered by language")
 
         if len(df) > max_:
@@ -57,10 +60,12 @@ def main():
         iter = 0
         for batchs in tqdm(range(0, len(df), 100)):
             for tweet in get_metadata(df['tweet_id'].tolist()[batchs:batchs + 100], t):
-                csv_writer.writerow(
-                    [tweet['id'], tweet['author_id'], tweet['created_at'], tweet['text'].replace('\n', ''), tweet['lang'],
-                     class_])
-                iter += 1
+                if tweet['lang'] in LANGUAGES:
+                    csv_writer.writerow(
+                        [tweet['id'], tweet['author_id'], tweet['created_at'], tweet['text'].replace('\n', ''),
+                         tweet['lang'],
+                         class_])
+                    iter += 1
 
         csv_file.close()
         print(f'Got {iter} tweets\n'
@@ -79,10 +84,10 @@ if __name__ == '__main__':
     parser.add_argument('--end', type=str, default='2023-04-12',
                         help='End date for scraping, format YYYY-MM-DD, max 2023-04-12')
     parser.add_argument('--env', type=str, help='Environment file to get twitter credentials, '
-                        'consumer_key, consumer_secret, access_token, access_token_secret', required=True)
+                                                'consumer_key, consumer_secret, access_token, access_token_secret',
+                        required=True)
     parser.add_argument('--class_', type=str, default='4', help='Class of the tweets (Default: 4)')
     parser.add_argument('--max', type=int, default=500_000, help='Max number of tweets to get (Default: 500_000)')
-
 
     args = parser.parse_args()
 
@@ -101,4 +106,3 @@ if __name__ == '__main__':
 
     # Scrape data
     main()
-
