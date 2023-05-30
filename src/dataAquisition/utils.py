@@ -116,7 +116,7 @@ def get_data(card, only_id=False, Class=""):
     #         emoji_list.append(emoji)
     # emojis = ' '.join(emoji_list)
 
-    tweet = (tweet_id, user_id, postdate, text, 'und', Class)
+    tweet = (tweet_id, user_id, postdate, text, Class)
     return tweet
 
 
