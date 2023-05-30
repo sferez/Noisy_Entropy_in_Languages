@@ -50,7 +50,6 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
     write_mode = 'w'
     # start scraping from <since> until <until>
     # add the <interval> to <since> to get <until_local> for the first refresh
-    until_local = datetime.datetime.strptime(since, '%Y-%m-%d') + datetime.timedelta(days=interval)
     # if <until>=None, set it to the actual date
     if until is None:
         until = datetime.date.today().strftime("%Y-%m-%d")
@@ -100,6 +99,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
         since = str(get_last_date_from_csv(path))[:10]
         write_mode = 'a'
         print(f'Resuming scraping from {since}...')
+    until_local = datetime.datetime.strptime(since, '%Y-%m-%d') + datetime.timedelta(days=interval)
 
     # start scraping
     with open(path, write_mode, newline='', encoding='utf-8') as f:
