@@ -16,7 +16,7 @@ With the following arguments:
 
 ```
 --from_account: Account to monitor
---env: Environment to use
+--env: Environment to use with username, password and email
 --start: Start date of the scraping
 --end: End date of the scraping
 --interval: Interval of the scraping (Default: 1 day)
@@ -81,7 +81,7 @@ dataAcquisition/scrape-covid-github.py
 With the following arguments:
 
 ```
---env: Environment to use with credentials
+--env: Environment to use with credentials (access_token, access_token_secret, consumer_key, consumer_secret)
 --start: Start date of the scraping (Default: 2020-03-22)
 --end: End date of the scraping (Default: 2023-04-12)
 --class_: Flag to indicate if the scraping is for a class (Default: 4)
