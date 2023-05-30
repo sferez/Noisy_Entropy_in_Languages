@@ -37,6 +37,7 @@ News (Class 2):
 import argparse
 from datetime import datetime
 import time
+import sys
 
 # Internal
 from scraping import scraping
@@ -92,6 +93,7 @@ if __name__ == "__main__":
             main()
         except KeyboardInterrupt:
             print("\nReceived interrupt, stopping...")
+            sys.exit(0)
         except Exception as e:
             print(f"Error occurred: {str(e)}")
             timeout += 1
