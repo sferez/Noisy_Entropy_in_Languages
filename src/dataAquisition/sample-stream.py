@@ -71,11 +71,9 @@ def main():
     url = create_url()
     timeout = 0
     while True:
-        try:
-            connect_to_endpoint(url)
-        except:
-            print(f'\n{traceback.format_exc()}')
-            timeout += 1
+        connect_to_endpoint(url)
+        timeout += 1
+        print(f'\nTimeout: {timeout}, restarting stream...')
 
 
 if __name__ == "__main__":
