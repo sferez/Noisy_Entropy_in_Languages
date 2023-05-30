@@ -336,7 +336,7 @@ def get_users_follow(users, headless, env, follow=None, verbose=1, wait=2, limit
     # initiate the driver
     driver = init_driver(headless=headless, env=env, firefox=True)
     sleep(wait)
-    # log in (the fj.env file should contain the username and password)
+    # log in (the env.env file should contain the username and password)
     # driver.get('https://www.twitter.com/login')
     log_in(driver, env, wait=wait)
     sleep(wait)
