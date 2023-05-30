@@ -56,7 +56,7 @@ def main():
             for tweet in get_metadata(df['tweet_id'].tolist()[batchs:batchs + 100], t):
                 csv_writer.writerow(
                     [tweet['id'], tweet['author_id'], tweet['created_at'], tweet['text'].replace('\n', ''), tweet['lang'],
-                     '4'])
+                     class_])
                 iter += 1
 
         csv_file.close()
@@ -71,12 +71,14 @@ if __name__ == '__main__':
         description='Scrape covid data from github repo https://github.com/thepanacealab/covid19_twitter and '
                     'rehydrate it')
 
-    parser.add_argument('--start', type=str, default='2020-05-20',
-                        help='Start date for scraping, format YYYY-MM-DD, min 2020-05-20')
+    parser.add_argument('--start', type=str, default='2020-03-22',
+                        help='Start date for scraping, format YYYY-MM-DD, min 2020-03-22')
     parser.add_argument('--end', type=str, default='2023-04-12',
                         help='End date for scraping, format YYYY-MM-DD, max 2023-04-12')
     parser.add_argument('--env', type=str, help='Environment file to get twitter credentials, '
                         'consumer_key, consumer_secret, access_token, access_token_secret', required=True)
+    parser.add_argument('--class_', type=str, default='4', help='Class of the tweets (Default: 4)')
+
 
     args = parser.parse_args()
 
@@ -85,11 +87,12 @@ if __name__ == '__main__':
     consumer_secret = get_consumer_secret(args.env)
     acces_token = get_access_token(args.env)
     acces_token_secret = get_access_token_secret(args.env)
+    class_ = args.class_
     t = twarc.Twarc2(consumer_key, consumer_secret, acces_token, acces_token_secret)
 
     # Set up dates
-    start_date = datetime.datetime.strptime(args.start_date, "%Y-%m-%d")
-    end_date = datetime.datetime.strptime(args.end_date, "%Y-%m-%d")
+    start_date = datetime.datetime.strptime(args.start, "%Y-%m-%d")
+    end_date = datetime.datetime.strptime(args.end, "%Y-%m-%d")
 
     # Scrape data
     main()

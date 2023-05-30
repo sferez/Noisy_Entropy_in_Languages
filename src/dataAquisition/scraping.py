@@ -3,6 +3,9 @@ File inspired from Scweet (https://github.com/Altimis/Scweet.git)
 Customized for the purpose of this project
 """
 
+# -------------------------------------------- IMPORTS --------------------------------------------------------------- #
+
+# External
 import csv
 import os
 import datetime
@@ -11,14 +14,19 @@ from time import sleep
 import random
 import pandas as pd
 
-from .utils import init_driver, get_last_date_from_csv, log_search_page, keep_scroling, log_in, check_for_error
+# Internal
+from utils import get_last_date_from_csv, log_search_page, keep_scroling, log_in
+
+
+# -------------------------------------------- FUNCTIONS ------------------------------------------------------------- #
 
 
 def scraping(since, until=None, words=None, to_account=None, from_account=None, mention_account=None, interval=5,
              lang=None,
              headless=True, limit=float("inf"), display_type="Top", resume=False, proxy=None, hashtag=None,
              save_dir="outputs", filter_replies=False, proximity=False,
-             geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env="fj.env", only_id=False, Class=""):
+             geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env="fj.env", only_id=False,
+             Class=""):
     """
     scrape data from twitter using requests, starting from <since> until <until>. The program make a search between each <since> and <until_local>
     until it reaches the <until> date if it's given, else it stops at the actual date.
@@ -63,7 +71,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
         path = save_dir + "/" + to_account + '_' + str(since).split(' ')[0] + '_' + str(until).split(' ')[
             0] + '.csv'
     elif mention_account:
-        path = save_dir + "/" + mention_account + '_' + str(init_date).split(' ')[0] + '_' + str(max_date).split(' ')[
+        path = save_dir + "/" + mention_account + '_' + str(since).split(' ')[0] + '_' + str(until).split(' ')[
             0] + '.csv'
     elif hashtag:
         path = save_dir + "/" + hashtag + '_' + str(since).split(' ')[0] + '_' + str(until).split(' ')[
@@ -88,9 +96,10 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
             continue
 
     # resume scraping from previous work
-    if resume:
+    if os.path.exists(path) and resume:
         since = str(get_last_date_from_csv(path))[:10]
         write_mode = 'a'
+        print(f'Resuming scraping from {since}...')
 
     # start scraping
     with open(path, write_mode, newline='', encoding='utf-8') as f:
