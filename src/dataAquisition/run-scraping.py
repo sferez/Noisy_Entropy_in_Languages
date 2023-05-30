@@ -36,6 +36,7 @@ News (Class 2):
 # External
 import argparse
 from datetime import datetime
+import time
 
 # Internal
 from scraping import scraping
@@ -85,4 +86,15 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main()
+    timeout = 0
+    while True:
+        try:
+            main()
+        except KeyboardInterrupt:
+            print("\nReceived interrupt, stopping...")
+        except Exception as e:
+            print(f"Error occurred: {str(e)}")
+            timeout += 1
+            print(f'\nTimeout: {timeout}, restarting stream...')
+            # Add a delay before retrying
+            time.sleep(60)  # adjust this value according to your needs
