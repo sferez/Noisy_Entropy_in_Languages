@@ -34,10 +34,8 @@ data/<user>/<user>_<start>_<end>.csv
 The data will be saved in the following format:
 
 ```
-tweet_id,user_id,timestamp,text,lang,class
+tweet_id,user_id,timestamp,text,class
 ```
-
-Note: From scraping the language can not be determined, so it is set to 'und' (undefined).
 
 ### Streaming
 
