@@ -241,7 +241,9 @@ def log_search_page(driver, since, until_local, lang, display_type, words, to_ac
 
 def get_last_date_from_csv(path):
     df = pd.read_csv(path)
-    return datetime.datetime.strftime(max(pd.to_datetime(df["Timestamp"])), '%Y-%m-%dT%H:%M:%S.000Z')
+    r = datetime.datetime.strftime(max(pd.to_datetime(df["Timestamp"])), '%Y-%m-%dT%H:%M:%S.000Z')
+    del df
+    return r
 
 
 def log_in(driver, env, timeout=20, wait=4):

@@ -38,7 +38,8 @@ import argparse
 from datetime import datetime
 
 # Internal
-from scraping import scraping, init_driver
+from scraping import scraping
+from utils import init_driver
 
 
 # ---------------------------------------------------- SCRIPT -------------------------------------------------------- #
@@ -47,7 +48,7 @@ def main():
     print(f'Scraping from {start} to {end} for {from_account}')
     driver = init_driver(headless=headless, show_images=False, env=env)
     data = scraping(start, until=end, interval=1, from_account=from_account,
-                    save_dir=f"../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
+                    save_dir=f"../../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
                     only_id=only_id, Class=class_, resume=True)
 
     driver.close()
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     parser.add_argument('--from_account', type=str, help='From account', required=True)
     parser.add_argument('--env', type=str, help='Environment file with Chrome driver path and Twitter credentials',
                         required=True)
-    parser.add_argument('--headless', type=bool, help='Headless', default=False)
+    parser.add_argument('--headless', type=bool, help='Headless', default=True)
     parser.add_argument('--class_', type=str, help='Class', default='1')
     parser.add_argument('--only_id', type=bool, help='Save only the tweet_id', default=False)
 
