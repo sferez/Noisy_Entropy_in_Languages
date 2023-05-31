@@ -53,9 +53,6 @@ def main():
                     save_dir=f"../../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
                     only_id=only_id, Class=class_, resume=True)
 
-    driver.close()
-    driver.quit()
-
 
 # ---------------------------------------------------- MAIN ---------------------------------------------------------- #
 

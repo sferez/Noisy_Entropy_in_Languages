@@ -158,7 +158,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
     if only_id:
         data = pd.DataFrame(data, columns=['tweet_id', 'class'])
     else:
-        data = pd.DataFrame(data, columns=['tweet_id', "user_id", 'timestamp', 'text', 'lang', 'class'])
+        data = pd.DataFrame(data, columns=['tweet_id', "user_id", 'timestamp', 'text', 'class'])
 
     # close the web driver
     driver.close()
