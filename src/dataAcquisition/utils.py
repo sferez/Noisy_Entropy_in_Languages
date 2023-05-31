@@ -292,7 +292,7 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
         # get the card of tweets
         while check_for_error(driver):
             print("Rate limit exceeded, waiting ...")
-            time.sleep(30)
+            time.sleep(60)
             driver.refresh()
             sleep(random.uniform(0.5, 1.5))
         page_cards = driver.find_elements(by=By.XPATH,

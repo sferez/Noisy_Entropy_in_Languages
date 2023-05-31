@@ -81,7 +81,6 @@ if __name__ == "__main__":
     interval = args.interval
     from_account = args.from_account
     headless = args.headless
-    print(headless)
     class_ = args.class_
     only_id = args.only_id
 
