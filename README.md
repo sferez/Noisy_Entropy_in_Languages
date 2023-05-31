@@ -4,6 +4,12 @@ Project is in development.
 
 Master's Thesis: Undertook an in-depth study on Noisy Entropy Estimation across multiple languages, utilizing data sourced from Social Media platforms and Computer Language.
 
+## Data
+
+To comply with Twitter's Terms of Service, the data used in this project is only shared dehydrated. Which means that the data is shared in the form of tweet ids, and not the full tweet.
+
+A script to hydrate the data is provided in the [dataAcquisition](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/dataAcquisition) folder, as well as a script to dehydrate the data.
+
 ## Data Acquisition
 
 Collect data from Twitter using scraping, streaming and Twitter API.
