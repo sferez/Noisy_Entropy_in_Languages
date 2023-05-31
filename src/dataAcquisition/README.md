@@ -158,3 +158,32 @@ python3 src/dataAcquisition/hydrate-tweets.py --env .env --file data/elonmusk/el
 2 - News and Media
 3 - Stream
 4 - Covid-19
+
+## Data Storage
+
+Data is stored in the following structure:
+
+```
+├── data
+│   ├── <scraping> (Scrape from user, hashtag or keyword)
+│   │   ├── <user>
+│   │   │   ├── <user>_<start>_<end>.csv
+│   │   │   ├── <user>_<start>_<end>.csv
+│   │   │   └── ...
+│   │   ├── <user>
+│   │   │   ├── <user>_<start>_<end>.csv
+│   │   │   ├── <user>_<start>_<end>.csv
+│   │   │   └── ...
+│   │   └── ...
+│   ├── <sample-stream> (Stream 1% of tweets)
+│   │   ├── <date>.csv
+│   │   ├── <date>.csv
+│   │   └── ...
+│   ├── <covid-github> (Scrape from Github and rehydrate)
+│   │   ├── <date>.csv
+│   │   ├── <date>.csv
+│   │   └── ...
+│   └──
+└──
+```
+
