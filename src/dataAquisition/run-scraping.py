@@ -17,18 +17,18 @@ News (Class 2):
     @Reuters start: 2007-01-01
 
     # French
-    @lemondefr start: 2007-01-01
-    @lefigaro start: 2007-01-01
-    @le_Parisien start: 2007-01-01
-    @20Minutes start: 2007-01-01
-    @BFMTV start: 2007-01-01
+    1. Le Monde (@lemondefr)
+    2. Le Figaro (@Le_Figaro)
+    3. Libération (@libe)
+    4. France 24 (@FRANCE24)
+    5. L'Express (@LEXPRESS)
 
     # Spanish
-    @elmundoes start: 2007-01-01
-    @el_pais start: 2007-01-01
-    @abc_es start: 2007-01-01
-    @LaVanguardia start: 2007-01-01
-    @EFEnoticias start: 2007-01-01
+    1. El País (@el_pais)
+    2. El Mundo (@elmundoes)
+    3. La Vanguardia (@LaVanguardia)
+    4. ABC.es (@abc_es)
+    5. El Confidencial (@elconfidencial)
 """
 
 # ---------------------------------------------------- IMPORTS ------------------------------------------------------- #
@@ -71,7 +71,7 @@ if __name__ == "__main__":
                         required=True)
     parser.add_argument('--headless', action=argparse.BooleanOptionalAction, help='Headless mode', default=False)
     parser.add_argument('--class_', type=str, help='Class', default='1')
-    parser.add_argument('--only_id', type=bool, help='Save only the tweet_id', default=False)
+    parser.add_argument('--only_id', action=argparse.BooleanOptionalAction, help='Only collect tweet_id', default=False)
 
     args = parser.parse_args()
 

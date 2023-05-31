@@ -95,7 +95,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
             continue
 
     # resume scraping from previous work
-    if os.path.exists(path) and resume:
+    if os.path.exists(path) and resume and not only_id:
         since = str(get_last_date_from_csv(path))[:10]
         write_mode = 'a'
         print(f'Resuming scraping from {since}...')
