@@ -151,6 +151,39 @@ Command example:
 python3 src/dataAcquisition/hydrate-tweets.py --env .env --file data/elonmusk/elonmusk_2020-01-01_2023-01-01.csv
 ```
 
+## Dehydrate Tweets
+
+To dehydrate a csv file containing tweet_id, run the following file:
+
+```
+src/dataAcquisition/dehydrate-tweets.py
+```
+
+With the following arguments:
+
+```
+--input_dir: Directory containing the files to dehydrate
+--output_dir: Directory to save the dehydrated files
+```
+
+The data will be saved in the following path (sub-structure folders included):
+
+```
+<output_dir>/<file>_dehydrated.csv
+```
+
+The data will be saved in the following format:
+
+```
+tweet_id
+```
+
+Command example:
+
+```
+python3 src/dataAcquisition/dehydrate-tweets.py --input_dir data/scraping --output_dir data/scraping_dehydrated
+```
+
 
 ## Class:
 
