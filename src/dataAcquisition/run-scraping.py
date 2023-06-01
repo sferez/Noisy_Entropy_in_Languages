@@ -5,19 +5,19 @@ Personalities (Class 1):
     @elonmusk start: 2010-01-01 X
     @billgates start: 2009-01-01
     @barackobama start: 2007-01-01 X
-    @emmanuelmacron start: 2013-01-01 ~
+    @emmanuelmacron start: 2013-01-01 X
     @sanchezcastejon start: 2009-01-01
 
 News (Class 2):
     # English
     @BBCNews start: 2007-01-01 ~
     @CNN start: 2007-01-01 ~
-    @nytimes start: 2007-01-01 ~
+    @nytimes start: 2007-01-01 X
     @guardian start: 2007-01-01 ~
-    @Reuters start: 2007-01-01
+    @Reuters start: 2007-01-01 ~
 
     # French
-    1. Le Monde (@lemondefr)
+    1. Le Monde (@lemondefr) ~
     2. Le Figaro (@Le_Figaro)
     3. Libération (@libe)
     4. France 24 (@FRANCE24)
@@ -52,6 +52,7 @@ def main():
     data = scraping(start, until=end, interval=1, from_account=from_account,
                     save_dir=f"../../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
                     only_id=only_id, Class=class_, resume=True)
+    print(f'Scraping finished for {from_account}, {len(data)} tweets scraped from {start} to {end}')
     sys.exit(0)
 
 # ---------------------------------------------------- MAIN ---------------------------------------------------------- #
