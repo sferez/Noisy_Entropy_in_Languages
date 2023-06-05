@@ -2,6 +2,45 @@
 
 Collect data from Twitter using scraping, streaming and Twitter API.
 
+## OVERVIEW
+
+This folder contains the following functionalities:
+
+- [Scraping](#scraping) - Collect data from Twitter using scraping
+- [Streaming](#streaming) - Collect data from Twitter using streaming (1% of current tweets)
+- [Covid-19](#covid-19) - Collect data from the covid-19 github repository and rehydrate the tweets
+- [Hydrate Tweets](#hydrate-tweets) - Hydrate a csv file containing tweet_id
+- [Dehydrate Tweets](#dehydrate-tweets) - Dehydrate a csv file containing tweet_id
+
+## Setup
+
+Have a .env file with the following variables:
+
+For scraping:
+
+```
+USERNAME=<username>
+PASSWORD=<password>
+EMAIL=<email>
+CHROME_DRIVER_PATH=<path to chrome driver>
+```
+
+For Streaming
+
+```
+BEARER_TOKEN=<bearer token>
+```
+
+For Twitter API (Hydrate, Dehydrate, Covid-19)
+
+```
+CONSUMER_KEY=<consumer key>
+CONSUMER_SECRET=<consumer secret>
+ACCESS_TOKEN=<access token>
+ACCESS_TOKEN_SECRET=<access token secret>
+```
+
+
 ## Scraping
 
 To scrape data from Twitter, run the following file:
