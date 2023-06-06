@@ -18,7 +18,7 @@ def dehydrate_csv_files(directory_path, output_path):
         for file in files:
             if file.endswith(".csv"):
                 df = pd.read_csv(os.path.join(root, file))
-                tweet_id_df = df[['tweet_id']]
+                tweet_id_df = df[['tweet_id']].dropna().astype('int64')
 
                 # Replicate the directory structure in output directory
                 rel_path = os.path.relpath(root, directory_path)
