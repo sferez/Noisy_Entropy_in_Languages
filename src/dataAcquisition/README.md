@@ -169,7 +169,6 @@ With the following arguments:
 ```
 --env: Environment to use with credentials (access_token, access_token_secret, consumer_key, consumer_secret)
 --file: File to hydrate (CSV with a column named tweet_id)
---class_: Flag to indicate if the scraping is for a class (Default: 1)
 ```
 
 The data will be saved in the following path:
@@ -181,7 +180,7 @@ The data will be saved in the following path:
 The data will be saved in the following format:
 
 ```
-tweet_id,user_id,timestamp,text,lang,class
+tweet_id,user_id,timestamp,text,lang
 ```
 
 Command example:
