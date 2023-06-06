@@ -2,31 +2,31 @@
 Script to run scraping.py with arguments from command line.
 
 Personalities (Class 1):
-    @elonmusk start: 2010-01-01 X
+    @elonmusk start: 2010-01-01
     @billgates start: 2009-01-01
-    @barackobama start: 2007-01-01 X
-    @emmanuelmacron start: 2013-01-01 X
+    @barackobama start: 2007-01-01
+    @emmanuelmacron start: 2013-01-01
     @sanchezcastejon start: 2009-01-01
 
 News (Class 2):
     # English
-    @BBCNews start: 2007-01-01 ~
-    @CNN start: 2007-01-01 ~
-    @nytimes start: 2007-01-01 X
-    @guardian start: 2007-01-01 ~
-    @Reuters start: 2007-01-01 ~
+    @BBCNews start: 2007-01-01
+    @CNN start: 2007-01-01
+    @nytimes start: 2007-01-01
+    @guardian start: 2007-01-01
+    @Reuters start: 2007-01-01
 
     # French
-    1. Le Monde (@lemondefr) ~
+    1. Le Monde (@lemondefr)
     2. Le Figaro (@Le_Figaro)
     3. Libération (@libe)
     4. France 24 (@FRANCE24)
-    5. L'Express (@LEXPRESS)
+    5. L'Express (@lexpress)
 
     # Spanish
     1. El País (@el_pais)
     2. El Mundo (@elmundoes)
-    3. La Vanguardia (@LaVanguardia)
+    3. La Vanguardia (@lavanguardia)
     4. ABC.es (@abc_es)
     5. El Confidencial (@elconfidencial)
 """
@@ -51,7 +51,7 @@ def main():
     driver = init_driver(headless=headless, show_images=False, env=env)
     data = scraping(start, until=end, interval=1, from_account=from_account,
                     save_dir=f"../../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
-                    only_id=only_id, Class=class_, resume=True)
+                    only_id=only_id, resume=True)
     print(f'Scraping finished for {from_account}, {len(data)} tweets scraped from {start} to {end}')
     sys.exit(0)
 
@@ -68,7 +68,6 @@ if __name__ == "__main__":
     parser.add_argument('--env', type=str, help='Environment file with Chrome driver path and Twitter credentials',
                         required=True)
     parser.add_argument('--headless', action=argparse.BooleanOptionalAction, help='Headless mode', default=False)
-    parser.add_argument('--class_', type=str, help='Class', default='1')
     parser.add_argument('--only_id', action=argparse.BooleanOptionalAction, help='Only collect tweet_id', default=False)
 
     args = parser.parse_args()
@@ -79,7 +78,6 @@ if __name__ == "__main__":
     interval = args.interval
     from_account = args.from_account
     headless = args.headless
-    class_ = args.class_
     only_id = args.only_id
 
     args = parser.parse_args()

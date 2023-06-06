@@ -33,7 +33,7 @@ def check_for_error(driver):
         return False
 
 
-def get_data(card, only_id=False, Class=""):
+def get_data(card, only_id=False):
     """Extract data from tweet card"""
 
     # try:
@@ -55,7 +55,7 @@ def get_data(card, only_id=False, Class=""):
         tweet_id = ""
 
     if only_id:
-        return (tweet_id, Class)
+        return [tweet_id]
 
     try:
         handle = card.find_element(by=By.XPATH, value='.//span[contains(text(), "@")]').text
@@ -116,7 +116,7 @@ def get_data(card, only_id=False, Class=""):
     #         emoji_list.append(emoji)
     # emojis = ' '.join(emoji_list)
 
-    tweet = (tweet_id, user_id, postdate, text, Class)
+    tweet = (tweet_id, user_id, postdate, text)
     return tweet
 
 
@@ -284,7 +284,7 @@ def log_in(driver, env, timeout=20, wait=4):
 
 
 def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limit, scroll, last_position,
-                  only_id=False, Class=""):
+                  only_id=False):
     """ scrolling function for tweets crawling"""
 
     while scrolling and tweet_parsed < limit:
@@ -298,7 +298,7 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
         page_cards = driver.find_elements(by=By.XPATH,
                                           value='//article[@data-testid="tweet"]')  # changed div by article
         for card in page_cards:
-            tweet = get_data(card, only_id=only_id, Class=Class)
+            tweet = get_data(card, only_id=only_id)
             if tweet:
                 # check if the tweet is unique
                 tweet_id = tweet[0]

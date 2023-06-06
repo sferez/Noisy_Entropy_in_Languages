@@ -51,7 +51,7 @@ def check_date():
         filename = '../../data/sample-stream/' + date + '.csv'
         csv_file = open(filename, 'a+', encoding='utf-8')
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
+        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang'])
         iter_ = {l: 0 for l in languages}
         print(f'New date: {date}, reseting iter_')
 
@@ -85,7 +85,7 @@ def connect_to_endpoint(url):
             text = json_response['data']['text']
             text = text.replace('\n', ' ')
             check_date()
-            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang, class_])
+            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang])
             iter_[lang] += 1
             sys.stdout.write('\r')
             msg = f'{" ".join([f"{l}: {iter_[l]}" for l in iter_])}'
@@ -123,14 +123,12 @@ if __name__ == "__main__":
     parser.add_argument('--languages', type=str, nargs='+', default=['en', 'fr', 'es', 'de', 'it'],
                         help='Languages to get')
     parser.add_argument('--env', type=str, required=True, help='Path to env file, containing bearer token')
-    parser.add_argument('--class_', type=str, default='3', help='Class of the tweets (Default: 3)')
 
     args = parser.parse_args()
 
     iter_max = args.iter_max
     languages = args.languages
     env = args.env
-    class_ = args.class_
     bearer_token = get_bearer_token(env)
 
     iter_ = {}
@@ -146,7 +144,7 @@ if __name__ == "__main__":
     if not os.path.exists(filename):
         csv_file = open(filename, 'w+', encoding='utf-8')
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
+        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang'])
     else:
         csv_file = open(filename, 'a+', encoding='utf-8')
         csv_writer = csv.writer(csv_file)

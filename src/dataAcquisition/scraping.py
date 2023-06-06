@@ -25,8 +25,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
              lang=None,
              headless=True, limit=float("inf"), display_type="Top", resume=False, proxy=None, hashtag=None,
              save_dir="outputs", filter_replies=False, proximity=False,
-             geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=None, only_id=False,
-             Class=""):
+             geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=None, only_id=False):
     """
     scrape data from twitter using requests, starting from <since> until <until>. The program make a search between each <since> and <until_local>
     until it reaches the <until> date if it's given, else it stops at the actual date.
@@ -39,9 +38,9 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
     # ------------------------- Variables :
     # header of csv
     if only_id:
-        header = ['tweet_id', 'class']
+        header = ['tweet_id']
     else:
-        header = ['tweet_id', "user_id", 'timestamp', 'text', 'class']
+        header = ['tweet_id', "user_id", 'timestamp', 'text']
     # list that contains all data
     data = []
     # unique tweet ids
@@ -141,7 +140,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
             # start scrolling and get tweets
             driver, data, writer, tweet_ids, scrolling, tweet_parsed, scroll, last_position = \
                 keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limit, scroll, last_position,
-                              only_id=only_id, Class=Class)
+                              only_id=only_id)
 
             # keep updating <start date> and <end date> for every search
             if type(since) == str:
@@ -156,9 +155,9 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
             print(f'Nb of Tweets : {tweet_parsed}')
 
     if only_id:
-        data = pd.DataFrame(data, columns=['tweet_id', 'class'])
+        data = pd.DataFrame(data, columns=['tweet_id'])
     else:
-        data = pd.DataFrame(data, columns=['tweet_id', "user_id", 'timestamp', 'text', 'class'])
+        data = pd.DataFrame(data, columns=['tweet_id', "user_id", 'timestamp', 'text'])
 
     # close the web driver
     driver.close()

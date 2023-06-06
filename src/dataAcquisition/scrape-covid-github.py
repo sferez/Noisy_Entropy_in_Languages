@@ -55,7 +55,7 @@ def main():
         csv_file = open(f'../../data/covid-github/{date}.csv', 'w+', encoding='utf-8')
         csv_writer = csv.writer(csv_file)
 
-        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang', 'class'])
+        csv_writer.writerow(['tweet_id', 'user_id', 'timestamp', 'text', 'lang'])
 
         iter = 0
         for batchs in tqdm(range(0, len(df), 100)):
@@ -63,8 +63,7 @@ def main():
                 if tweet['lang'] in LANGUAGES:
                     csv_writer.writerow(
                         [tweet['id'], tweet['author_id'], tweet['created_at'], tweet['text'].replace('\n', ''),
-                         tweet['lang'],
-                         class_])
+                         tweet['lang']])
                     iter += 1
 
         csv_file.close()
@@ -86,7 +85,6 @@ if __name__ == '__main__':
     parser.add_argument('--env', type=str, help='Environment file to get twitter credentials, '
                                                 'consumer_key, consumer_secret, access_token, access_token_secret',
                         required=True)
-    parser.add_argument('--class_', type=str, default='4', help='Class of the tweets (Default: 4)')
     parser.add_argument('--max', type=int, default=500_000, help='Max number of tweets to get (Default: 500_000)')
 
     args = parser.parse_args()
@@ -96,7 +94,6 @@ if __name__ == '__main__':
     consumer_secret = get_consumer_secret(args.env)
     acces_token = get_access_token(args.env)
     acces_token_secret = get_access_token_secret(args.env)
-    class_ = args.class_
     max_ = args.max
     t = twarc.Twarc2(consumer_key, consumer_secret, acces_token, acces_token_secret)
 
