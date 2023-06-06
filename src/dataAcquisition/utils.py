@@ -491,7 +491,7 @@ def get_user_id(username):
     }
     response = requests.request("POST", url, headers=headers, data=payload)
 
-    return response.text
+    return int(response.text)
 
 
 def get_metadata(ids, twarc_session):
