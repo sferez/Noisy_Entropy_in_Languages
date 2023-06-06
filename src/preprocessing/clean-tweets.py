@@ -45,7 +45,7 @@ def remove_twitter_urls(text):
 
 
 def give_emoji_free_text(text):
-    return emoji.get_emoji_regexp().sub(r'', text)
+    return emoji.replace_emoji(text, replace="")
 
 
 def remove_mentions(text):
@@ -102,7 +102,7 @@ def main():
         df['text'] = df['text'].apply(lambda x: remove_emoji(x))
         df['text'] = df['text'].apply(lambda x: remove_accents(x))
         # df['text'] = df['text'].apply(lambda x: remove_emoticons(x))
-        # df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
+        df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
         df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
         df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
         df['text'] = df['text'].apply(lambda x: to_lowercase(x))

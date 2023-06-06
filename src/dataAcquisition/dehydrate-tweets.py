@@ -33,8 +33,8 @@ def dehydrate_csv_files(directory_path, output_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Dehydrate tweets from a csv file by keeping only tweet_id')
 
-    parser.add_argument('--input_dir', type=str, help='Directory containing the CSV files', required=True)
-    parser.add_argument('--output_dir', type=str, help='Directory where you want the dehydrated CSV files',
+    parser.add_argument('--input_dir', '--i', type=str, help='Directory containing the CSV files', required=True)
+    parser.add_argument('--output_dir', '--o', type=str, help='Directory where you want the dehydrated CSV files',
                         required=False)
 
     args = parser.parse_args()

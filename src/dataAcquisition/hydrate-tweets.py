@@ -48,7 +48,7 @@ def main():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Hydrate tweets from a csv file with tweet_id')
 
-    parser.add_argument('--file', type=str, help='File with tweet_id to hydrate', required=True)
+    parser.add_argument('--file', '--f', type=str, help='File with tweet_id to hydrate', required=True)
     parser.add_argument('--env', type=str, help='Environment file to get twitter credentials, '
                                                 'consumer_key, consumer_secret, access_token, access_token_secret',
                         required=True)
