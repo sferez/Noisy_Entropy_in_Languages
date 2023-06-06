@@ -50,7 +50,7 @@ def get_data(card, only_id=False):
 
     # tweet id
     try:
-        tweet_id = tweet_url.split("/")[-1]
+        tweet_id = int(tweet_url.split("/")[-1])
     except:
         tweet_id = ""
 
