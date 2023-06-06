@@ -14,7 +14,7 @@ import pandas as pd
 
 def main():
     full_paths = []
-    for root, dirs, files in os.walk(directory):
+    for root, dirs, files in os.walk(input_dir):
         for file in files:
             if file.endswith(".csv"):
                 full_paths.append(os.path.join(root, file))
@@ -22,7 +22,7 @@ def main():
     dfs = [pd.read_csv(fp) for fp in full_paths]
 
     df = pd.concat(dfs, ignore_index=True)
-    df.to_csv(os.path.join(directory, final), index=False)
+    df.to_csv(os.path.join(input_dir, output), index=False)
 
     print('COMBINED CSV FILES:')
     for fp in full_paths:
@@ -34,12 +34,12 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Combine CSV files')
 
-    parser.add_argument('--directory', type=str, help='Directory', required=True)
-    parser.add_argument('--final', type=str, help='Final file name (Default: combined.csv)', default='combined.csv')
+    parser.add_argument('--input_dir', '--i', type=str, help='Directory', required=True)
+    parser.add_argument('--output', '--o', type=str, help='Final file name (Default: combined.csv)', default='combined.csv')
 
     args = parser.parse_args()
 
-    directory = args.directory
-    final = args.final
+    input_dir = args.input_dir
+    output = args.output
 
     main()
