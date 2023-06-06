@@ -52,11 +52,18 @@ src/dataAcquisition/run-scraping.py
 With the following arguments:
 
 ```
---from_account: Account to monitor
+# Seach type (Only one of the following):
+--from_account, --a: Account to monitor
+--hashtag, --h: Hashtag to monitor
+--word, --w: Word to monitor
+
+# Other arguments Mandatory:
 --env: Environment to use with username, password and email
---start: Start date of the scraping
---end: End date of the scraping
---interval: Interval of the scraping (Default: 1 day)
+--start, --s: Start date of the scraping
+
+# Other arguments Optional:
+--end, --e: End date of the scraping (Default: Today)
+--interval, --i: Interval of the scraping (Default: 1 day)
 --headless: Run the scraping in headless mode 
 --only_id: Flag to indicate if only the tweet id should be scraped
 ```
@@ -92,7 +99,10 @@ src/dataAcquisition/sample-stream.py
 With the following arguments:
 
 ```
+# Arguments Mandatory:
 --env: Environment to use with bearer token
+
+# Arguments Optional:
 --languages: Languages to stream (Default: en, fr, es, de, it)
 --iter_max: Maximum number of iterations for each language (Default: 1_000_000)
 ```
@@ -127,7 +137,10 @@ src/dataAcquisition/scrape-covid-github.py
 With the following arguments:
 
 ```
+# Arguments Mandatory:
 --env: Environment to use with credentials (access_token, access_token_secret, consumer_key, consumer_secret)
+
+# Arguments Optional:
 --start: Start date of the scraping (Default: 2020-03-22)
 --end: End date of the scraping (Default: 2023-04-12)
 ```
@@ -163,8 +176,9 @@ src/dataAcquisition/hydrate-tweets.py
 With the following arguments:
 
 ```
+# Arguments Mandatory:
 --env: Environment to use with credentials (access_token, access_token_secret, consumer_key, consumer_secret)
---file: File to hydrate (CSV with a column named tweet_id)
+--file, --f: File to hydrate (CSV with a column named tweet_id)
 ```
 
 The data will be saved in the following path:
@@ -196,8 +210,9 @@ src/dataAcquisition/dehydrate-tweets.py
 With the following arguments:
 
 ```
---input_dir: Directory containing the files to dehydrate
---output_dir: Directory to save the dehydrated files
+# Arguments Mandatory:
+--input_dir, --i: Directory containing the files to dehydrate
+--output_dir, --o: Directory to save the dehydrated files
 ```
 
 The data will be saved in the following path (sub-structure folders included):
@@ -237,9 +252,9 @@ Data is stored in the following structure:
 │   │   │   ├── <user>_<start>_<end>.csv
 │   │   │   ├── <user>_<start>_<end>.csv
 │   │   │   └── ...
-│   │   ├── <user>
-│   │   │   ├── <user>_<start>_<end>.csv
-│   │   │   ├── <user>_<start>_<end>.csv
+│   │   ├── <hashtag>
+│   │   │   ├── <hashtag>_<start>_<end>.csv
+│   │   │   ├── <hashtag>_<start>_<end>.csv
 │   │   │   └── ...
 │   │   └── ...
 │   ├── <sample-stream> (Stream 1% of tweets)
