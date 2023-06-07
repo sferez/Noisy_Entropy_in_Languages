@@ -69,59 +69,69 @@ def remove_extra_spaces(text):
     text = text.replace('      ', ' ')  # 6 spaces
     return text
 
+
 def remove_accents(text):
     return unidecode(text)
+
+
+def process_file(fp):
+    df = pd.read_csv(fp)
+
+    df.dropna(inplace=True)
+    df.drop_duplicates(subset=['tweet_id'], inplace=True)
+
+    df['tweet_id'] = df['tweet_id'].astype(int)
+    df['user_id'].replace('error-co', 0, inplace=True)  # Error in the data (user_id = 'error-co')
+    df['user_id'] = df['user_id'].astype(int)
+
+    df['text'] = df['text'].str.replace('\n', '')
+    df['text'] = df['text'].str.replace('\r', '')
+
+    df['text'] = df['text'].apply(lambda x: remove_urls(x))
+    df['text'] = df['text'].apply(lambda x: remove_twitter_urls(x))
+    df['text'] = df['text'].apply(lambda x: remove_mentions(x))
+    df['text'] = df['text'].apply(lambda x: remove_emoji(x))
+    df['text'] = df['text'].apply(lambda x: remove_accents(x))
+    df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
+    df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
+    df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
+    df['text'] = df['text'].apply(lambda x: to_lowercase(x))
+
+    df.to_csv(os.path.join(output_, os.path.basename(fp)), index=False)
+
+    print(f'Cleaned {os.path.basename(fp)}')
 
 
 # -------------------------------------------------- MAIN -------------------------------------------------- #
 
 
 def main():
-    full_paths = []
-    for root, dirs, files in os.walk(input_dir):
-        for file in files:
-            if file.endswith(".csv"):
-                full_paths.append(os.path.join(root, file))
-
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
     print('Cleaning data...')
-    for fp in full_paths:
-        df = pd.read_csv(fp)
-        df.dropna()
-        df = df.dropna(subset=['text'])
-        df['tweet_id'] = df['tweet_id'].astype('int64')
-        df['user_id'] = df['user_id'].astype('int64')
-        df.drop_duplicates(subset=['tweet_id'], inplace=True)
-        df['text'] = df['text'].str.replace('\n', '')
-        df['text'] = df['text'].str.replace('\r', '')
-        df['text'] = df['text'].apply(lambda x: remove_urls(x))
-        df['text'] = df['text'].apply(lambda x: remove_twitter_urls(x))
-        df['text'] = df['text'].apply(lambda x: remove_mentions(x))
-        df['text'] = df['text'].apply(lambda x: remove_emoji(x))
-        df['text'] = df['text'].apply(lambda x: remove_accents(x))
-        # df['text'] = df['text'].apply(lambda x: remove_emoticons(x))
-        df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
-        df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
-        df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
-        df['text'] = df['text'].apply(lambda x: to_lowercase(x))
+    if not os.path.exists(output_):
+        os.makedirs(output_)
 
-        df.to_csv(os.path.join(output_dir, os.path.basename(fp)), index=False)
+    if os.path.isfile(input_):
+        process_file(input_)
+    else:
 
-        print(f'Cleaned {os.path.basename(fp)}')
+        for root, dirs, files in os.walk(input_):
+            for file in files:
+                if file.endswith(".csv"):
+                    fp = os.path.join(root, file)
+                    process_file(fp)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform data cleaning on the raw linguistic data.')
-    parser.add_argument('--input_dir', '--i', type=str, help='Directory containing the raw data.', required=True)
-    parser.add_argument('--output_dir', '--o', type=str, help='Directory to save the cleaned data.', required=True)
+    parser.add_argument('--input', '--i', type=str, help='Directory containing the raw data, or CSV File',
+                        required=True)
+    parser.add_argument('--output', '--o', type=str, help='Directory to save the cleaned data.', required=True)
 
     args = parser.parse_args()
 
-    input_dir = args.input_dir
-    output_dir = args.output_dir
+    input_ = args.input
+    output_ = args.output
 
     main()

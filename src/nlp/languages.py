@@ -30,30 +30,37 @@ def detect_language(text):
     return 'und'
 
 
+def process_file(fp):
+    df = pd.read_csv(fp)
+
+    if 'lang' in df.columns:
+        if df['lang'].isnull().sum() == 0:
+            print('Already detected')
+            return
+
+    df['text'] = df['text'].astype(str)  # Avoids errors in the detection
+    tqdm.pandas()
+    df['lang'] = df['text'].progress_apply(detect_language)
+
+    df.to_csv(fp, index=False)
+
+
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 
 def main():
+    print(f'Language detection on {input_}...')
 
-    print(f'Language detection on {input_dir}...')
-
-    for root, dirs, files in os.walk(input_dir):
-        for file in files:
-            if file.endswith(".csv"):
-                print(file)
-                fp = os.path.join(root, file)
-                df = pd.read_csv(fp)
-
-                if 'lang' in df.columns:
-                    if df['lang'].isnull().sum() == 0:
-                        print('Already detected')
-                        continue
-
-                df['text'] = df['text'].astype(str)  # Avoids errors in the detection
-                tqdm.pandas()
-                df['lang'] = df['text'].progress_apply(detect_language)
-
-                df.to_csv(fp, index=False)
+    if os.path.isfile(input_):  # Single file
+        fp = input_
+        process_file(fp)
+    else:
+        for root, dirs, files in os.walk(input_):  # Directory
+            for file in files:
+                if file.endswith(".csv"):
+                    print(file)
+                    fp = os.path.join(root, file)
+                    process_file(fp)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
@@ -62,16 +69,19 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Apply NLP language detection to a CSV file.')
 
-    parser.add_argument('--input_dir', '--i', type=str, help='Directory', required=True)
-    parser.add_argument('--fast', '--f', action=argparse.BooleanOptionalAction, help='Use fast language detection',
+    parser.add_argument('--input', '--i', type=str, help='Directory or CSV File', required=True)
+    parser.add_argument('--fast', '--fa', action=argparse.BooleanOptionalAction, help='Use fast language detection',
                         default=False)
+    parser.add_argument('--force', '--fo', action=argparse.BooleanOptionalAction, help='Force detection', default=False)
 
     args = parser.parse_args()
 
-    input_dir = args.input_dir
+    input_ = args.input
     fast = args.fast
+    force = args.force
 
     if fast:
+        print('Using fast language detection')
         detector = LanguageDetectorBuilder.from_languages(*LANGUAGES).with_low_accuracy_mode().build()
     else:
         detector = LanguageDetectorBuilder.from_languages(*LANGUAGES).build()

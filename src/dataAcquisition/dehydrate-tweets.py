@@ -13,19 +13,41 @@ import argparse
 
 # ------------------------------------------- FUNCTIONS ------------------------------------------- #
 
-def dehydrate_csv_files(directory_path, output_path):
-    for root, dirs, files in os.walk(directory_path):
-        for file in files:
-            if file.endswith(".csv"):
-                df = pd.read_csv(os.path.join(root, file))
-                tweet_id_df = df[['tweet_id']].dropna().astype('int64')
 
-                # Replicate the directory structure in output directory
-                rel_path = os.path.relpath(root, directory_path)
-                new_dir = os.path.join(output_path, rel_path + "_dehydrated")
-                os.makedirs(new_dir, exist_ok=True)
+def process_file(fp):
+    df = pd.read_csv(fp)
+    tweet_id_df = df[['tweet_id']].dropna().astype('int64')
+    tweet_id_df.to_csv(fp, index=False)
 
-                tweet_id_df.to_csv(os.path.join(new_dir, file), index=False)
+    print(f'Dehydrated {fp}')
+    return tweet_id_df
+
+
+# ---------------------------------------------- MAIN ---------------------------------------------- #
+
+def main():
+
+    if os.path.isfile(input_):  # Single file
+        fp = input_
+        tweet_id_df = process_file(fp)
+
+        new_dir = os.path.join(output + "_dehydrated")
+        os.makedirs(new_dir, exist_ok=True)
+
+        tweet_id_df.to_csv(os.path.join(new_dir, Path(fp).name), index=False)
+    else:
+        for root, dirs, files in os.walk(input_):
+            for file in files:
+                if file.endswith(".csv"):
+                    fp = os.path.join(root, file)
+                    tweet_id_df = process_file(fp)
+
+                    # Replicate the directory structure in output directory
+                    rel_path = os.path.relpath(root, input_)
+                    new_dir = os.path.join(output, rel_path + "_dehydrated")
+                    os.makedirs(new_dir, exist_ok=True)
+
+                    tweet_id_df.to_csv(os.path.join(new_dir, file), index=False)
 
 
 # ------------------------------------------- MAIN ------------------------------------------- #
@@ -33,12 +55,12 @@ def dehydrate_csv_files(directory_path, output_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Dehydrate tweets from a csv file by keeping only tweet_id')
 
-    parser.add_argument('--input_dir', '--i', type=str, help='Directory containing the CSV files', required=True)
-    parser.add_argument('--output_dir', '--o', type=str, help='Directory where you want the dehydrated CSV files',
-                        required=False)
+    parser.add_argument('--input', '--i', type=str, help='Directory or CSV file', required=True)
+    parser.add_argument('--output', '--o', type=str, help='Directory where you want the dehydrated CSV files',
+                        required=True)
 
     args = parser.parse_args()
-    input_dir = args.input_dir
-    output_dir = args.output_dir
+    input_ = args.input
+    output = args.output
 
-    dehydrate_csv_files(input_dir, output_dir)
+    main()
