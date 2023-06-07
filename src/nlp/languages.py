@@ -23,9 +23,8 @@ LANGUAGES = [Language.ENGLISH, Language.FRENCH, Language.GERMAN, Language.ITALIA
 def detect_language(text):
     result = detector.detect_language_of(text)
     if result:
-
         conf = detector.compute_language_confidence(text, result)
-        if conf > 0.85:
+        if conf > 0.90:
             return result.iso_code_639_1.name.lower()
     return 'und'
 
