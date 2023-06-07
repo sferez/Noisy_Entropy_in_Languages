@@ -1,5 +1,11 @@
 """
 Sentiment NLP detection
+
+Based on TweetNLP: Cutting-Edge Natural Language Processing for Social Media.
+Camacho-Collados, J., Rezaee, K., Riahi, T., Ushio, A., Loureiro, D., Antypas, D., Boisson, J., Espinosa-Anke, L.,
+Liu, F., Martinez-Cámara, E., & others (2022).
+In Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: System Demonstrations.
+Association for Computational Linguistics.
 """
 
 # ----------------------------------------------- IMPORTS ----------------------------------------------- #
