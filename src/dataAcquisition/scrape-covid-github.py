@@ -43,7 +43,7 @@ def main():
 
         if 'lang' in df.columns:
             # Filter by language with english, french, spanish, german and italian
-            df = df[df['lang'].isin(LANGUAGES)]
+            df = df[df['lang'].isin(languages)]
             print("Data filtered by language")
 
         if len(df) > max_:
@@ -60,7 +60,7 @@ def main():
         iter = 0
         for batchs in tqdm(range(0, len(df), 100)):
             for tweet in get_metadata(df['tweet_id'].tolist()[batchs:batchs + 100], t):
-                if tweet['lang'] in LANGUAGES:
+                if tweet['lang'] in languages:
                     csv_writer.writerow(
                         [tweet['id'], tweet['author_id'], tweet['created_at'], tweet['text'].replace('\n', ''),
                          tweet['lang']])
@@ -86,6 +86,8 @@ if __name__ == '__main__':
                                                 'consumer_key, consumer_secret, access_token, access_token_secret',
                         required=True)
     parser.add_argument('--max', type=int, default=500_000, help='Max number of tweets to get (Default: 500_000)')
+    parser.add_argument('--languages', '--l', type=str, nargs='+', help='Languages to keep', default=LANGUAGES,
+                        required=False)
 
     args = parser.parse_args()
 
@@ -95,6 +97,7 @@ if __name__ == '__main__':
     acces_token = get_access_token(args.env)
     acces_token_secret = get_access_token_secret(args.env)
     max_ = args.max
+    languages = args.languages
     t = twarc.Twarc2(consumer_key, consumer_secret, acces_token, acces_token_secret)
 
     # Set up dates

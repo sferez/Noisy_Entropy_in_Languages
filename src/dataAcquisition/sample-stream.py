@@ -19,6 +19,10 @@ import time
 # Internal
 from env import get_bearer_token
 
+# ------------------------------------------- CONSTANTS --------------------------------------------------- #
+
+LANGUAGES = ['en', 'fr', 'es', 'de', 'it']
+
 
 # ------------------------------------------- FUNCTIONS ------------------------------------------------------ #
 
@@ -120,8 +124,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Sample Twitter Stream, get 1% of current tweets')
 
     parser.add_argument('--iter_max', type=int, default=1_000_000, help='Maximum number of tweets to get per language')
-    parser.add_argument('--languages', type=str, nargs='+', default=['en', 'fr', 'es', 'de', 'it'],
-                        help='Languages to get')
+    parser.add_argument('--languages', '--l', type=str, nargs='+', help='Languages to keep', default=LANGUAGES,
+                        required=False)
     parser.add_argument('--env', type=str, required=True, help='Path to env file, containing bearer token')
 
     args = parser.parse_args()
