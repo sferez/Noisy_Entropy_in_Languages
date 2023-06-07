@@ -22,7 +22,7 @@ from env import get_consumer_key, get_consumer_secret, get_access_token, get_acc
 
 def process_file(fp):
     df = pd.read_csv(fp)
-    tweet_id_df = df[['tweet_id']].dropna().astype('int64')
+    tweet_id_df = df[['tweet_id']].dropna().astype(int)
 
     print(f'Hydrating {fp}')
 

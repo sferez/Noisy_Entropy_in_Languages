@@ -16,7 +16,7 @@ import argparse
 
 def process_file(fp):
     df = pd.read_csv(fp)
-    tweet_id_df = df[['tweet_id']].dropna().astype('int64')
+    tweet_id_df = df[['tweet_id']].dropna().astype(int)
     tweet_id_df.to_csv(fp, index=False)
 
     print(f'Dehydrated {fp}')
