@@ -73,7 +73,26 @@ if __name__ == "__main__":
     model = tweetnlp.load_model('topic_classification')
 
     # /!\ Note: Id 0 is reserved for the 'und' label, All the other labels are shifted by 1 /!\
-    label_to_id = {v: int(k)+1 for k, v in model.id_to_label.items()}
+    label_to_id = {v: int(k) + 1 for k, v in model.id_to_label.items()}
     label_to_id['und'] = 0
+    # 1: arts_&_culture
+    # 2: business_&_entrepreneurs
+    # 3: celebrity_&_pop_culture
+    # 4: diaries_&_daily_life
+    # 5: family
+    # 6: fashion_&_style
+    # 7: film_tv_&_video
+    # 8: fitness_&_health
+    # 9: food_&_dining
+    # 10: gaming
+    # 11: learning_&_educational
+    # 11: music
+    # 13: news_&_social_concern
+    # 14: other_hobbies
+    # 15: relationships
+    # 16: science_&_technology
+    # 17: sports
+    # 18: travel_&_adventure
+    # 19: youth_&_student_life
 
     main()
