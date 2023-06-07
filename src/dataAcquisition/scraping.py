@@ -102,7 +102,7 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
 
     # start scraping
     with open(path, write_mode, newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, escapechar='\\')
         if write_mode == 'w':
             writer.writerow(header)
 
