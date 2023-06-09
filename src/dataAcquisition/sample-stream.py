@@ -28,11 +28,12 @@ LANGUAGES = ['en', 'fr', 'es', 'de', 'it']
 
 def create_url():
     # Add the parameters you want to the URL
-    tweet_fields = "tweet.fields=lang,created_at,geo"
-    expansions = "expansions=author_id,geo.place_id"
-    # user_fields = "user.fields=location"
-    place_fields = "place.fields=country_code,geo,id"
-    url = f"https://api.twitter.com/2/tweets/sample/stream?{tweet_fields}&{expansions}&{place_fields}"
+    tweet_fields = "tweet.fields=lang,created_at"
+    expansions = "expansions=author_id"
+    user_fields = "user.fields="
+    place_fields = "place.fields="
+    media_fields = "media.fields="
+    url = f"https://api.twitter.com/2/tweets/sample/stream?{tweet_fields}&{expansions}&{user_fields}&{place_fields}&{media_fields}"
     return url
 
 
@@ -40,7 +41,6 @@ def bearer_oauth(r):
     """
     Method required by bearer token authentication.
     """
-
     r.headers["Authorization"] = f"Bearer {bearer_token}"
     r.headers["User-Agent"] = "v2SampledStreamPython"
     return r
@@ -63,37 +63,57 @@ def check_date():
 def connect_to_endpoint(url):
     global iter_
     response = requests.request("GET", url, auth=bearer_oauth, stream=True)
-    print(response.status_code)
     if response.status_code != 200:
         raise Exception(
             "Request returned an error: {} {}".format(
                 response.status_code, response.text
             )
         )
-    for response_line in response.iter_lines():
-        if response_line:
-            json_response = json.loads(response_line)
-            # if lang not in languages skip
-            lang = json_response['data']['lang'] if 'lang' in json_response['data'] else None
-            if lang not in languages:
-                continue
-            if iter_[lang] >= iter_max:
-                if all([iter_[l] >= iter_max for l in iter_]):
-                    csv_file.close()
-                    exit()
-                continue
-            # Extract the fields you want from the response
-            tweet_id = json_response['data']['id']
-            author_id = json_response['data']['author_id']
-            timestamp = json_response['data']['created_at']
-            text = json_response['data']['text']
-            text = text.replace('\n', ' ')
-            check_date()
-            csv_writer.writerow([tweet_id, author_id, timestamp, text, lang])
-            iter_[lang] += 1
-            sys.stdout.write('\r')
-            msg = f'{" ".join([f"{l}: {iter_[l]}" for l in iter_])}'
-            sys.stdout.write(msg)
+
+    if languages[0] == 'all':
+        for response_line in response.iter_lines():
+            if response_line:
+                json_response = json.loads(response_line)
+                tweet_data = json_response.get('data', {})
+                if tweet_data:
+                    if iter_['all'] >= iter_max:
+                        continue
+                    iter_['all'] += 1
+
+                lang = tweet_data.get('lang')
+                tweet_id = tweet_data.get('id')
+                author_id = tweet_data.get('author_id')
+                timestamp = tweet_data.get('created_at')
+                text = tweet_data.get('text', "").replace('\n', ' ')
+                location = tweet_data.get('location', "")
+                print(location)
+
+                check_date()
+                csv_writer.writerow([tweet_id, author_id, timestamp, text, lang])
+                sys.stdout.write('\r')
+                sys.stdout.write(f'Gathered {iter_["all"]} tweets')
+
+    else:
+        for response_line in response.iter_lines():
+            if response_line:
+                json_response = json.loads(response_line)
+                tweet_data = json_response.get('data', {})
+                if tweet_data:
+                    lang = tweet_data.get('lang')
+                    if lang not in languages or iter_[lang] >= iter_max:
+                        continue
+                    iter_[lang] += 1
+
+                    tweet_id = tweet_data.get('id')
+                    author_id = tweet_data.get('author_id')
+                    timestamp = tweet_data.get('created_at')
+                    text = tweet_data.get('text', "").replace('\n', ' ')
+
+                    check_date()
+                    csv_writer.writerow([tweet_id, author_id, timestamp, text, lang])
+                    sys.stdout.write('\r')
+                    msg = f'{" ".join([f"{l}: {iter_[l]}" for l in iter_])}'
+                    sys.stdout.write(msg)
 
 
 # ------------------------------------------- MAIN ----------------------------------------------------------- #
@@ -106,14 +126,12 @@ def main():
             connect_to_endpoint(url)
         except KeyboardInterrupt:
             print("\nReceived interrupt, stopping...")
-            # Perform cleanup here
             csv_file.close()
             sys.exit(0)
         except Exception as e:
             print(f"Error occurred: {str(e)}")
             timeout += 1
             print(f'\nTimeout: {timeout}, restarting stream...')
-            # Add a delay before retrying
             time.sleep(5)  # adjust this value according to your needs
 
 
@@ -135,13 +153,12 @@ if __name__ == "__main__":
     env = args.env
     bearer_token = get_bearer_token(env)
 
-    iter_ = {}
-    for lang in languages:
-        iter_[lang] = 0
+    iter_ = {k: 0 for k in languages}
 
     date = datetime.datetime.now().strftime("%Y-%m-%d")
     filename = '../../data/sample-stream/' + date + '.csv'
 
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     if not os.path.exists('../../data/sample-stream'):
         os.makedirs('../../data/sample-stream')
 

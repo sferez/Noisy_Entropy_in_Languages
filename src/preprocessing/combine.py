@@ -8,6 +8,7 @@ Combine all the data into one file from a directory
 import argparse
 import os
 import pandas as pd
+from tqdm import tqdm
 
 
 # ---------------------------------------------------- SCRIPT -------------------------------------------------------- #
@@ -19,9 +20,13 @@ def main():
             if file.endswith(".csv"):
                 full_paths.append(os.path.join(root, file))
 
-    dfs = [pd.read_csv(fp) for fp in full_paths]
+    df = pd.read_csv(full_paths[0])
+    for fp in tqdm(full_paths[1:]):
+        df = pd.concat([df, pd.read_csv(fp)], ignore_index=True)
 
-    df = pd.concat(dfs, ignore_index=True)
+    l = len(df)
+    df = df.drop_duplicates(subset=['tweet_id'])
+    print(f'Dropped {l - len(df)} duplicates')
     df.to_csv(os.path.join(input_, output), index=False)
 
     print('COMBINED CSV FILES:')
@@ -35,7 +40,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Combine CSV files')
 
     parser.add_argument('--input', '--i', type=str, help='Directory', required=True)
-    parser.add_argument('--output', '--o', type=str, help='Final file name (Default: combined.csv)', default='combined.csv')
+    parser.add_argument('--output', '--o', type=str, help='Final file name (Default: combined.csv)',
+                        default='combined.csv')
 
     args = parser.parse_args()
 
