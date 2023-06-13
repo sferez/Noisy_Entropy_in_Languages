@@ -13,6 +13,7 @@ from emot.emo_unicode import EMOTICONS_EMO
 import argparse
 import string
 from unidecode import unidecode
+from tqdm import tqdm
 
 
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
@@ -87,15 +88,22 @@ def process_file(fp):
     df['text'] = df['text'].str.replace('\n', '')
     df['text'] = df['text'].str.replace('\r', '')
 
-    df['text'] = df['text'].apply(lambda x: remove_urls(x))
-    df['text'] = df['text'].apply(lambda x: remove_twitter_urls(x))
-    df['text'] = df['text'].apply(lambda x: remove_mentions(x))
-    df['text'] = df['text'].apply(lambda x: remove_emoji(x))
-    df['text'] = df['text'].apply(lambda x: remove_accents(x))
-    df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
-    df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
-    df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
-    df['text'] = df['text'].apply(lambda x: to_lowercase(x))
+    if urls:
+        df['text'] = df['text'].apply(lambda x: remove_urls(x))
+        df['text'] = df['text'].apply(lambda x: remove_twitter_urls(x))
+    if emojis:
+        df['text'] = df['text'].apply(lambda x: remove_emoji(x))
+        df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
+    if mentions:
+        df['text'] = df['text'].apply(lambda x: remove_mentions(x))
+    if punctuation:
+        df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
+    if accents:
+        df['text'] = df['text'].apply(lambda x: remove_accents(x))
+    if spaces:
+        df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
+    if lowercase:
+        df['text'] = df['text'].apply(lambda x: to_lowercase(x))
 
     df.to_csv(os.path.join(output_, os.path.basename(fp)), index=False)
 
@@ -115,7 +123,7 @@ def main():
     else:
 
         for root, dirs, files in os.walk(input_):
-            for file in files:
+            for file in tqdm(files):
                 if file.endswith(".csv"):
                     fp = os.path.join(root, file)
                     process_file(fp)
@@ -129,9 +137,24 @@ if __name__ == '__main__':
                         required=True)
     parser.add_argument('--output', '--o', type=str, help='Directory to save the cleaned data.', required=True)
 
+    parser.add_argument('--punctuation', '--p', action=argparse.BooleanOptionalAction, help='Keep punctuation', default=False)
+    parser.add_argument('--accents', '--a', action=argparse.BooleanOptionalAction, help='Keep accents', default=False)
+    parser.add_argument('--emojis', '--e', action=argparse.BooleanOptionalAction, help='Keep emojis', default=False)
+    parser.add_argument('--mentions', '--m', action=argparse.BooleanOptionalAction, help='Keep mentions', default=False)
+    parser.add_argument('--urls', '--u', action=argparse.BooleanOptionalAction, help='Keep urls', default=False)
+    parser.add_argument('--spaces', '--s', action=argparse.BooleanOptionalAction, help='Keep extra spaces', default=False)
+    parser.add_argument('--lowercase', '--l', action=argparse.BooleanOptionalAction, help='Keep lowercase', default=False)
+
     args = parser.parse_args()
 
     input_ = args.input
     output_ = args.output
+    punctuation = not args.punctuation
+    accents = not args.accents
+    emojis = not args.emojis
+    mentions = not args.mentions
+    urls = not args.urls
+    spaces = not args.spaces
+    lowercase = not args.lowercase
 
     main()
