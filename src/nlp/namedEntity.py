@@ -16,13 +16,31 @@ import pandas as pd
 import os
 from tqdm import tqdm
 import tweetnlp
+import spacy
 
 # ----------------------------------------------- GLOBALS ----------------------------------------------- #
 
 types = {'person', 'location', 'event', 'corporation', 'product'}
+nlp = spacy.load("en_core_web_sm")
+entities_list = []
 
 
 # ---------------------------------------------- FUNCTIONS ---------------------------------------------- #
+
+def lemmatize_entity(entity):
+    # Lemmatizes the entity
+    return ' '.join([word.lemma_ if word.lemma_ != '-PRON-' else word.text for word in nlp(entity)])
+
+
+def detect_entity_w_lem(text):
+    result = model.predict(text)
+
+    res = {}
+    for r in result:
+        if r['type'] in types:
+            res[r['type']] = lemmatize_entity(r['entity'])
+
+    return res
 
 
 def detect_entity(text):
@@ -35,13 +53,18 @@ def detect_entity(text):
 
     return res
 
+
 def process_file(fp):
     df = pd.read_csv(fp)
 
-
     df['text'] = df['text'].astype(str)  # Avoids errors in the detection
+    df = df.drop(columns=['person', 'location', 'event', 'corporation', 'product'],
+                 errors='ignore')  # drop columns if they exist
     tqdm.pandas()
-    df = pd.concat([df, df['text'].progress_apply(detect_entity).apply(pd.Series)], axis=1)
+    if lemmatize:
+        df = pd.concat([df, df['text'].progress_apply(detect_entity_w_lem).apply(pd.Series)], axis=1)
+    else:
+        df = pd.concat([df, df['text'].progress_apply(detect_entity).apply(pd.Series)], axis=1)
 
     df.to_csv(fp, index=False)
 
@@ -50,7 +73,7 @@ def process_file(fp):
 
 
 def main():
-    print(f'Named Entity detection on {input_}...')
+    print(f'Named Entity detection on {input_} with lemmatization: {lemmatize}...')
 
     if os.path.isfile(input_):  # Single file
         fp = input_
@@ -71,11 +94,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Apply NLP Named Entity detection to a CSV file.')
 
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV File', required=True)
-    # parser.add_argument('--force', '--fo', action=argparse.BooleanOptionalAction, help='Force detection', default=False)
+    parser.add_argument('--lemmatize', '--l', action=argparse.BooleanOptionalAction, help='Lemmatize entities', default=False)
 
     args = parser.parse_args()
     input_ = args.input
-    # force = args.force
+    lemmatize = args.lemmatize
 
     model = tweetnlp.NER()
 
