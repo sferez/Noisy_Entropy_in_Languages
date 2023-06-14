@@ -33,7 +33,7 @@ def process_file(fp):
 
 
 def main():
-    print('Filtering data...')
+    print(f'Filtering data with languages: {languages}')
 
     if os.path.isfile(input_):
         process_file(input_)

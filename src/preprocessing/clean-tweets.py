@@ -76,7 +76,7 @@ def remove_accents(text):
 
 
 def process_file(fp):
-    df = pd.read_csv(fp)
+    df = pd.read_csv(fp, lineterminator='\n', encoding='utf-8')
 
     df.dropna(inplace=True)
     df.drop_duplicates(subset=['tweet_id'], inplace=True)
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform data cleaning on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory containing the raw data, or CSV File',
                         required=True)
-    parser.add_argument('--output', '--o', type=str, help='Directory to save the cleaned data.', required=True)
+    parser.add_argument('--output', '--o', type=str, help='Directory to save the scraping-cleaned data.', required=True)
 
     parser.add_argument('--punctuation', '--p', action=argparse.BooleanOptionalAction, help='Keep punctuation', default=False)
     parser.add_argument('--accents', '--a', action=argparse.BooleanOptionalAction, help='Keep accents', default=False)
