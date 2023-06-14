@@ -14,6 +14,7 @@ import argparse
 import string
 from unidecode import unidecode
 from tqdm import tqdm
+from pandas.errors import ParserError
 
 
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
@@ -76,7 +77,11 @@ def remove_accents(text):
 
 
 def process_file(fp):
-    df = pd.read_csv(fp, lineterminator='\n', encoding='utf-8')
+    try:
+        df = pd.read_csv(fp, encoding='utf-8')
+    except ParserError:
+        print(f'ParserError: {fp}')
+        df = pd.read_csv(fp, lineterminator='\n', encoding='utf-8')
 
     df.dropna(inplace=True)
     df.drop_duplicates(subset=['tweet_id'], inplace=True)

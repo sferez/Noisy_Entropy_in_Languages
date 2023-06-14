@@ -8,6 +8,7 @@ Perform data cleaning on the raw linguistic data (tweets).
 import pandas as pd
 import argparse
 import os
+from tqdm import tqdm
 
 
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
@@ -29,7 +30,7 @@ def main():
     else:
 
         for root, dirs, files in os.walk(input_):
-            for file in files:
+            for file in tqdm(files):
                 if file.endswith(".csv"):
                     fp = os.path.join(root, file)
                     process_file(fp)
