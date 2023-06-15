@@ -21,25 +21,33 @@ import tweetnlp
 # ---------------------------------------------- FUNCTIONS ---------------------------------------------- #
 
 
-def detect_emotion(text):
-    topic = model.predict(text)
-
-    return label_to_id[topic['label']]
+def detect_emotion(texts, batch_size=256):
+    emotions = []
+    for i in tqdm(range(0, len(texts), batch_size)):
+        batch_texts = texts[i:i+batch_size]
+        topics = model.predict(batch_texts, batch_size=batch_size, skip_preprocess=True)
+        emotions.extend([label_to_id[topic['label']] for topic in topics])
+    return emotions
 
 
 def process_file(fp):
-    df = pd.read_csv(fp)
+    # df = pd.read_csv(fp)
 
-    if 'emotion' in df.columns and not force:
-        if df['emotion'].isnull().sum() == 0:
-            print('Already detected')
-            return
+    for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=10000))):
+        if 'emotion' in df.columns and not force:
+            if df['emotion'].isnull().sum() == 0:
+                print('Already detected')
+                continue
+        df['text'] = df['text'].astype(str)  # Avoids errors in the detection
+        # tqdm.pandas()
+        # df['emotion'] = df['text'].progress_apply(detect_emotion)
+        df['emotion'] = detect_emotion(df['text'].tolist())
 
-    df['text'] = df['text'].astype(str)  # Avoids errors in the detection
-    tqdm.pandas()
-    df['emotion'] = df['text'].progress_apply(detect_emotion)
+        mode = 'a' if i != 0 else 'w'
+        df.to_csv(f'{fp}.tmp', index=False, mode=mode, header=(i == 0))
 
-    df.to_csv(fp, index=False)
+    os.remove(fp)
+    os.rename(f'{fp}.tmp', fp)
 
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #

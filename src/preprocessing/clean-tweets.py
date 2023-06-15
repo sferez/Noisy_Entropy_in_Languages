@@ -76,6 +76,12 @@ def remove_accents(text):
     return unidecode(text)
 
 
+def remove_rt(text):
+    if text.startswith('RT '):
+        return text[3:]
+    return text
+
+
 def process_file(fp):
     try:
         df = pd.read_csv(fp, encoding='utf-8')
@@ -105,6 +111,8 @@ def process_file(fp):
         df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
     if accents:
         df['text'] = df['text'].apply(lambda x: remove_accents(x))
+    if rt:
+        df['text'] = df['text'].apply(lambda x: remove_rt(x))
     if spaces:
         df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
     if lowercase:
@@ -148,6 +156,7 @@ if __name__ == '__main__':
     parser.add_argument('--mentions', '--m', action=argparse.BooleanOptionalAction, help='Keep mentions', default=False)
     parser.add_argument('--urls', '--u', action=argparse.BooleanOptionalAction, help='Keep urls', default=False)
     parser.add_argument('--spaces', '--s', action=argparse.BooleanOptionalAction, help='Keep extra spaces', default=False)
+    parser.add_argument('--rt', '--r', action=argparse.BooleanOptionalAction, help='Keep RT', default=False)
     parser.add_argument('--lowercase', '--l', action=argparse.BooleanOptionalAction, help='Keep lowercase', default=False)
 
     args = parser.parse_args()
@@ -160,6 +169,7 @@ if __name__ == '__main__':
     mentions = not args.mentions
     urls = not args.urls
     spaces = not args.spaces
+    rt = not args.rt
     lowercase = not args.lowercase
 
     main()
