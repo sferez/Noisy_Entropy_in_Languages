@@ -21,7 +21,7 @@ import tweetnlp
 # ---------------------------------------------- FUNCTIONS ---------------------------------------------- #
 
 
-def detect_emotion(texts, batch_size=256):
+def detect_emotion(texts, batch_size=64):
     emotions = []
     for i in tqdm(range(0, len(texts), batch_size)):
         batch_texts = texts[i:i+batch_size]
