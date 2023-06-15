@@ -16,12 +16,18 @@ import pandas as pd
 import os
 from tqdm import tqdm
 import tweetnlp
+import subprocess
+
+# ---------------------------------------------- CONSTANTS ---------------------------------------------- #
+
+CHUNKSIZE = 10_000
+BATCH_SIZE = 64
 
 
 # ---------------------------------------------- FUNCTIONS ---------------------------------------------- #
 
 
-def detect_emotion(texts, batch_size=64):
+def detect_emotion(texts, batch_size=BATCH_SIZE):
     emotions = []
     for i in tqdm(range(0, len(texts), batch_size)):
         batch_texts = texts[i:i+batch_size]
@@ -32,8 +38,9 @@ def detect_emotion(texts, batch_size=64):
 
 def process_file(fp):
     # df = pd.read_csv(fp)
+    num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
 
-    for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=10000))):
+    for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)), total=num_lines // CHUNKSIZE + 1):
         if 'emotion' in df.columns and not force:
             if df['emotion'].isnull().sum() == 0:
                 print('Already detected')
@@ -84,9 +91,16 @@ if __name__ == "__main__":
     model = tweetnlp.Emotion()
 
     label_to_id = {v: k for k, v in model.id_to_label.items()}
-    # 0 - anger
-    # 1 - joy
-    # 2 - optimism
-    # 3 - sadness
+    #  'anger': '0',
+    #  'anticipation': '1',
+    #  'disgust': '2',
+    #  'fear': '3',
+    #  'joy': '4',
+    #  'love': '5',
+    #  'optimism': '6',
+    #  'pessimism': '7',
+    #  'sadness': '8',
+    #  'surprise': '9',
+    #  'trust': '10'
 
     main()
