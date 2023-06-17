@@ -30,26 +30,36 @@ BATCH_SIZE = 64
 def detect_emotion(texts, batch_size=BATCH_SIZE):
     emotions = []
     for i in tqdm(range(0, len(texts), batch_size)):
-        batch_texts = texts[i:i+batch_size]
+        batch_texts = texts[i:i + batch_size]
         topics = model.predict(batch_texts, batch_size=batch_size, skip_preprocess=True)
         emotions.extend([label_to_id[topic['label']] for topic in topics])
     return emotions
 
 
 def process_file(fp):
-    # df = pd.read_csv(fp)
-    num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
+    df = pd.read_csv(fp)
 
+    if 'emotion' in df.columns and not force:
+        if df['emotion'].isnull().sum() == 0:
+            print('Already detected')
+            return
+
+    df['text'] = df['text'].astype(str)  # Avoids errors in the detection
+    df['emotion'] = detect_emotion(df['text'].tolist())
+
+    df.to_csv(fp, index=False)
+
+
+def process_file_chunk(fp, num_lines):
+    print('Processing in chunks...')
     for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)), total=num_lines // CHUNKSIZE + 1):
         if 'emotion' in df.columns and not force:
             if df['emotion'].isnull().sum() == 0:
                 print('Already detected')
                 continue
-        df['text'] = df['text'].astype(str)  # Avoids errors in the detection
-        # tqdm.pandas()
-        # df['emotion'] = df['text'].progress_apply(detect_emotion)
-        df['emotion'] = detect_emotion(df['text'].tolist())
 
+        df['text'] = df['text'].astype(str)  # Avoids errors in the detection
+        df['emotion'] = detect_emotion(df['text'].tolist())
         mode = 'a' if i != 0 else 'w'
         df.to_csv(f'{fp}.tmp', index=False, mode=mode, header=(i == 0))
 
@@ -65,14 +75,22 @@ def main():
 
     if os.path.isfile(input_):  # Single file
         fp = input_
-        process_file(fp)
+        num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
+        if num_lines > CHUNKSIZE:
+            process_file_chunk(fp, num_lines)
+        else:
+            process_file(fp)
     else:
         for root, dirs, files in os.walk(input_):
             for file in files:
                 if file.endswith(".csv"):
                     print(file)
                     fp = os.path.join(root, file)
-                    process_file(fp)
+                    num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
+                    if num_lines > CHUNKSIZE:
+                        process_file_chunk(fp, num_lines)
+                    else:
+                        process_file(fp)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
