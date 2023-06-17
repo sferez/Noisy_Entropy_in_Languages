@@ -16,20 +16,24 @@ import pandas as pd
 import os
 from tqdm import tqdm
 import tweetnlp
+import subprocess
+
+# ---------------------------------------------- CONSTANTS ---------------------------------------------- #
+
+CHUNKSIZE = 10_000
+BATCH_SIZE = 64
 
 
 # ---------------------------------------------- FUNCTIONS ---------------------------------------------- #
 
 
-def detect_sentiment(text):
-    topic = model.predict(text)
-
-    if topic['label'] == 'positive':
-        return 1
-    elif topic['label'] == 'negative':
-        return -1
-    else:
-        return 0
+def detect_sentiment(texts, batch_size=BATCH_SIZE):
+    sentiments = []
+    for i in tqdm(range(0, len(texts), batch_size)):
+        batch_texts = texts[i:i + batch_size]
+        topics = model.predict(batch_texts, batch_size=batch_size, skip_preprocess=True)
+        sentiments.extend([label_to_id[topic['label']] for topic in topics])
+    return sentiments
 
 
 def process_file(fp):
@@ -41,10 +45,26 @@ def process_file(fp):
             return
 
     df['text'] = df['text'].astype(str)  # Avoids errors in the detection
-    tqdm.pandas()
-    df['sentiment'] = df['text'].progress_apply(detect_sentiment)
+    df['sentiment'] = detect_sentiment(df['text'].tolist())
 
     df.to_csv(fp, index=False)
+
+
+def process_file_chunk(fp, num_lines):
+    print('Processing in chunks...')
+    for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)), total=num_lines // CHUNKSIZE + 1):
+        if 'sentiment' in df.columns and not force:
+            if df['sentiment'].isnull().sum() == 0:
+                print('Already detected')
+                continue
+
+        df['text'] = df['text'].astype(str)  # Avoids errors in the detection
+        df['sentiment'] = detect_sentiment(df['text'].tolist())
+        mode = 'a' if i != 0 else 'w'
+        df.to_csv(f'{fp}.tmp', index=False, mode=mode, header=(i == 0))
+
+    os.remove(fp)
+    os.rename(f'{fp}.tmp', fp)
 
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
@@ -55,14 +75,22 @@ def main():
 
     if os.path.isfile(input_):  # Single file
         fp = input_
-        process_file(fp)
+        num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
+        if num_lines > CHUNKSIZE:
+            process_file_chunk(fp, num_lines)
+        else:
+            process_file(fp)
     else:
         for root, dirs, files in os.walk(input_):
             for file in files:
                 if file.endswith(".csv"):
                     print(file)
                     fp = os.path.join(root, file)
-                    process_file(fp)
+                    num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
+                    if num_lines > CHUNKSIZE:
+                        process_file_chunk(fp, num_lines)
+                    else:
+                        process_file(fp)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
@@ -79,5 +107,6 @@ if __name__ == "__main__":
     force = args.force
 
     model = tweetnlp.Sentiment(multilingual=True)
+    label_to_id = {'positive': 1, 'negative': -1, 'neutral': 0}
 
     main()
