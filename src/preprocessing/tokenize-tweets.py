@@ -28,7 +28,10 @@ def process_file(fp):
     df = df.dropna(subset=['text'])
     df['text'] = df['text'].astype(str)
     tqdm.pandas()
-    df['tokens'] = df['text'].progress_apply(lambda x: tweet_tokenizer.tokenize(x))
+    if not chars:
+        df['tokens'] = df['text'].progress_apply(lambda x: tweet_tokenizer.tokenize(x))
+    else:
+        df['tokens'] = df['text'].progress_apply(lambda x: list(x))
     if ngrams_ > 1:
         df['tokens'] = df['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
     all_tokens = list(chain.from_iterable(df['tokens']))
@@ -66,11 +69,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform tokenization on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV file', required=True)
     parser.add_argument('--ngrams', '--n', type=int, help='Generate n-grams', default=1)
+    parser.add_argument('--chars', '--c', action=argparse.BooleanOptionalAction, help='Use characters instead of words', default=False)
 
     args = parser.parse_args()
 
     input_ = args.input
     ngrams_ = args.ngrams
+    chars = args.chars
 
     tweet_tokenizer = TweetTokenizer()
 
