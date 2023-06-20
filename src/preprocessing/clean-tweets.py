@@ -38,7 +38,8 @@ def remove_emoji(text):
 
 def remove_urls(text):
     result = re.sub(r"http\S+", "", text)
-    return (result)
+    # result = re.sub(r'(https?://\S+|www\.\S+)', '', text)
+    return result
 
 
 def remove_twitter_urls(text):
@@ -150,14 +151,17 @@ if __name__ == '__main__':
                         required=True)
     parser.add_argument('--output', '--o', type=str, help='Directory to save the scraping-cleaned data.', required=True)
 
-    parser.add_argument('--punctuation', '--p', action=argparse.BooleanOptionalAction, help='Keep punctuation', default=False)
+    parser.add_argument('--punctuation', '--p', action=argparse.BooleanOptionalAction, help='Keep punctuation',
+                        default=False)
     parser.add_argument('--accents', '--a', action=argparse.BooleanOptionalAction, help='Keep accents', default=False)
     parser.add_argument('--emojis', '--e', action=argparse.BooleanOptionalAction, help='Keep emojis', default=False)
     parser.add_argument('--mentions', '--m', action=argparse.BooleanOptionalAction, help='Keep mentions', default=False)
     parser.add_argument('--urls', '--u', action=argparse.BooleanOptionalAction, help='Keep urls', default=False)
-    parser.add_argument('--spaces', '--s', action=argparse.BooleanOptionalAction, help='Keep extra spaces', default=False)
+    parser.add_argument('--spaces', '--s', action=argparse.BooleanOptionalAction, help='Keep extra spaces',
+                        default=False)
     parser.add_argument('--rt', '--r', action=argparse.BooleanOptionalAction, help='Keep RT', default=False)
-    parser.add_argument('--lowercase', '--l', action=argparse.BooleanOptionalAction, help='Keep lowercase', default=False)
+    parser.add_argument('--lowercase', '--l', action=argparse.BooleanOptionalAction, help='Keep lowercase',
+                        default=False)
 
     args = parser.parse_args()
 
