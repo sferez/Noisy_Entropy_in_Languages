@@ -23,57 +23,69 @@ vocab = set()
 
 op_before = {
     "Python": {'=', '+=', '-=', '*=', '/=', '//=', '%=', '&=', '|=', '^=', '>>=', '<<=', '**='},
-    "Java": {'=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '++', '--'},
-    "C++": {'=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '++', '--'}
+    "Java": {'=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '>>>=', '++', '--'},
+    "C++": {'=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '>>>=', '++', '--'}
 }
 
 op_after = {
-    "Python": {'for', 'while'},
-    "Java": {'for', 'while'},
-    "C++": {'for', 'while'}
+    "Python": {'for', 'while', 'in', ','},
+    "Java": {'int', 'float', 'double', 'String', 'char', 'for', 'while', 'new'},
+    "C++": {'int', 'float', 'double', 'string', 'char', 'for', 'while', '*', '&', 'new'}
 }
 
 op_func = {
     "Python": {'def', 'class'},
-    "Java": {'public', 'private', 'protected', 'static', 'final', 'abstract', 'synchronized', 'native', 'strictfp'},
-    "C++": {'public', 'private', 'protected', 'static', 'final', 'abstract', 'synchronized', 'native', 'strictfp'}
+    "Java": {'public', 'private', 'protected', 'static', 'final', 'abstract', 'void', 'int', 'double', 'float',
+             'String'},
+    "C++": {'public', 'private', 'protected', 'static', 'final', 'virtual', 'void', 'int', 'double', 'float', 'string'}
 }
 
 exclude = {
-    "Python": {'and', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec', 'finally',
-               'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not', 'or', 'pass', 'print', 'raise',
-               'return', 'try', 'while', 'Data', 'Float', 'Int', 'Numeric', 'Oxphys', 'array', 'close', 'float', 'int',
-               'input', 'open', 'range', 'str', 'type', 'write', 'zeros', 'acos', 'asin', 'atan', 'cos', 'e', 'exp',
-               'fabs',
-               'floor', 'log', 'log10', 'pi', 'pow', 'sin', 'sqrt', 'tan', 'append', 'count', 'extend', 'index',
-               'insert',
-               'pop', 'remove', '+', '-', '*', '/', '//', '%', '**', '<<', '>>', '&', '|', '^', '~', '<', '>', '<=',
-               '>=',
-               '==', '!=', '<>', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '**=', '//=', '{', '}',
-               '[',
-               ']', '(', ')', '.', ',', ':', '@', '=', ';', '+=', '-=', '*=', '/=', '//=', '%=', '&=', '|=', '^=',
-               '>>=',
-               '<<='},
-    "Java": {'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch', 'char', 'class', 'const', 'continue',
-             'default', 'do', 'double', 'else', 'enum', 'extends', 'final', 'finally', 'float', 'for', 'goto', 'if',
-             'implements', 'import', 'instanceof', 'int', 'interface', 'long', 'native', 'new', 'package', 'private',
-             'protected', 'public', 'return', 'short', 'static', 'strictfp', 'super', 'switch', 'synchronized', 'this',
-             'throw', 'throws', 'transient', 'try', 'void', 'volatile', 'while', 'true', 'false', 'null', '+', '-', '*',
-             '/', '//', '%', '**', '<<', '>>', '&', '|', '^', '~', '<', '>', '<=', '>=',
-             '==', '!=', '<>', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '**=', '//=', '{', '}',
-             '[',
-             ']', '(', ')', '.', ',', ':', '@', '=', ';', '+=', '-=', '*=', '/=', '//=', '%=', '&=', '|=', '^=', '>>=',
-             '<<='},
-    "C++": {'and', 'and_eq', 'asm', 'auto', 'bitand', 'bitor', 'bool', 'break', 'case', 'catch', 'char', 'class',
-            'compl', 'const', 'const_cast', 'continue', 'default', 'delete', 'do', 'double', 'dynamic_cast', 'else',
-            'enum', 'explicit', 'export', 'extern', 'false', 'float', 'for', 'friend', 'goto', 'if', 'inline', 'int',
-            'long', 'mutable', 'namespace', 'new', 'not', 'not_eq', 'operator', 'or', 'or_eq', 'private', 'protected',
-            'public', 'register', 'reinterpret_cast', 'return', 'short', 'signed', 'sizeof', 'static', 'static_cast',
-            'struct', 'switch', 'template', 'this', 'throw', 'true', 'try', 'typedef', 'typeid', 'typename', 'union',
-            'unsigned', 'using', 'virtual', 'void', 'volatile', 'wchar_t', 'while', 'xor', 'xor_eq', '+', '-', '*', '/',
-            '//', '%', '**', '<<', '>>', '&', '|', '^', '~', '<', '>', '<=', '>=', '==', '!=', '<>', '+=', '-=', '*=',
-            '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '**=', '//=', '{', '}', '[', ']', '(', ')', '.', ',', ':', '@',
-            '=', ';', '+=', '-=', '*=', '/=', '//=', '%=', '&=', '|=', '^=', '>>=', '<<='}
+    "Python": {
+        'and', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec', 'finally',
+        'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not', 'or', 'pass', 'print', 'raise',
+        'return', 'try', 'while', 'Data', 'Float', 'Int', 'Numeric', 'Oxphys', 'array', 'close', 'float', 'int',
+        'input', 'open', 'range', 'str', 'type', 'write', 'zeros', 'acos', 'asin', 'atan', 'cos', 'e', 'exp',
+        'fabs', 'floor', 'log', 'log10', 'pi', 'pow', 'sin', 'sqrt', 'tan', 'append', 'count', 'extend', 'index',
+        'insert', 'pop', 'remove', '+', '-', '*', '/', '//', '%', '**', '<<', '>>', '&', '|', '^', '~', '<', '>', '<=',
+        '>=', '==', '!=', '<>', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '**=', '//=', '{', '}',
+        '[', ']', '(', ')', '.', ',', ':', '@', '=', ';', '+=', '-=', '*=', '/=', '//=', '%=', '&=', '|=', '^=',
+        '>>=', '<<=', 'None', 'True', 'False', 'abs', 'all', 'any', 'ascii', 'bin', 'bool', 'chr', 'complex', 'dict',
+        'dir', 'divmod', 'enumerate', 'eval', 'filter', 'format', 'hex', 'id', 'len', 'list', 'map', 'max', 'min',
+        'next', 'object', 'oct', 'ord', 'pow', 'repr', 'round', 'set', 'slice', 'sorted', 'sum', 'tuple', 'zip',
+        'Exception', 'StopIteration', 'SystemExit', 'StandardError', 'ArithmeticError', 'OverflowError'
+    },
+    "Java": {
+        'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch', 'char', 'class', 'const', 'continue',
+        'default', 'do', 'double', 'else', 'enum', 'extends', 'final', 'finally', 'float', 'for', 'goto', 'if',
+        'implements', 'import', 'instanceof', 'int', 'interface', 'long', 'native', 'new', 'package', 'private',
+        'protected', 'public', 'return', 'short', 'static', 'strictfp', 'super', 'switch', 'synchronized', 'this',
+        'throw', 'throws', 'transient', 'try', 'void', 'volatile', 'while', 'true', 'false', 'null', '+', '-', '*',
+        '/', '%', '<<', '>>', '&', '|', '^', '~', '<', '>', '<=', '>=', '==', '!=', '+=', '-=', '*=', '/=', '%=', '&=',
+        '|=',
+        '^=', '>>=', '<<=', '{', '}', '[', ']', '(', ')', '.', ',', ':', '@', '=', ';', '+=', '-=', '*=', '/=',
+        '%=', '&=', '|=', '^=', '>>=', '<<=', 'System', 'String', 'Integer', 'Double', 'Math', 'Object', 'Class',
+        'Exception', 'Arrays', 'List', 'println', 'print', 'equals', 'length', 'hashCode', 'getClass', 'toString',
+        'int', 'float', 'double', 'String', 'char', 'for', 'while', 'new', 'public', 'private', 'protected', 'static',
+        'final', 'abstract', 'void', 'int', 'double', 'float',
+        'String', '=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '>>=', '<<=', '>>>=', '++', '--'
+    },
+    "C++": {
+        'and', 'and_eq', 'asm', 'auto', 'bitand', 'bitor', 'bool', 'break', 'case', 'catch', 'char', 'class',
+        'compl', 'const', 'const_cast', 'continue', 'default', 'delete', 'do', 'double', 'dynamic_cast', 'else',
+        'enum', 'explicit', 'export', 'extern', 'false', 'float', 'for', 'friend', 'goto', 'if', 'inline', 'int',
+        'long', 'mutable', 'namespace', 'new', 'not', 'not_eq', 'operator', 'or', 'or_eq', 'private', 'protected',
+        'public', 'register', 'reinterpret_cast', 'return', 'short', 'signed', 'sizeof', 'static', 'static_cast',
+        'struct', 'switch', 'template', 'this', 'throw', 'true', 'try', 'typedef', 'typeid', 'typename', 'union',
+        'unsigned', 'using', 'virtual', 'void', 'volatile', 'wchar_t', 'while', 'xor', 'xor_eq', '+', '-', '*', '/',
+        '%', '<<', '>>', '&', '|', '^', '~', '<', '>', '<=', '>=', '==', '!=', '+=', '-=', '*=', '/=', '%=', '&=', '|=',
+        '^=', '>>=', '{', '}', '[', ']', '(', ')', '.', ',', ':', '@', '=', ';', '+=', '-=', '*=', '/=',
+        '%=', '&=', '|=', '^=', '>>=', 'std', 'string', 'cout', 'cin', 'endl', 'vector', 'map', 'set', 'printf',
+        'scanf', 'gets', 'puts', 'getchar', 'putchar', 'public', 'private', 'protected', 'static', 'final', 'virtual',
+        'void', 'int', 'double', 'float', 'string',
+        'int', 'float', 'double', 'string', 'char', 'for', 'while', '*', '&', 'new', '=', '+=', '-=', '*=', '/=', '%=',
+        '&=', '|=', '^=', '>>=', '<<=', '>>>=', '++', '--'
+    }
 }
 
 comments = {
@@ -85,19 +97,17 @@ comments = {
 
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
 
+
 def tokenize(file):
     print(f'Tokenizing...')
+    total_lines = sum(1 for _ in open(file))
     with open(file) as f:
-        lines = f.read().splitlines()
+        csv_writer = csv.writer(open(f'{file.split(".")[0]}_clean.csv', 'w'), delimiter=',')
+        csv_writer.writerow(['id', 'tokens'])
+        for line in tqdm(f, total=total_lines):
+            tokens = line.strip().split('\t')
+            csv_writer.writerow([tokens[0].split('/')[-1].split('.')[0], tokens[1:]])
 
-    csv_writer = csv.writer(open(f'{file.split(".")[0]}_clean.csv', 'w'), delimiter=',')
-    csv_writer.writerow(['id', 'tokens'])
-    for line in tqdm(lines):
-        tokens = line.split('\t')
-        csv_writer.writerow([tokens[0].split('/')[-1].split('.')[0], tokens[1:]])
-
-    del tokens
-    del lines
     gc.collect()
 
 
@@ -113,6 +123,9 @@ def rm_variables_and_func(tokens):
             if tokens[i - 1] not in variables and tokens[i - 1] not in exclude[lang]:
                 variables.add(tokens[i - 1])
         elif tokens[i] in op_after[lang]:
+            if lang in ["Java", "C++"]:
+                if tokens[i + 2] not in variables and tokens[i + 2] not in exclude[lang]:
+                    variables.add(tokens[i + 2])
             if tokens[i + 1] not in variables and tokens[i + 1] not in exclude[lang]:
                 variables.add(tokens[i + 1])
         elif tokens[i] in op_func[lang]:
@@ -141,7 +154,8 @@ def process_file(fp):
     df['tokens'] = df['tokens'].apply(lambda x: literal_eval(x))
     tokens = list(chain.from_iterable(df['tokens']))
     tokens = rm_comments(tokens)
-    tokens = rm_variables_and_func(tokens)
+    if not var:
+        tokens = rm_variables_and_func(tokens)
 
     with open(fp.replace('.csv', f'_tokens.txt'), 'w') as f:
         if not char:
@@ -166,7 +180,8 @@ def process_file_chunk(fp, num_lines):
         df['tokens'] = df['tokens'].apply(lambda x: literal_eval(x))
         tokens = list(chain.from_iterable(df['tokens']))
         tokens = rm_comments(tokens)
-        tokens = rm_variables_and_func(tokens)
+        if not var:
+            tokens = rm_variables_and_func(tokens)
 
         mode = 'a' if i != 0 else 'w'
         with open(fp.replace('.csv', f'_tokens.txt'), mode) as f:
@@ -216,11 +231,11 @@ if __name__ == '__main__':
     parser.add_argument('--lang', '--l', type=str, help='Language: Java, Python, C++', required=True)
     parser.add_argument('--char', '--c', action=argparse.BooleanOptionalAction, help='Character-level tokenization',
                         default=False)
+    parser.add_argument('--var', '--v', action=argparse.BooleanOptionalAction, help='Keep variables', default=False)
     args = parser.parse_args()
     input_ = args.input
     lang = args.lang
     char = args.char
-
-    "../../data/cleanPython.csv"
+    var = args.var
 
     main()
