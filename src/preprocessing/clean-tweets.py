@@ -41,7 +41,6 @@ def remove_urls(text):
     # result = re.sub(r'(https?://\S+|www\.\S+)', '', text)
     return result
 
-
 def remove_twitter_urls(text):
     clean = re.sub(r"pic.twitter\S+", "", text)
     return (clean)

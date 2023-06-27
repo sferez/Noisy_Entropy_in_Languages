@@ -35,11 +35,11 @@ def process_file(fp):
     if ngrams_ > 1:
         df['tokens'] = df['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
     all_tokens = list(chain.from_iterable(df['tokens']))
-    with open(fp.replace('.csv', f'_vocab_{ngrams_}-gram.txt'), 'w') as f:
+    with open(fp.replace('.csv', f'_vocab_{ngrams_}-gram{"_char" if chars else ""}.txt'), 'w') as f:
         for token in set(all_tokens):
             f.write(f'{token}\n')
         f.close()
-    with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram.txt'), 'w') as f:
+    with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), 'w') as f:
         for tokens in all_tokens:
             f.write(f'{tokens}\n')
     print(f'Tokenized {fp}.'
