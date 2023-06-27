@@ -33,20 +33,27 @@ def process_file():
     return counts, all_tokens
 
 
+def nsb_entropy(counts):
+    histogram = list(counts.values())
+    nxkx = make_nxkx(np.array(histogram), len(histogram))
+    entropy = S(nxkx, sum(histogram), len(histogram))
+    ds = dS(nxkx, sum(histogram), len(histogram))
+
+    std = np.sqrt(abs(ds - entropy ** 2))
+    # get entropy in bits
+    entropy /= np.log(2)
+    ds /= np.log(2)
+    std /= np.log(2)
+
+    return entropy, std
+
+
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
     counts, all_tokens = process_file()
-    histogram = list(counts.values())
 
-    nxkx = make_nxkx(np.array(histogram), len(histogram))
-    entropy = S(nxkx, sum(histogram), len(histogram))
-    ds = dS(nxkx, sum(histogram), len(histogram))
-    std = np.sqrt(ds - entropy ** 2)
-
-    # get entropy in bits
-    entropy /= np.log(2)
-    ds /= np.log(2)
+    entropy, std = nsb_entropy(counts)
 
     print(f'Entropy: {round(entropy,4)}')
     print(f'Std_Dev: {round(std,4)}')

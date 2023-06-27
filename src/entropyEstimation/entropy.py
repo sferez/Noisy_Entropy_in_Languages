@@ -15,6 +15,7 @@ import gc
 import argparse
 import os
 import pandas as pd
+from run_nsb import nsb_entropy
 
 # ----------------------------------------------- CONSTANTS ----------------------------------------------- #
 
@@ -121,6 +122,11 @@ def main():
         print(f'{method}: Entropy: {org_entropy:.3f}, MAE: {mae:.3f}, MSE: {mse:.3f}, SD: {sd:.3f}, 95% CI: {ci}')
         plot_fig(bootstrap_entropies, org_entropy, method, result_dir, ci)
         df = gen_results(df, file, result_dir, method, org_entropy, mae, mse, sd, ci)
+    print('Method: NSB')
+    nsb_e, nsb_std = nsb_entropy(counts)
+    print(f'NSB: Entropy: {round(nsb_e,3)}, SD: {round(nsb_std,3)}, 95% CI: [{round(nsb_e - nsb_std,3)} {round(nsb_e + nsb_std,3)}]')
+    df = gen_results(df, file, result_dir, 'nsb', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std])
+
     df.to_csv(f'{result_dir}/results.csv', index=False)
 
 
