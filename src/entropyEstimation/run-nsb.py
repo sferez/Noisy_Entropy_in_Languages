@@ -16,14 +16,20 @@ from nsb import make_nxkx, S, dS
 
 
 def process_file():
+    global vocab
     with open(tokens, 'r') as f:
         all_tokens = f.read().splitlines()  # Assuming each line in vocab.txt is a separate token.
     counts = Counter(all_tokens)
     if vocab:
         print(f'Vocab file provided: {vocab}')
-        for token in vocab:
-            if token not in counts:
-                counts[token] = 0
+        i=0
+        with open(vocab, 'r') as f:
+            vocab = set(f.read().splitlines())
+            for token in vocab:
+                if token not in counts:
+                    i += 1
+                    counts[token] = 0
+        print(f'Vocab size: {len(vocab)}, Number of OOV tokens: {i}')
     return counts, all_tokens
 
 
