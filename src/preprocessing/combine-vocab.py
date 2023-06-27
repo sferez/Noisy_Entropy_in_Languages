@@ -50,8 +50,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Combine CSV files')
 
     parser.add_argument('--input', '--i', type=str, help='Directory', required=True)
-    parser.add_argument('--output', '--o', type=str, help='Final file name (Default: vocab-combined.csv)',
-                        default='vocab-combined.csv')
+    parser.add_argument('--output', '--o', type=str, help='Final file name (Default: vocab-combined.txt)',
+                        default='vocab-combined.txt')
 
     args = parser.parse_args()
 
