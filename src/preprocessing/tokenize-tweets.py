@@ -12,6 +12,12 @@ import pandas as pd
 from tqdm import tqdm
 from itertools import chain
 from nltk.util import ngrams
+import subprocess
+
+# -------------------------------------------------- GLOBALS -------------------------------------------------- #
+
+CHUNKSIZE = 100000
+vocab = set()
 
 
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
@@ -47,20 +53,52 @@ def process_file(fp):
           f'\n\tTokens: {fp.replace(".csv", f"_tokens_{ngrams_}-gram.txt")}')
 
 
+def process_file_chunk(fp, num_lines):
+    print('Processing in chunks...')
+    for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)), total=num_lines // CHUNKSIZE + 1):
+        df = df.dropna(subset=['text'])
+        df['text'] = df['text'].astype(str)
+        if not chars:
+            df['tokens'] = df['text'].apply(lambda x: tweet_tokenizer.tokenize(x))
+        else:
+            df['tokens'] = df['text'].apply(lambda x: list(x))
+        if ngrams_ > 1:
+            df['tokens'] = df['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
+        all_tokens = list(chain.from_iterable(df['tokens']))
+
+        mode = 'a' if i != 0 else 'w'
+        with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), mode) as f:
+            for token in all_tokens:
+                f.write(f'{token}\n')
+
+        vocab.update(all_tokens)
+
+    with open(fp.replace('.csv', f'_vocab_{ngrams_}-gram{"_char" if chars else ""}.txt'), 'w') as f:
+        for token in vocab:
+            f.write(f'{token}\n')
+
+
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
     print(f'Tokenizing data with {ngrams_}-grams tokens...')
 
     if os.path.isfile(input_):
-        process_file(input_)
+        num_lines = int(subprocess.check_output(f"wc -l {input_}", shell=True).split()[0]) - 1
+        if num_lines > CHUNKSIZE:
+            process_file_chunk(input_, num_lines)
+        else:
+            process_file(input_)
     else:
-
         for root, dirs, files in os.walk(input_):
             for file in files:
                 if file.endswith(".csv"):
                     fp = os.path.join(root, file)
-                    process_file(fp)
+                    num_lines = int(subprocess.check_output(f"wc -l {fp}", shell=True).split()[0]) - 1
+                    if num_lines > CHUNKSIZE:
+                        process_file_chunk(fp, num_lines)
+                    else:
+                        process_file(fp)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
@@ -69,7 +107,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform tokenization on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV file', required=True)
     parser.add_argument('--ngrams', '--n', type=int, help='Generate n-grams', default=1)
-    parser.add_argument('--chars', '--c', action=argparse.BooleanOptionalAction, help='Use characters instead of words', default=False)
+    parser.add_argument('--chars', '--c', action=argparse.BooleanOptionalAction, help='Use characters instead of words',
+                        default=False)
 
     args = parser.parse_args()
 
