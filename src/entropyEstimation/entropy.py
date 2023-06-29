@@ -113,7 +113,8 @@ def main():
     os.makedirs(f'results/{os.path.basename(tokens)}', exist_ok=True)
     result_dir = f'results/{os.path.basename(tokens)}'
 
-    os.system(f'Rscript src/entropyEstimation/entropy.R {tokens}  {result_dir} {vocab if vocab else ""}')
+    os.system(
+        f'Rscript src/entropyEstimation/entropy.R --tokens {tokens}  --output_dir {result_dir} {"--vocab " + vocab if vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--bootstrap 1" if bootstrap else ""}')
 
     print('Method: NSB')
     counts, all_tokens = process_file()
@@ -124,11 +125,15 @@ def main():
         f'Original Entropy: {round(nsb_e, 3)}\n'
         f'SD: {round(nsb_std, 3)}\n'
         f'95% CI: [{round(nsb_e - nsb_std, 3)} {round(nsb_e + nsb_std, 3)}]')
-    df = pd.DataFrame([[file, 'nsb', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
-                        columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci'])
-    df2 = pd.read_csv(f'{result_dir}/results.csv')
+    if bootstrap:
+        df = pd.DataFrame([[file, 'NSB', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
+                          columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci'])
+    else:
+        df = pd.DataFrame([[file, 'NSB', nsb_e]],
+                          columns=['file', 'method', 'entropy'])
+    df2 = pd.read_csv(f'{result_dir}/unigrams.csv')
     df = pd.concat([df, df2])
-    df.to_csv(f'{result_dir}/results.csv', index=False)
+    df.to_csv(f'{result_dir}/unigrams.csv', index=False)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
@@ -139,9 +144,14 @@ if __name__ == '__main__':
     parser.add_argument('--vocab', '--v', type=str,
                         help='Path to vocabulary file, if not provided, all tokens will be considered as vocabulary',
                         default=None)
+    parser.add_argument('--max_tokens', '--mt', type=int, help='Maximum number of tokens to consider', default=None)
+    parser.add_argument('--bootstrap', '--b', type=int, action=argparse.BooleanOptionalAction,
+                        help='Whether to perform bootstrap analysis', default=False)
 
     args = parser.parse_args()
     tokens = args.tokens
     vocab = args.vocab
+    max_tokens = args.max_tokens
+    bootstrap = args.bootstrap
 
     main()
