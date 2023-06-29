@@ -112,21 +112,22 @@ def main():
     file = tokens.split('.')[0]
     os.makedirs(f'results/{os.path.basename(tokens)}', exist_ok=True)
     result_dir = f'results/{os.path.basename(tokens)}'
-    counts, all_tokens = process_file()
-    df = pd.DataFrame(columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci', 'img'])
-    for method in tqdm(methods):
-        print(f'Method: {method}')
-        org_entropy = original_entropy(counts, method)
-        bootstrap_entropies = bootstrap_analysis(all_tokens, method)
-        mae, mse, sd, ci = cal_stats(bootstrap_entropies, org_entropy)
-        print(f'{method}: Entropy: {org_entropy:.3f}, MAE: {mae:.3f}, MSE: {mse:.3f}, SD: {sd:.3f}, 95% CI: {ci}')
-        plot_fig(bootstrap_entropies, org_entropy, method, result_dir, ci)
-        df = gen_results(df, file, result_dir, method, org_entropy, mae, mse, sd, ci)
-    print('Method: NSB')
-    nsb_e, nsb_std = nsb_entropy(counts)
-    print(f'NSB: Entropy: {round(nsb_e,3)}, SD: {round(nsb_std,3)}, 95% CI: [{round(nsb_e - nsb_std,3)} {round(nsb_e + nsb_std,3)}]')
-    df = gen_results(df, file, result_dir, 'nsb', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std])
 
+    os.system(f'Rscript src/entropyEstimation/entropy.R {tokens}  {result_dir} {vocab if vocab else ""}')
+
+    print('Method: NSB')
+    counts, all_tokens = process_file()
+    del all_tokens
+    gc.collect()
+    nsb_e, nsb_std = nsb_entropy(counts)
+    print(
+        f'Original Entropy: {round(nsb_e, 3)}\n'
+        f'SD: {round(nsb_std, 3)}\n'
+        f'95% CI: [{round(nsb_e - nsb_std, 3)} {round(nsb_e + nsb_std, 3)}]')
+    df = pd.DataFrame([[file, 'nsb', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
+                        columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci'])
+    df2 = pd.read_csv(f'{result_dir}/results.csv')
+    df = pd.concat([df, df2])
     df.to_csv(f'{result_dir}/results.csv', index=False)
 
 
@@ -135,7 +136,9 @@ def main():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Calculate the entropy of a given vocabulary.')
     parser.add_argument('--tokens', '--t', type=str, help='Path to list of tokens')
-    parser.add_argument('--vocab', '--v', type=str, help='Path to vocabulary file', default=None)
+    parser.add_argument('--vocab', '--v', type=str,
+                        help='Path to vocabulary file, if not provided, all tokens will be considered as vocabulary',
+                        default=None)
 
     args = parser.parse_args()
     tokens = args.tokens
