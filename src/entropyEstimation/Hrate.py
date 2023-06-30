@@ -11,8 +11,8 @@ import os
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 def main():
-    os.makedirs(f'results/{os.path.basename(tokens)}', exist_ok=True)
-    result_dir = f'results/{os.path.basename(tokens)}'
+    result_dir = f'results/{os.path.basename(tokens).split(".")[0]}'
+    os.makedirs(f'results/{result_dir}', exist_ok=True)
 
     os.system(
         f'Rscript src/entropyEstimation/Hrate.R --tokens {tokens} --output_dir {result_dir} --max_tokens {str(max_tokens) if max_tokens else "0"} {"--fast 1" if fast else ""}')

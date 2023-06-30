@@ -109,9 +109,8 @@ def gen_results(df, file, result_dir, method, org_entropy, mae, mse, sd, ci):
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
-    file = tokens.split('.')[0]
-    os.makedirs(f'results/{os.path.basename(tokens)}', exist_ok=True)
-    result_dir = f'results/{os.path.basename(tokens)}'
+    result_dir = f'results/{os.path.basename(tokens).split(".")[0]}'  # results/<file_name>
+    os.makedirs(f'results/{result_dir}', exist_ok=True)
 
     os.system(
         f'Rscript src/entropyEstimation/entropy.R --tokens {tokens}  --output_dir {result_dir} {"--vocab " + vocab if vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--bootstrap 1" if bootstrap else ""}')
@@ -126,10 +125,10 @@ def main():
         f'SD: {round(nsb_std, 3)}\n'
         f'95% CI: [{round(nsb_e - nsb_std, 3)} {round(nsb_e + nsb_std, 3)}]')
     if bootstrap:
-        df = pd.DataFrame([[file, 'NSB', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
+        df = pd.DataFrame([[tokens, 'NSB', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
                           columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci'])
     else:
-        df = pd.DataFrame([[file, 'NSB', nsb_e]],
+        df = pd.DataFrame([[tokens, 'NSB', nsb_e]],
                           columns=['file', 'method', 'entropy'])
     df2 = pd.read_csv(f'{result_dir}/unigrams.csv')
     df = pd.concat([df, df2])
