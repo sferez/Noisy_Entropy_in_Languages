@@ -147,7 +147,7 @@ if (bootstrap) {
   )
 }
 
-csv <- paste(output_dir, 'unigrams.csv', sep = '/')
+csv <- paste0(output_dir, '/unigrams', ifelse(max_tokens != "NULL", paste0("_", max_tokens), ''), '.csv')
 write.csv(results, csv, row.names = FALSE, col.names = TRUE)
 
 
@@ -176,7 +176,7 @@ for (method in methods) {
       ci = paste0("[", stats$ci[1], ", ", stats$ci[2], "]")
     )
     # Plot bootstrap entropy distribution
-    png(paste0(output_dir, '/', method, '.png'))
+    png(paste0(output_dir, '/', method, ifelse(max_tokens != "NULL", paste0("_", max_tokens), ''), '.png'))
     plot_fig(bootstrap_entropies[[method]], org_entropy, method, stats$ci)
     dev.off()
   } else {

@@ -130,9 +130,10 @@ def main():
     else:
         df = pd.DataFrame([[tokens, 'NSB', nsb_e]],
                           columns=['file', 'method', 'entropy'])
-    df2 = pd.read_csv(f'{result_dir}/unigrams.csv')
+    file = f'{result_dir}/unigrams{"_" + str(max_tokens) if max_tokens else ""}.csv'
+    df2 = pd.read_csv(file)
     df = pd.concat([df, df2])
-    df.to_csv(f'{result_dir}/unigrams.csv', index=False)
+    df.to_csv(file, index=False)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
