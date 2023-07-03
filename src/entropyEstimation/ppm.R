@@ -155,11 +155,11 @@ mtext(paste("Average Entropy:", round(mean(avg_entropy), 2)), side = 3, line = 0
 dev.off()
 
 png(file.path(output_dir, paste0("ppm_entropy_distribution_", max_train, ifelse(decay, "_decay", ""), ".png")))
-hist(avg_entropy, breaks = 20, main = "PPM Entropy Distribution", xlab = "Entropy (bits)", freq = FALSE)
-lines(density(avg_entropy), col = "black")
-abline(v = mean(avg_entropy), col = "red")
+hist(avg_entropy_tweet, breaks = 20, main = "PPM Entropy Distribution", xlab = "Entropy (bits)", freq = FALSE)
+lines(density(avg_entropy_tweet), col = "black")
+abline(v = mean(avg_entropy_tweet), col = "red")
 mtext(paste("Train on:", max_train, "occurences, Decay:", decay), side = 1, line = 4, cex = 0.8)
-mtext(paste("Average Entropy:", round(mean(avg_entropy), 2)), side = 3, line = 0.5, cex = 0.8)
+mtext(paste("Average Entropy:", round(mean(avg_entropy_tweet), 2)), side = 3, line = 0.5, cex = 0.8)
 dev.off()
 
 
