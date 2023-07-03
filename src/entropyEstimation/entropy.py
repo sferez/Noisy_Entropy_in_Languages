@@ -15,7 +15,7 @@ import gc
 import argparse
 import os
 import pandas as pd
-from run_nsb import nsb_entropy
+from src.entropyEstimation.run_nsb import nsb_entropy
 
 # ----------------------------------------------- CONSTANTS ----------------------------------------------- #
 
