@@ -55,16 +55,16 @@ results <- data.frame(
   sd = sd
 )
 
-csv <- paste(output_dir, 'hrate.csv', sep = '/')
+csv <- paste0(output_dir, '/hrate', ifelse(max_tokens != 0, paste0("_", max_tokens), ''), '.csv')
 write.csv(results, csv, row.names = FALSE, col.names = TRUE)
 
 # Plot the results
-plot_file <- paste(output_dir, 'hrate.png', sep = '/')
+plot_file <- paste0(output_dir, '/hrate', ifelse(max_tokens != 0, paste0("_", max_tokens), ''), '.png')
 png(plot_file)
 plot(stabil)
 dev.off()
 
-plot_file <- paste(output_dir, 'hrate_sd.png', sep = '/')
+plot_file <- paste0(output_dir, '/hrate_sd', ifelse(max_tokens != 0, paste0("_", max_tokens), ''), '.png')
 png(plot_file)
 plot.criterion(stabil)
 dev.off()
