@@ -50,8 +50,12 @@ def run_hrate_entropy(tokens):
 
 def main():
     print('Running full analysis...')
-    run_unigram_entropy(tokens, vocab)
-    run_ppm_entropy(tokens, vocab)
+    if not skip_unigram:
+        run_unigram_entropy(tokens, vocab)
+    if not skip_ppm:
+        run_ppm_entropy(tokens, vocab)
+    if not skip_hrate:
+        run_hrate_entropy(tokens)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
@@ -62,10 +66,19 @@ if __name__ == '__main__':
     parser.add_argument('--vocab', '--v', type=str, help='Path to vocabulary')
     parser.add_argument('--use_vocab', '--uv', type=int, action=argparse.BooleanOptionalAction, default=False,
                         help='Use vocab for unigram entropy estimation')
+    parser.add_argument('--unigram', '--u', type=int, action=argparse.BooleanOptionalAction,
+                        help='Skip unigram entropy estimation', default=False)
+    parser.add_argument('--ppm', '--p', type=int, action=argparse.BooleanOptionalAction,
+                        help='Skip PPM entropy estimation', default=False)
+    parser.add_argument('--hrate', '--h', type=int, action=argparse.BooleanOptionalAction,
+                        help='Skip Hrate entropy estimation', default=False)
 
     args = parser.parse_args()
     tokens = args.tokens
     vocab = args.vocab
     use_vocab = args.use_vocab
+    skip_unigram = args.unigram
+    skip_ppm = args.ppm
+    skip_hrate = args.hrate
 
     main()
