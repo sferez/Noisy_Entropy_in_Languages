@@ -6,6 +6,7 @@ library(purrr)
 library(progressr)
 library(getopt)
 library(data.table)
+library(R.utils)
 
 
 MAX_TRAIN <- 10000
@@ -67,13 +68,14 @@ vocab <- readLines(vocab_file)
 vocab_size <- length(vocab)
 vocab_factor <- factor(vocab, levels = vocab)
 
-lines <- readLines(tokens_file)
-
-if (max_train < length(lines)) {
-    print(paste("Sampling", max_train, "occurences"))
-    lines <- lines[sample(length(lines), max_train)]
+# Determine the total number of lines
+total_lines <- countLines(tokens_file)
+if (max_train < total_lines) {
+    print(paste("Sampling", max_train, "occurrences"))
+    lines_indexes <- sort(sample(total_lines, max_train))
 } else {
-    max_train <- length(lines)
+    max_train <- total_lines
+    lines_indexes <- 1:max_train
 }
 
 
@@ -86,28 +88,41 @@ if (!decay) {
 
 
 # Create a text progress bar
-pb <- txtProgressBar(min = 0, max = length(lines), style = 3)
+pb <- txtProgressBar(min = 0, max = max_train, style = 3)
 
 # Create a vector to store the entropies
-avg_entropy_tweet <- numeric(length(lines))
-model_order <- vector("list", length(lines))
-information_content <- vector("list", length(lines))
-entropy <- vector("list", length(lines))
+avg_entropy_tweet <- numeric(max_train)
+model_order <- vector("list", max_train)
+information_content <- vector("list", max_train)
+entropy <- vector("list", max_train)
 last_end_time <- 1
-# Update the progress bar in the loop
-for (i in seq_along(lines)) {
-    # Process the tweet
-    res <- process_tweet(lines[i], model = model, decay = decay, last_end_time = last_end_time)
-    last_end_time <- res$last_end_time
-    avg_entropy_tweet[i] <- res$avg_entropy
-    entropy[[i]] <- res$entropy
-    model_order[[i]] <- res$model_order
-    information_content[[i]] <- res$information_content
 
-    # Update the progress bar
-    setTxtProgressBar(pb, i)
+# Initialize line counter
+counter <- 1
+
+# open the file connection
+con <- file(tokens_file, open = "r")
+
+for (i in seq_len(total_lines)) {
+    # Read specific line based on the sample
+    line <- readLines(con, n = 1)
+
+    # Process the tweet only if it's in the sampled indexes
+    if (i %in% lines_indexes) {
+        res <- process_tweet(line, model = model, decay = decay, last_end_time = last_end_time)
+        last_end_time <- res$last_end_time
+        avg_entropy_tweet[counter] <- res$avg_entropy
+        entropy[[counter]] <- res$entropy
+        model_order[[counter]] <- res$model_order
+        information_content[[counter]] <- res$information_content
+        # Update the progress bar
+        setTxtProgressBar(pb, counter)
+        counter <- counter + 1
+    }
 }
-close(pb)
+
+# Close file connection
+close(con)
 
 
 # PREDICTION 50 tokens
