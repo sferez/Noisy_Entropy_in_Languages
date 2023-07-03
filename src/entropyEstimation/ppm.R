@@ -67,7 +67,14 @@ vocab <- readLines(vocab_file)
 vocab_size <- length(vocab)
 vocab_factor <- factor(vocab, levels = vocab)
 
-lines <- readLines(tokens_file, n = max_train)
+lines <- readLines(tokens_file)
+
+if (max_train < length(lines)) {
+    print(paste("Sampling", max_train, "occurences"))
+    lines <- lines[sample(length(lines), max_train)]
+} else {
+    max_train <- length(lines)
+}
 
 
 if (!decay) {
@@ -103,12 +110,12 @@ for (i in seq_along(lines)) {
 close(pb)
 
 
-# PREDICTION
+# PREDICTION 50 tokens
 if (decay) {
-    seq_time <- seq(1, 20) + last_end_time
-    pred <- model_seq(model, generate = TRUE, seq = 20, time = seq_time)
+    seq_time <- seq(1, 50) + last_end_time
+    pred <- model_seq(model, generate = TRUE, seq = 50, time = seq_time)
 } else {
-    pred <- model_seq(model, generate = TRUE, seq = 20)
+    pred <- model_seq(model, generate = TRUE, seq = 50)
 }
 
 # Compute the average statistics
