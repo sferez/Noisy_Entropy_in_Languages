@@ -11,7 +11,7 @@ import os
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 def main():
-    result_dir = f'results/{os.path.basename(tokens).split(".")[0].replace("ppm", "")}'
+    result_dir = f'results/{os.path.basename(tokens).split(".")[0].replace("ppm", "")}/ppm'
     os.makedirs(result_dir, exist_ok=True)
 
     os.system(

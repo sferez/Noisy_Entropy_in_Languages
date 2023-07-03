@@ -109,8 +109,8 @@ def gen_results(df, file, result_dir, method, org_entropy, mae, mse, sd, ci):
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
-    result_dir = f'results/{os.path.basename(tokens).split(".")[0]}'  # results/<file_name>
-    os.makedirs(f'results/{result_dir}', exist_ok=True)
+    result_dir = f'results/{os.path.basename(tokens).split(".")[0]}/unigrams'  # results/<file_name>/unigrams
+    os.makedirs(result_dir, exist_ok=True)
 
     os.system(
         f'Rscript src/entropyEstimation/entropy.R --tokens {tokens}  --output_dir {result_dir} {"--vocab " + vocab if vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--bootstrap 1" if bootstrap else ""}')
