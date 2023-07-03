@@ -72,6 +72,9 @@ def process_file(fp):
 
 def process_file_chunk(fp, num_lines):
     print('Processing in chunks...')
+    if ppm:
+        csv_writer = csv.writer(
+            open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}_ppm.txt'), 'w'))
     for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)),
                       total=num_lines // CHUNKSIZE + 1):
         df['tokens'] = df['tokens'].apply(lambda x: literal_eval(x))
@@ -82,8 +85,8 @@ def process_file_chunk(fp, num_lines):
         mode = 'a' if i != 0 else 'w'
 
         if ppm:
-            df["tokens"].to_csv(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}_ppm.txt'),
-                                mode=mode, index=False)
+            for tokens in df["tokens"]:
+                csv_writer.writerow(tokens)
         else:
             with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), mode) as f:
                 if not char:

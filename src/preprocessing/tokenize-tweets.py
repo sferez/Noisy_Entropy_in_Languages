@@ -63,22 +63,26 @@ def process_file(fp):
 
 def process_file_chunk(fp, num_lines):
     print('Processing in chunks...')
+    if ppm:
+        csv_writer = csv.writer(
+            open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'), 'w'))
     for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)), total=num_lines // CHUNKSIZE + 1):
         df = df.dropna(subset=['text'])
-        df['text'] = df['text'].astype(str)
+        df_ = df.copy()
+        df_['text'] = df_['text'].astype(str)
         if not chars:
-            df['tokens'] = df['text'].apply(lambda x: tweet_tokenizer.tokenize(x))
+            df_['tokens'] = df_['text'].apply(lambda x: tweet_tokenizer.tokenize(x))
         else:
-            df['tokens'] = df['text'].apply(lambda x: list(x))
+            df_['tokens'] = df_['text'].apply(lambda x: list(x))
         if ngrams_ > 1:
-            df['tokens'] = df['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
-        all_tokens = list(chain.from_iterable(df['tokens']))
+            df_['tokens'] = df_['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
+        all_tokens = list(chain.from_iterable(df_['tokens']))
 
         mode = 'a' if i != 0 else 'w'
 
         if ppm:
-            df["tokens"].to_csv(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'),
-                                mode=mode, index=False)
+            for tokens in df_["tokens"]:
+                csv_writer.writerow(tokens)
         else:
             with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), mode) as f:
                 for token in all_tokens:
