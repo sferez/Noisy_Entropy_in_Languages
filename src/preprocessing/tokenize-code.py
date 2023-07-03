@@ -13,6 +13,7 @@ import argparse
 import os
 import subprocess
 from nltk.util import ngrams
+import csv
 
 # -------------------------------------------------- GLOBALS -------------------------------------------------- #
 
@@ -47,13 +48,19 @@ def process_file(fp):
         df['tokens'] = df['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
     tokens = list(chain.from_iterable(df['tokens']))
 
-    with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), 'w') as f:
-        if not char:
-            for token in tokens:
-                f.write(f'{token}\n')
-        else:
-            for c in ''.join(tokens):
-                f.write(f'{c}\n')
+    if ppm:
+        csv_writer = csv.writer(
+            open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}_ppm.txt'), 'w'))
+        for tokens in df["tokens"]:
+            csv_writer.writerow(tokens)
+    else:
+        with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), 'w') as f:
+            if not char:
+                for token in tokens:
+                    f.write(f'{token}\n')
+            else:
+                for c in ''.join(tokens):
+                    f.write(f'{c}\n')
     with open(fp.replace('.csv', f'_vocab_{ngrams_}-gram{"_char" if char else ""}.txt'), 'w') as f:
         if not char:
             for token in set(tokens):
@@ -73,13 +80,18 @@ def process_file_chunk(fp, num_lines):
         tokens = list(chain.from_iterable(df['tokens']))
 
         mode = 'a' if i != 0 else 'w'
-        with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), mode) as f:
-            if not char:
-                for token in tokens:
-                    f.write(f'{token}\n')
-            else:
-                for c in ''.join(tokens):
-                    f.write(f'{c}\n')
+
+        if ppm:
+            df["tokens"].to_csv(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}_ppm.txt'),
+                                mode=mode, index=False)
+        else:
+            with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), mode) as f:
+                if not char:
+                    for token in tokens:
+                        f.write(f'{token}\n')
+                else:
+                    for c in ''.join(tokens):
+                        f.write(f'{c}\n')
 
         update_vocab(tokens)
 
@@ -116,10 +128,13 @@ if __name__ == '__main__':
     parser.add_argument('--char', '--c', action=argparse.BooleanOptionalAction, help='Character-level tokenization',
                         default=False)
     parser.add_argument('--ngrams', '--n', type=int, help='Generate n-grams', default=1)
+    parser.add_argument('--ppm', action=argparse.BooleanOptionalAction, help='Write tokens for ppm analysis',
+                        default=False)
 
     args = parser.parse_args()
     input_ = args.input
     char = args.char
     ngrams_ = args.ngrams
+    ppm = args.ppm
 
     main()
