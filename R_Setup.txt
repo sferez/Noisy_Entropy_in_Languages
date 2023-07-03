@@ -1,0 +1,22 @@
+# Install R
+sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+sudo apt install r-base
+sudo apt-get install libcurl4-openssl-dev libssl-dev libfontconfig1-dev libxml2-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+
+# Open R and install packages
+R
+install.packages("devtools")
+install.packages("entropy")
+install.packages("ggplot2")
+install.packages("getopt")
+install.packages("sampling")
+install.packages("stringr")
+install.packages("readr")
+install.packages("purrr")
+install.packages("progressr")
+install.packages("data.table")
+
+# Install R packages from github
+library(devtools)
+install_github("dimalik/Hrate")
+install_github("pmcharrison/ppm")
