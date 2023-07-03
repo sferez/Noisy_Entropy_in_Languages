@@ -26,7 +26,7 @@ def run_unigram_entropy(tokens, vocab):
 
 
 def run_ppm_entropy(tokens, vocab):
-    tokens_ = tokens.replace('.txt', 'ppm.txt')
+    tokens_ = tokens.replace('.txt', '_ppm.txt')
     print('Estimating PPM entropy...')
     print('  Decay: None')
     for max_train in ppm_max_train:

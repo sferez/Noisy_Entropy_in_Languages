@@ -15,7 +15,7 @@ import gc
 import argparse
 import os
 import pandas as pd
-from src.entropyEstimation.run_nsb import nsb_entropy
+# from src.entropyEstimation.run_nsb import nsb_entropy
 
 # ----------------------------------------------- CONSTANTS ----------------------------------------------- #
 
@@ -115,25 +115,25 @@ def main():
     os.system(
         f'Rscript src/entropyEstimation/entropy.R --tokens {tokens}  --output_dir {result_dir} {"--vocab " + vocab if vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--bootstrap 1" if bootstrap else ""}')
 
-    print('Method: NSB')
-    counts, all_tokens = process_file()
-    del all_tokens
-    gc.collect()
-    nsb_e, nsb_std = nsb_entropy(counts)
-    print(
-        f'Original Entropy: {round(nsb_e, 3)}\n'
-        f'SD: {round(nsb_std, 3)}\n'
-        f'95% CI: [{round(nsb_e - nsb_std, 3)} {round(nsb_e + nsb_std, 3)}]')
-    if bootstrap:
-        df = pd.DataFrame([[tokens, 'NSB', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
-                          columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci'])
-    else:
-        df = pd.DataFrame([[tokens, 'NSB', nsb_e]],
-                          columns=['file', 'method', 'entropy'])
-    file = f'{result_dir}/unigrams{"_" + str(max_tokens) if max_tokens else ""}.csv'
-    df2 = pd.read_csv(file)
-    df = pd.concat([df, df2])
-    df.to_csv(file, index=False)
+    # print('Method: NSB')
+    # counts, all_tokens = process_file()
+    # del all_tokens
+    # gc.collect()
+    # nsb_e, nsb_std = nsb_entropy(counts)
+    # print(
+    #     f'Original Entropy: {round(nsb_e, 3)}\n'
+    #     f'SD: {round(nsb_std, 3)}\n'
+    #     f'95% CI: [{round(nsb_e - nsb_std, 3)} {round(nsb_e + nsb_std, 3)}]')
+    # if bootstrap:
+    #     df = pd.DataFrame([[tokens, 'NSB', nsb_e, 0, 0, nsb_std, [nsb_e - nsb_std, nsb_e + nsb_std]]],
+    #                       columns=['file', 'method', 'entropy', 'mae', 'mse', 'sd', 'ci'])
+    # else:
+    #     df = pd.DataFrame([[tokens, 'NSB', nsb_e]],
+    #                       columns=['file', 'method', 'entropy'])
+    # file = f'{result_dir}/unigrams{"_" + str(max_tokens) if max_tokens else ""}.csv'
+    # df2 = pd.read_csv(file)
+    # df = pd.concat([df, df2])
+    # df.to_csv(file, index=False)
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
