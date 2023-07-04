@@ -13,7 +13,7 @@ import os
 unigram_max_tokens = [None, 25_000, 50_000, 100_000]
 unigram_max_tokens_fast = [150_000, 200_000, 250_000]
 ppm_max_train = [10_000]
-hrate_max_tokens = [150_000]
+hrate_max_tokens = [100_000]
 
 
 # ----------------------------------------------- FUNCTIONS ----------------------------------------------- #
