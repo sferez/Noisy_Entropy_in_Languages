@@ -22,7 +22,7 @@ def run_unigram_entropy(tokens, vocab):
     for max_tokens in unigram_max_tokens:
         print(f'  max_tokens: {max_tokens}')
         os.system(
-            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} --b')
+            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--b" if not fast else ""}')
 
 
 def run_ppm_entropy(tokens, vocab):
@@ -72,6 +72,8 @@ if __name__ == '__main__':
                         help='Skip PPM entropy estimation', default=False)
     parser.add_argument('--hrate', '--h', type=int, action=argparse.BooleanOptionalAction,
                         help='Skip Hrate entropy estimation', default=False)
+    parser.add_argument('--fast', '--f', type=int, action=argparse.BooleanOptionalAction,
+                        help='Skip PPM entropy estimation, and uncertainty analysis', default=False)
 
     args = parser.parse_args()
     tokens = args.tokens
@@ -80,5 +82,9 @@ if __name__ == '__main__':
     skip_unigrams = args.unigrams
     skip_ppm = args.ppm
     skip_hrate = args.hrate
+    fast = args.fast
+
+    if fast:
+        skip_ppm = True
 
     main()
