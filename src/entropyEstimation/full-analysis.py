@@ -11,8 +11,9 @@ import os
 # ----------------------------------------------- CONSTANTS ----------------------------------------------- #
 
 unigram_max_tokens = [None, 25_000, 50_000, 100_000]
+unigram_max_tokens_fast = [150_000, 200_000, 250_000]
 ppm_max_train = [10_000]
-hrate_max_tokens = [100_000]
+hrate_max_tokens = [150_000]
 
 
 # ----------------------------------------------- FUNCTIONS ----------------------------------------------- #
@@ -23,6 +24,11 @@ def run_unigram_entropy(tokens, vocab):
         print(f'  max_tokens: {max_tokens}')
         os.system(
             f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--b" if not fast else ""}')
+
+    for max_tokens in unigram_max_tokens_fast:
+        print(f'  max_tokens: {max_tokens}')
+        os.system(
+            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""}')
 
 
 def run_ppm_entropy(tokens, vocab):
