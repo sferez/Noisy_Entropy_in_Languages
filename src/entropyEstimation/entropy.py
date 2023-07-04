@@ -109,7 +109,10 @@ def process_file():
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
-    result_dir = f'results/{os.path.basename(tokens).split(".")[0]}/unigrams'  # results/<file_name>/unigrams
+    if output_dir:
+        result_dir = f'results/{output_dir}/unigrams'
+    else:
+        result_dir = f'results/{tokens.split("/")[-1].split(".")[0]}/unigrams'  # results/<file_name>/unigrams
     os.makedirs(result_dir, exist_ok=True)
 
     os.system(
@@ -147,11 +150,13 @@ if __name__ == '__main__':
     parser.add_argument('--max_tokens', '--mt', type=int, help='Maximum number of tokens to consider', default=None)
     parser.add_argument('--bootstrap', '--b', type=int, action=argparse.BooleanOptionalAction,
                         help='Whether to perform bootstrap analysis', default=False)
+    parser.add_argument('--output_dir', '--o', type=str, help='Path to output directory', default=None, required=False)
 
     args = parser.parse_args()
     tokens = args.tokens
     vocab = args.vocab
     max_tokens = args.max_tokens
     bootstrap = args.bootstrap
+    output_dir = args.output_dir
 
     main()

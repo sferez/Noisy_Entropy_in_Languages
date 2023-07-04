@@ -11,7 +11,10 @@ import os
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 def main():
-    result_dir = f'results/{os.path.basename(tokens).split(".")[0].replace("_ppm", "")}/ppm'
+    if output_dir:
+        result_dir = f'results/{output_dir}/ppm'
+    else:
+        result_dir = f'results/{os.path.basename(tokens).split(".")[0].replace("_ppm", "")}/ppm'
     os.makedirs(result_dir, exist_ok=True)
 
     os.system(
@@ -27,11 +30,13 @@ if __name__ == '__main__':
     parser.add_argument('--max_train', '--mt', type=int, help='Maximum number of training samples to consider',
                         default=None)
     parser.add_argument('--decay', '--d', type=int, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--output_dir', '--o', type=str, help='Path to output directory', default=None, required=False)
 
     args = parser.parse_args()
     tokens = args.tokens
     vocab = args.vocab
     max_train = args.max_train
     decay = args.decay
+    output_dir = args.output_dir
 
     main()

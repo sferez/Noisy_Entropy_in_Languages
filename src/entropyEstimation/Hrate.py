@@ -11,7 +11,10 @@ import os
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 def main():
-    result_dir = f'results/{os.path.basename(tokens).split(".")[0]}/Hrate'
+    if output_dir:
+        result_dir = f'results/{output_dir}/Hrate'
+    else:
+        result_dir = f'results/{os.path.basename(tokens).split(".")[0]}/Hrate'
     os.makedirs(result_dir, exist_ok=True)
 
     os.system(
@@ -25,10 +28,12 @@ if __name__ == '__main__':
     parser.add_argument('--tokens', '--t', type=str, help='Path to list of tokens')
     parser.add_argument('--max_tokens', '--mt', type=int, help='Maximum number of tokens to consider', default=None)
     parser.add_argument('--fast', '--f', type=int, action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument('--output_dir', '--o', type=str, help='Path to output directory', default=None, required=False)
 
     args = parser.parse_args()
     tokens = args.tokens
     max_tokens = args.max_tokens
     fast = args.fast
+    output_dir = args.output_dir
 
     main()
