@@ -23,12 +23,12 @@ def run_unigram_entropy(tokens, vocab):
     for max_tokens in unigram_max_tokens:
         print(f'  max_tokens: {max_tokens}')
         os.system(
-            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--b" if not fast else ""}')
+            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--b" if not fast else ""} {"--o " + output_dir if output_dir else ""}')
 
     for max_tokens in unigram_max_tokens_fast:
         print(f'  max_tokens: {max_tokens}')
         os.system(
-            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""}')
+            f'python3 src/entropyEstimation/entropy.py --tokens {tokens} {"--vocab " + vocab if use_vocab else ""} {"--max_tokens " + str(max_tokens) if max_tokens else ""} {"--o " + output_dir if output_dir else ""}')
 
 
 def run_ppm_entropy(tokens, vocab):
@@ -37,19 +37,19 @@ def run_ppm_entropy(tokens, vocab):
     print('  Decay: None')
     for max_train in ppm_max_train:
         print(f'    max_train: {max_train}')
-        os.system(f'python3 src/entropyEstimation/ppm.py --tokens {tokens_} --vocab {vocab} --max_train {max_train}')
+        os.system(f'python3 src/entropyEstimation/ppm.py --tokens {tokens_} --vocab {vocab} --max_train {max_train} {"--o " + output_dir if output_dir else ""}')
     print('  Decay: True')
     for max_train in ppm_max_train:
         print(f'    max_train: {max_train}')
         os.system(
-            f'python3 src/entropyEstimation/ppm.py --tokens {tokens_} --vocab {vocab} --max_train {max_train} --d')
+            f'python3 src/entropyEstimation/ppm.py --tokens {tokens_} --vocab {vocab} --max_train {max_train} --d {"--o " + output_dir if output_dir else ""}')
 
 
 def run_hrate_entropy(tokens):
     print('Estimating Hrate entropy...')
     for max_tokens in hrate_max_tokens:
         print(f'  max_tokens: {max_tokens}')
-        os.system(f'python3 src/entropyEstimation/Hrate.py --tokens {tokens} --max_tokens {max_tokens}')
+        os.system(f'python3 src/entropyEstimation/Hrate.py --tokens {tokens} --max_tokens {max_tokens} {"--o " + output_dir if output_dir else ""} {"--f" if fast else ""}')
 
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
@@ -80,6 +80,7 @@ if __name__ == '__main__':
                         help='Skip Hrate entropy estimation', default=False)
     parser.add_argument('--fast', '--f', type=int, action=argparse.BooleanOptionalAction,
                         help='Skip PPM entropy estimation, and uncertainty analysis', default=False)
+    parser.add_argument('--output_dir', '--o', type=str, help='Path to output directory', default=None, required=False)
 
     args = parser.parse_args()
     tokens = args.tokens
@@ -89,6 +90,7 @@ if __name__ == '__main__':
     skip_ppm = args.ppm
     skip_hrate = args.hrate
     fast = args.fast
+    output_dir = args.output_dir
 
     if fast:
         skip_ppm = True
