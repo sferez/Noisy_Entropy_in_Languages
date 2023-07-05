@@ -44,7 +44,7 @@ process_tweet <- function(tweet, model, decay = FALSE, last_end_time = 1) {
     tokens <- strsplit(gsub('(^\\[|\\]$)', '', tweet), ',(?=(?:[^"]*"[^"]*")*[^"]*$)', perl = TRUE)[[1]]
     tokens <- gsub('^"|"$', '', tokens)
     tokens <- tokens[tokens != '\"\"']
-    # tokens <- tokens[tokens %in% vocab]  # (should not happen, security check)
+    tokens <- tokens[tokens %in% model$alphabet_levels]  # (should not happen, security check)
 
     # Convert the tokens to the factor levels based on the vocabulary
     tokens_factor <- match(tokens, model$alphabet_levels)
