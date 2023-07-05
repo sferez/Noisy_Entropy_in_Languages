@@ -193,6 +193,8 @@ for (i in seq_len(total_lines)) {
         # every 1000 tweets, save the results
         if (counter %% 1000 == 0) {
            generate_result(counter)
+            if (decay) {
+                last_end_time <- last_end_time + 50 # add 50 to the last end time due to the prediction
         }
         counter <- counter + 1
     }
