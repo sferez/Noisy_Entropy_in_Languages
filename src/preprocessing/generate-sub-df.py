@@ -9,13 +9,15 @@ Sub-datasets will be grouped by a column and will contain tweet_id and text colu
 import pandas as pd
 import argparse
 import os
+from tqdm import tqdm
+
+# ----------------------------------------------- FUNCTIONS ----------------------------------------------- #
 
 
-# ------------------------------------------------- MAIN ------------------------------------------------- #
-
-def main():
-    df = pd.read_csv(input_)
-    df = df[['tweet_id', 'text', group_by]]
+def process_file(file):
+    print(f'Processing {file}...')
+    # df = pd.read_csv(input_)
+    df = pd.read_csv(file, usecols=['tweet_id', 'text', group_by])
     if group_by == 'timestamp':
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         if unit == 'D':
@@ -26,14 +28,32 @@ def main():
             df['timestamp'] = df['timestamp'].dt.to_period('Y')
     df = df.groupby(group_by)
 
-    if not os.path.exists(f'{input_[:-4]}_by_{group_by}'):
-        os.makedirs(f'{input_[:-4]}_by_{group_by}')
+    if not os.path.exists(f'{file[:-4]}_by_{group_by}'):
+        os.makedirs(f'{file[:-4]}_by_{group_by}')
 
     for group in df.groups:
         if len(df.get_group(group)) < min_size:
             continue
-        df.get_group(group).drop(columns=[group_by]).to_csv(f'{input_[:-4]}_by_{group_by}/{group}.csv', index=False)
+        df.get_group(group).drop(columns=[group_by]).to_csv(f'{file[:-4]}_by_{group_by}/{group}.csv', index=False)
         print(f'Sub-dataset generated for {group_by} = {group}')
+
+
+
+# ------------------------------------------------- MAIN ------------------------------------------------- #
+
+def main():
+    print(f'Generating sub-datasets for {input_} grouped by {group_by}...')
+
+    if os.path.isfile(input_):
+        process_file(input_)
+    else:
+
+        for root, dirs, files in os.walk(input_):
+            for file in tqdm(files):
+                if file.endswith(".csv"):
+                    fp = os.path.join(root, file)
+                    process_file(fp)
+
 
 
 # -------------------------------------------------- CLI -------------------------------------------------- #
