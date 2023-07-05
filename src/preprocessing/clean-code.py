@@ -100,7 +100,7 @@ comments = {
 def rm_comments(tokens):
     if debug:
         for i in range(len(tokens)):
-            if tokens[i].startswith(comments[lang]) or tokens[i].endswith(comments[lang]):
+            if tokens[i].startswith(comments[lang]) and tokens[i].endswith(comments[lang]) and tokens[i] not in exclude[lang]:
                 comment_set.add(tokens[i])
                 tokens[i] = "#COMMENTS#"
     else:
@@ -116,11 +116,12 @@ def rm_comments(tokens):
 def rm_strings(tokens):
     if debug:
         for i in range(len(tokens)):
-            if tokens[i].startswith(('"', "'")) or tokens[i].endswith(('"', "'")):
+            if tokens[i].startswith(('"', "'")) and tokens[i].endswith(('"', "'")) and tokens[i] not in exclude[lang]:
                 string_set.add(tokens[i])
                 tokens[i] = "#STR#"
     else:
-        tokens = ["#STR#" if token.startswith(('"', "'")) or token.endswith(('"', "'")) else token for token in tokens]
+        tokens = ["#STR#" if token.startswith(('"', "'")) or token.endswith(('"', "'")) and token not in exclude[
+            lang] else token for token in tokens]
 
     return tokens
 
@@ -128,11 +129,11 @@ def rm_strings(tokens):
 def rm_numbers(tokens):
     if debug:
         for i in range(len(tokens)):
-            if tokens[i].isdigit():
+            if tokens[i].isdigit() and tokens[i] not in exclude[lang]:
                 number_set.add(tokens[i])
                 tokens[i] = "#NUM#"
     else:
-        tokens = [token if not token.isdigit() else '#NUM#' for token in tokens]
+        tokens = ["#NUM#" if token.isdigit() and token not in exclude[lang] else token for token in tokens]
 
     return tokens
 
