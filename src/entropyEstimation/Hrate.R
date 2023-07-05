@@ -3,7 +3,7 @@ library(Hrate)
 library(getopt)
 
 MAX_TOKENS <- 100000
-STEP_SIZE <- 100
+STEP_SIZE <- 25 # 25 for fast mode, 100 for detailed mode
 
 # Define the command line options
 spec <- matrix(c(
