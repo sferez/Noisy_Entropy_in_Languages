@@ -42,15 +42,13 @@ def process_file(fp):
     if ngrams_ > 1:
         df['tokens'] = df['tokens'].apply(lambda x: generate_ngrams(x, ngrams_))
     all_tokens = list(chain.from_iterable(df['tokens']))
-    if ppm:
-        csv_writer = csv.writer(
-            open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'), 'w'))
-        for tokens in df["tokens"]:
-            csv_writer.writerow(tokens)
-    else:
-        with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), 'w') as f:
-            for tokens in all_tokens:
-                f.write(f'{tokens}\n')
+    csv_writer = csv.writer(
+        open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'), 'w'))
+    for tokens in df["tokens"]:
+        csv_writer.writerow(tokens)
+    with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), 'w') as f:
+        for tokens in all_tokens:
+            f.write(f'{tokens}\n')
     with open(fp.replace('.csv', f'_vocab_{ngrams_}-gram{"_char" if chars else ""}.txt'), 'w') as f:
         for token in set(all_tokens):
             f.write(f'{token}\n')
@@ -63,9 +61,8 @@ def process_file(fp):
 
 def process_file_chunk(fp, num_lines):
     print('Processing in chunks...')
-    if ppm:
-        csv_writer = csv.writer(
-            open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'), 'w'))
+    csv_writer = csv.writer(
+        open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'), 'w'))
     for i, df in tqdm(enumerate(pd.read_csv(fp, chunksize=CHUNKSIZE)), total=num_lines // CHUNKSIZE + 1):
         df = df.dropna(subset=['text'])
         df_ = df.copy()
@@ -80,13 +77,12 @@ def process_file_chunk(fp, num_lines):
 
         mode = 'a' if i != 0 else 'w'
 
-        if ppm:
-            for tokens in df_["tokens"]:
-                csv_writer.writerow(tokens)
-        else:
-            with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), mode) as f:
-                for token in all_tokens:
-                    f.write(f'{token}\n')
+        for tokens in df_["tokens"]:
+            csv_writer.writerow(tokens)
+
+        with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}.txt'), mode) as f:
+            for token in all_tokens:
+                f.write(f'{token}\n')
 
         vocab.update(all_tokens)
 
@@ -126,15 +122,12 @@ if __name__ == '__main__':
     parser.add_argument('--ngrams', '--n', type=int, help='Generate n-grams', default=1)
     parser.add_argument('--chars', '--c', action=argparse.BooleanOptionalAction, help='Use characters instead of words',
                         default=False)
-    parser.add_argument('--ppm', action=argparse.BooleanOptionalAction, help='Write tokens for ppm analysis',
-                        default=False)
 
     args = parser.parse_args()
 
     input_ = args.input
     ngrams_ = args.ngrams
     chars = args.chars
-    ppm = args.ppm
 
     tweet_tokenizer = TweetTokenizer()
 
