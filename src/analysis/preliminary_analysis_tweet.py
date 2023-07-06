@@ -192,6 +192,28 @@ def is_punctuation(token):
     return True if token in string.punctuation or token == "..." else False
 
 
+def plot_token_frequencies(df, vocab_size, save=False):
+    # Calculate the percentage of tokens that fall into each category
+    categories = [1, 2, 3, 4, 5, 10, 100]
+    percentages = [len(df[df["count"] <= cat]) / vocab_size * 100 for cat in categories]
+
+    # Create a DataFrame for the plot
+    plot_df = pd.DataFrame({
+        'Category': ['1', '<=2', '<=3', '<=4', '<=5', '<=10', '<=100'],
+        'Percentage': percentages
+    })
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    sns.barplot(data=plot_df, x='Category', y='Percentage', color='gray')
+    plt.title('Percentage of Tokens by Frequency Category')
+    plt.xlabel('Frequency Category')
+    plt.ylabel('Percentage of Tokens (%)')
+    if save:
+        plt.savefig(f'../../Final/Analysis/{filename[:-4]}/token_appearance.png')
+    plt.show()
+
+
 def analyse_tokens(token_file, save=False):
     nltk.download('stopwords')
     stopwords = nltk.corpus.stopwords.words()
@@ -216,6 +238,8 @@ def analyse_tokens(token_file, save=False):
     print(f'\t<=5: {len(df[df["count"] <= 5])}, {len(df[df["count"] <= 5]) / len(vocab) * 100:.2f}%')
     print(f'\t<=10: {len(df[df["count"] <= 10])}, {len(df[df["count"] <= 10]) / len(vocab) * 100:.2f}%')
     print(f'\t<=100: {len(df[df["count"] <= 100])}, {len(df[df["count"] <= 100]) / len(vocab) * 100:.2f}%')
+
+    plot_token_frequencies(df, len(vocab), save=save)
 
     if save:
         with open(f'../../Final/Analysis/{filename[:-4]}/analysis.txt', 'a+') as f:
@@ -478,9 +502,3 @@ def run_analysis(file, save=False):
                 analyse_ppm(os.path.join(dirname, f), save)
             elif 'token' in f:
                 analyse_tokens(os.path.join(dirname, f), save)
-
-
-if __name__ == '__main__':
-    df = load_data(
-        '/Users/admin/Jupyter_notebooks/Noisy_Entropy_Estimation/data/stream-cleaned/streams-cleaned_by_lang/fr.csv')
-    plot_sentiment_over_time(df)
