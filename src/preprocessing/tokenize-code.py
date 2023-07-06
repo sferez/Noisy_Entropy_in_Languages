@@ -50,8 +50,12 @@ def process_file(fp):
 
     csv_writer = csv.writer(
         open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}_ppm.txt'), 'w'))
-    for tokens in df["tokens"]:
-        csv_writer.writerow(tokens)
+    if not char:
+        for tokens in df["tokens"]:
+            csv_writer.writerow(tokens)
+    else:
+        for tokens in df["tokens"]:
+            csv_writer.writerow(''.join(tokens))
     with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), 'w') as f:
         if not char:
             for token in tokens:
@@ -81,8 +85,12 @@ def process_file_chunk(fp, num_lines):
 
         mode = 'a' if i != 0 else 'w'
 
-        for tokens in df["tokens"]:
-            csv_writer.writerow(tokens)
+        if not char:
+            for tokens in df["tokens"]:
+                csv_writer.writerow(tokens)
+        else:
+            for tokens in df["tokens"]:
+                csv_writer.writerow(''.join(tokens))
         with open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}.txt'), mode) as f:
             if not char:
                 for token in tokens:
