@@ -189,7 +189,7 @@ def plot_tweets_over_time(df, save=False):
 
 
 def is_punctuation(token):
-    return True if token in string.punctuation or token == "..." else False
+    return True if token in string.punctuation or token in ("...", '`', "'", "—", '”', '“', "’") else False
 
 
 def plot_token_frequencies(df, vocab_size, save=False):
@@ -481,7 +481,7 @@ def plot_by_day(df, save=False):
 # -------------------------------------------------- MAIN -------------------------------------------------- #
 
 
-def run_analysis(file, save=False):
+def run_tweet_analysis(file, save=False):
     if save:
         os.makedirs(f'../../Final/Analysis/{os.path.basename(file).split(".")[0]}', exist_ok=True)
         open(f'../../Final/Analysis/{os.path.basename(file).split(".")[0]}/analysis.txt', 'w').close()
