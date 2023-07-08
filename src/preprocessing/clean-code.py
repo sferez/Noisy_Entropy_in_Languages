@@ -100,7 +100,7 @@ comments = {
 def rm_comments(tokens):
     if debug:
         for i in range(len(tokens)):
-            if tokens[i].startswith(comments[lang]) and tokens[i].endswith(comments[lang]) and tokens[i] not in exclude[
+            if (tokens[i].startswith(comments[lang]) or tokens[i].endswith(comments[lang])) and tokens[i] not in exclude[
                 lang]:
                 comment_set.add(tokens[i])
                 tokens[i] = "#COMMENTS#"
@@ -117,12 +117,12 @@ def rm_comments(tokens):
 def rm_strings(tokens):
     if debug:
         for i in range(len(tokens)):
-            if tokens[i].startswith(('"', "'", "f'", 'f"')) and tokens[i].endswith(('"', "'")) and tokens[i] not in \
+            if (tokens[i].startswith(('"', "'", "f'", 'f"')) or tokens[i].endswith(('"', "'"))) and tokens[i] not in \
                     exclude[lang]:
                 string_set.add(tokens[i])
                 tokens[i] = "#STR#"
     else:
-        tokens = ["#STR#" if token.startswith(('"', "'")) or token.endswith(('"', "'")) and token not in exclude[
+        tokens = ["#STR#" if (token.startswith(('"', "'")) or token.endswith(('"', "'"))) and token not in exclude[
             lang] else token for token in tokens]
 
     return tokens
