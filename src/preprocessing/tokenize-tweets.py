@@ -18,7 +18,6 @@ import csv
 # -------------------------------------------------- GLOBALS -------------------------------------------------- #
 
 CHUNKSIZE = 100000
-vocab = set()
 
 
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
@@ -60,6 +59,7 @@ def process_file(fp):
 
 
 def process_file_chunk(fp, num_lines):
+    vocab = set()
     print('Processing in chunks...')
     csv_writer = csv.writer(
         open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if chars else ""}_ppm.txt'), 'w'))
