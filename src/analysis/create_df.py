@@ -166,6 +166,8 @@ def process_label(label, label_type):
         return sentiment_id[int(label)]
     elif label_type == 'date':
         return datetime.strptime(label, '%Y-%m-%d').date()
+    elif label_type == 'file':
+        return label
 
 
 def process_single_analysis(directory):
@@ -199,6 +201,7 @@ def process_multiple_analysis(main_dir, label_type):
         - hate
         - date
         - irony
+        - file
     Return order:
         - ppm_entropy
         - ppm_infor_content
@@ -210,9 +213,9 @@ def process_multiple_analysis(main_dir, label_type):
     :param label_type: The type of label used for the analyses.
     :return: A tuple containing the processed dataframes.
     """
-    if label_type not in ['sentiment', 'topic', 'emotion', 'offensive', 'hate', 'date', 'irony']:
+    if label_type not in ['sentiment', 'topic', 'emotion', 'offensive', 'hate', 'date', 'irony', 'file']:
         raise Exception(
-            'Invalid label type, please choose from sentiment, topic, emotion, offensive, hate, date, irony')
+            'Invalid label type, please choose from sentiment, topic, emotion, offensive, hate, date, irony, file')
 
     label_dirs = [os.path.join(main_dir, name) for name in os.listdir(main_dir) if
                   os.path.isdir(os.path.join(main_dir, name))]
