@@ -117,7 +117,7 @@ def rm_comments(tokens):
 def rm_strings(tokens):
     if debug:
         for i in range(len(tokens)):
-            if (tokens[i].startswith(('"', "'", "f'", 'f"')) or tokens[i].endswith(('"', "'"))) and tokens[i] not in \
+            if (tokens[i].startswith(('"', "'", "f'", 'f"', "b'", 'b"', 'r"', "r'")) or tokens[i].endswith(('"', "'"))) and tokens[i] not in \
                     exclude[lang]:
                 string_set.add(tokens[i])
                 tokens[i] = "#STR#"
