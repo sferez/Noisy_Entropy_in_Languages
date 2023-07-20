@@ -59,7 +59,7 @@ def to_lowercase(text):
 
 
 def remove_punctuation(text):
-    special_chars = "«»"
+    special_chars = "«».`—'“’"
     return text.translate(str.maketrans('', '', string.punctuation + special_chars))
 
 
@@ -77,7 +77,9 @@ def remove_accents(text):
 
 
 def remove_rt(text):
-    if text.startswith('RT '):
+    if text.startswith('RT : ') and mentions:
+        return text[5:]
+    elif text.startswith('RT ') and not mentions:
         return text[3:]
     return text
 
