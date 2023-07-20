@@ -109,12 +109,12 @@ def process_file(fp):
         df['text'] = df['text'].apply(lambda x: give_emoji_free_text(x))
     if mentions:
         df['text'] = df['text'].apply(lambda x: remove_mentions(x))
+    if rt:
+        df['text'] = df['text'].apply(lambda x: remove_rt(x))
     if punctuation:
         df['text'] = df['text'].apply(lambda x: remove_punctuation(x))
     if accents:
         df['text'] = df['text'].apply(lambda x: remove_accents(x))
-    if rt:
-        df['text'] = df['text'].apply(lambda x: remove_rt(x))
     if spaces:
         df['text'] = df['text'].apply(lambda x: remove_extra_spaces(x))
     if lowercase:
