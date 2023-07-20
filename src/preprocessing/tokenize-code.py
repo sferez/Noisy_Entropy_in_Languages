@@ -24,17 +24,6 @@ vocab = set()
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
 
 
-def update_vocab(tokens):
-    if not char:
-        for token in tokens:
-            if token not in vocab:
-                vocab.add(token)
-    else:
-        for c in ''.join(tokens):
-            if c not in vocab:
-                vocab.add(c)
-
-
 def generate_ngrams(tokens, n):
     n_grams = ngrams(tokens, n)
     return [" ".join(gram) for gram in n_grams]
@@ -99,7 +88,7 @@ def process_file_chunk(fp, num_lines):
                 for c in ''.join(tokens):
                     f.write(f'{c}\n')
 
-        update_vocab(tokens)
+        vocab.update(tokens)
 
     with open(fp.replace('.csv', f'_vocab_{ngrams_}-gram{"_char" if char else ""}.txt'), 'w') as f:
         for token in vocab:
