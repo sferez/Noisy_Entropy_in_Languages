@@ -37,6 +37,17 @@ def process_file(file):
         df.get_group(group).drop(columns=[group_by]).to_csv(f'{file[:-4]}_by_{group_by}/{group}.csv', index=False)
         print(f'Sub-dataset generated for {group_by} = {group}')
 
+    # Special for COVID DATASET
+    # for group in df.groups:
+    #     if not os.path.exists(f'{input_}_by_{group}'):
+    #         os.makedirs(f'{input_}_by_{group}')
+    #
+    # for group in df.groups:
+    #     if len(df.get_group(group)) < min_size:
+    #         continue
+    #     df.get_group(group).drop(columns=[group_by]).to_csv(f'{input_}_by_{group}/{os.path.basename(file)}', index=False)
+    #     print(f'Sub-dataset generated for {group_by} = {group}')
+
 
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
