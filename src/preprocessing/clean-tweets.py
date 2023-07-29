@@ -120,6 +120,7 @@ def process_file(fp):
     if lowercase:
         df['text'] = df['text'].apply(lambda x: to_lowercase(x))
 
+    df.drop(df[df['text'] == ''].index, inplace=True)
     df.to_csv(os.path.join(output_, os.path.basename(fp)), index=False)
 
     print(f'Cleaned {os.path.basename(fp)}')
