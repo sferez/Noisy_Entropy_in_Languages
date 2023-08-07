@@ -13,6 +13,7 @@ import argparse
 from time import sleep
 import random
 import pandas as pd
+import subprocess
 
 # Internal
 from utils import get_last_date_from_csv, log_search_page, keep_scroling, log_in
@@ -95,9 +96,10 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
 
     # resume scraping from previous work
     if os.path.exists(path) and resume and not only_id:
-        since = str(get_last_date_from_csv(path))[:10]
-        write_mode = 'a'
-        print(f'Resuming scraping from {since}...')
+        if int(subprocess.check_output(f"wc -l {path}", shell=True).split()[0]) - 1 > 0:
+            since = str(get_last_date_from_csv(path))[:10]
+            write_mode = 'a'
+            print(f'Resuming scraping from {since}...')
     until_local = datetime.datetime.strptime(since, '%Y-%m-%d') + datetime.timedelta(days=interval)
 
     # start scraping

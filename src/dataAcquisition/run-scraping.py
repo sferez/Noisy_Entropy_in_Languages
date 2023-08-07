@@ -42,6 +42,7 @@ import sys
 # Internal
 from scraping import scraping
 from utils import init_driver
+import traceback
 
 
 # ---------------------------------------------------- SCRIPT -------------------------------------------------------- #
@@ -91,7 +92,7 @@ if __name__ == "__main__":
     env = args.env
     start = args.start
     end = args.end
-    interval = args.interval
+    interval = int(args.interval)
     headless = args.headless
     only_id = args.only_id
 
