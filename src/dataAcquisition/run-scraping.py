@@ -51,17 +51,17 @@ def main():
     driver = init_driver(headless=headless, show_images=False, env=env)
     if mode == 'account':
         print(f'Searching tweets from {from_account}...')
-        data = scraping(start, until=end, interval=1, from_account=from_account,
+        data = scraping(start, until=end, interval=interval, from_account=from_account,
                         save_dir=f"../../data/scraping/{from_account}", driver=driver, env=env, headless=headless,
                         only_id=only_id, resume=True)
     elif mode == 'hashtag':
         print(f'Searching tweets with hashtag {hashtag}...')
-        data = scraping(start, until=end, interval=1, hashtag=hashtag,
+        data = scraping(start, until=end, interval=interval, hashtag=hashtag,
                         save_dir=f"../../data/scraping/{hashtag}", driver=driver, env=env, headless=headless,
                         only_id=only_id, resume=True)
     elif mode == 'word':
         print(f'Searching tweets with word {word}...')
-        data = scraping(start, until=end, interval=1, words=word,
+        data = scraping(start, until=end, interval=interval, words=word,
                         save_dir=f"../../data/scraping/{word}", driver=driver, env=env, headless=headless,
                         only_id=only_id, resume=True)
 
