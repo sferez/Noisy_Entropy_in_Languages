@@ -89,7 +89,8 @@ def load_data(file):
     global filename
     df = pd.read_csv(file)
     filename = os.path.basename(file)
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
 
     for col in ['sentiment', 'emotion', 'offensive', 'hate', 'irony', 'topic']:
         if col in df.columns:
@@ -99,18 +100,22 @@ def load_data(file):
 
 def general_informations(df, save=False):
     print(f'Number of tweets: {len(df)}')
-    print('Time range:', df['timestamp'].min().strftime('%Y-%m-%d %H:%M:%S'), 'to',
-          df['timestamp'].max().strftime('%Y-%m-%d %H:%M:%S'))
+    if 'timestamp' in df.columns:
+        print('Time range:', df['timestamp'].min().strftime('%Y-%m-%d %H:%M:%S'), 'to',
+              df['timestamp'].max().strftime('%Y-%m-%d %H:%M:%S'))
 
     if save:
         with open(f'../../Final/Analysis/{filename[:-4]}/analysis.txt', 'a+') as f:
             f.write(f'\nGeneral informations\n')
             f.write(f'Number of tweets: {len(df)}\n')
-            f.write(
-                f'Time range: {df["timestamp"].min().strftime("%Y-%m-%d %H:%M:%S")} to {df["timestamp"].max().strftime("%Y-%m-%d %H:%M:%S")}\n')
+            if 'timestamp' in df.columns:
+                f.write(
+                    f'Time range: {df["timestamp"].min().strftime("%Y-%m-%d %H:%M:%S")} to {df["timestamp"].max().strftime("%Y-%m-%d %H:%M:%S")}\n')
 
 
 def tweets_per_user(df, save=False):
+    if 'user_id' not in df.columns:
+        return
     # Count the number of tweets per user
     user_tweet_counts = df['user_id'].value_counts()
 
@@ -169,13 +174,21 @@ def plot_distribution_label(df, save=False):
 
 
 def plot_tweets_over_time(df, save=False):
+    if 'timestamp' not in df.columns:
+        return
     df['date'] = df['timestamp'].dt.date
     plt.figure(figsize=(15, 6))
     sns.barplot(data=df.groupby('date').count()['tweet_id'].reset_index(), x='date', y='tweet_id', color='gray')
     plt.axhline(df.groupby('date').count()['tweet_id'].mean(), color='red', linestyle='--', label='Mean')
     plt.title('Number of tweets over time')
     plt.xlabel('Date')
+
+    # Dynamically calculate step size to always show 10 labels
     plt.xticks(rotation=45)
+    ticks = plt.xticks()[0]
+    labels = [item.get_text() for item in plt.gca().get_xticklabels()]
+    n = len(ticks) // 10 if len(ticks) // 10 > 0 else 1  # Divide by 10, but avoid dividing by zero
+    plt.xticks(ticks[::n], labels[::n], rotation=45)
     plt.ylabel('Number of tweets')
     plt.annotate('File: ' + filename,
                  xy=(0, 0), xycoords='axes fraction', fontsize=10, color='grey', alpha=0.8,
@@ -431,7 +444,7 @@ def map_sentiment(sentiment):
 
 
 def plot_sentiment_over_time(df, save=False):
-    if 'sentiment' not in df.columns:
+    if 'sentiment' not in df.columns or 'timestamp' not in df.columns:
         return
     df['date'] = df['timestamp'].dt.date
     df['sentiment_id'] = df['sentiment'].apply(map_sentiment)
@@ -458,6 +471,8 @@ def plot_sentiment_over_time(df, save=False):
 
 
 def plot_by_day(df, save=False):
+    if 'timestamp' not in df.columns:
+        return
     # Create a new column for hour of the day
     df['hour'] = df['timestamp'].dt.hour
 
