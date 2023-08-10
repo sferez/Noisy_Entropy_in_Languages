@@ -1,7 +1,7 @@
 """
 Run the preliminary analysis on a dataset to explore the data.
 """
-
+import gc
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
 
 import os
@@ -260,6 +260,9 @@ def analyse_ppm(ppm_file, save=False):
             f.write(f'\tQ3 number of tokens per code: {np.quantile(lenghts, 0.75)}\n')
             f.write(f'\tMin number of tokens per code: {np.min(lenghts)}\n')
             f.write(f'\tMax number of tokens per code: {np.max(lenghts)}\n')
+
+    del lenghts, line
+    gc.collect()
 
 
 # -------------------------------------------------- MAIN -------------------------------------------------- #
