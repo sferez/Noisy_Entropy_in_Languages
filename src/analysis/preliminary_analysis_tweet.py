@@ -178,7 +178,7 @@ def plot_tweets_over_time(df, save=False):
         return
     df['date'] = df['timestamp'].dt.date
     plt.figure(figsize=(15, 6))
-    sns.barplot(data=df.groupby('date').count()['tweet_id'].reset_index(), x='date', y='tweet_id', color='gray')
+    sns.barplot(data=df.groupby('date').count()['tweet_id'].reset_index(), x='date', y='tweet_id', color='gray', edgecolor='gray')
     plt.axhline(df.groupby('date').count()['tweet_id'].mean(), color='red', linestyle='--', label='Mean')
     plt.title('Number of tweets over time')
     plt.xlabel('Date')
