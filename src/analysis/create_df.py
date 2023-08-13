@@ -13,7 +13,7 @@ from datetime import datetime
 sentiment_id = {
     0: "Neutral",
     1: "Positive",
-    2: "Negative"
+    -1: "Negative"
 }
 
 emotion_id = {
