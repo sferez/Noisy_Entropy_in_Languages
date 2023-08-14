@@ -91,11 +91,12 @@ def process_file(fp):
         print(f'ParserError: {fp}')
         df = pd.read_csv(fp, lineterminator='\n', encoding='utf-8')
 
-    df.dropna(inplace=True)
+    df.dropna(subset=['text', 'tweet_id'], inplace=True)
     df.drop_duplicates(subset=['tweet_id'], inplace=True)
 
     df['tweet_id'] = df['tweet_id'].astype(int)
     df['user_id'].replace('error-co', 0, inplace=True)  # Error in the data (user_id = 'error-co')
+    df['user_id'].fillna(0, inplace=True)
     df['user_id'] = df['user_id'].astype(int)
 
     df['text'] = df['text'].str.replace('\n', '')
