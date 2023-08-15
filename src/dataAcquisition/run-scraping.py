@@ -96,13 +96,13 @@ if __name__ == "__main__":
     headless = args.headless
     only_id = args.only_id
 
-    if '--from_account' in sys.argv:
+    if '--from_account' or '--a' in sys.argv:
         from_account = args.from_account
         mode = 'account'
-    elif '--hashtag' in sys.argv:
+    elif '--hashtag' or '--h' in sys.argv:
         hashtag = args.hashtag
         mode = 'hashtag'
-    elif '--word' in sys.argv:
+    elif '--word' or '--w' in sys.argv:
         word = args.word
         mode = 'word'
     else:
