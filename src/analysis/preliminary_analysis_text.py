@@ -149,11 +149,13 @@ def analyse_tokens(token_file, save=False):
     df.drop('is_punctuation', axis=1, inplace=True)
     counter = {token: freq for token, freq in counter.items() if not is_punctuation(token)}
     print(f'\nMost common tokens without punctuation:')
+    print(f'Number of punctuation tokens: {len(vocab) - len(counter)}')
     print(f"{df.sort_values('count', ascending=False).head(10)}\n")
 
     if save:
         with open(f'../../Final/Analysis/{filename[:-4]}/analysis.txt', 'a+') as f:
             f.write('\nMost common tokens without punctuation:\n')
+            f.write(f'Number of punctuation tokens: {len(vocab) - len(counter)}\n')
             f.write(f"{df.sort_values('count', ascending=False).head(10).to_string()}\n")
 
     wordcloud = WordCloud(width=800, height=400, max_words=100, background_color='white').generate_from_frequencies(
