@@ -1,5 +1,9 @@
 """
-Tokenize the raw linguistic data from a txt file.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Tokenize the raw linguistic data txt files.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -16,11 +20,30 @@ import csv
 
 
 def generate_ngrams(tokens, n):
+    """
+    Generate n-grams from a list of tokens.
+    :param tokens: list of tokens
+    :type tokens: list
+    :param n: n-gram
+    :type n: int
+    :return: list of n-grams
+    :rtype: list
+    >>> generate_ngrams(['I', 'am', 'so', 'happy'], 2)
+    >>> ['I am', 'am so', 'so happy']
+    """
     n_grams = ngrams(tokens, n)
     return [" ".join(gram) for gram in n_grams]
 
 
 def process_file(fp):
+    """
+    Process a txt file by tokenizing it.
+    :param fp: file path
+    :type fp: str
+    :return: None
+    :rtype: None
+    >>> process_file('data.txt')
+    """
     print(f'Tokenizing {fp}...')
     all_tokens = []
     csv_writer = csv.writer(
@@ -54,6 +77,12 @@ def process_file(fp):
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
+    """
+    Main function of the tokenize-text.py script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     print(f'Tokenizing data with {ngrams_}-grams tokens...')
 
     if os.path.isfile(input_):
@@ -69,6 +98,19 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the tokenize-text.py script.
+    
+    Args:
+        --input, --i: Directory or txt file
+        --ngrams, --n: Generate n-grams (default: 1)
+        --chars, --c: Use characters instead of words (default: False)
+        
+    Examples:
+        >>> python tokenize-text.py --input data.txt
+        >>> python tokenize-text.py --input data.txt --ngrams 2
+        >>> python tokenize-text.py --input data.txt --ngrams 2 --chars
+    """
     parser = argparse.ArgumentParser(description='Perform tokenization on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory or txt file', required=True)
     parser.add_argument('--ngrams', '--n', type=int, help='Generate n-grams', default=1)

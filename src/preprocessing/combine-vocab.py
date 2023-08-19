@@ -1,5 +1,9 @@
 """
-Combine all vocab files into one
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Combine multiple vocab files into one.
 """
 
 # ---------------------------------------------------- IMPORTS ------------------------------------------------------- #
@@ -7,8 +11,6 @@ Combine all vocab files into one
 # External
 import argparse
 import os
-import pandas as pd
-from tqdm import tqdm
 
 # --------------------------------------------------- CONSTANT ------------------------------------------------------- #
 
@@ -19,6 +21,12 @@ vocab = set()
 
 
 def main():
+    """
+    Main function of the combine-vocab.py script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     global i
     full_paths = []
     for root, dirs, files in os.walk(input_):
@@ -47,6 +55,17 @@ def main():
 # ---------------------------------------------------- MAIN ---------------------------------------------------------- #
 
 if __name__ == "__main__":
+    """
+    Command Line Interface of the combine-vocab.py script.
+    
+    Args:
+        --input, --i: Directory
+        --output, --o: Final file name (Default: vocab-combined.txt)
+        
+    Examples:
+        >>> python combine-vocab.py --input data
+        >>> python combine-vocab.py --input data --output final_vocab.txt
+    """
     parser = argparse.ArgumentParser(description='Combine CSV files')
 
     parser.add_argument('--input', '--i', type=str, help='Directory', required=True)

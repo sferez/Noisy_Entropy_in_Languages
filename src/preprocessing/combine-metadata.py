@@ -1,5 +1,9 @@
 """
-Combine metadata for a CSV file.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Combine metadata for a Twitter CSV file.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -12,6 +16,12 @@ import argparse
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
+    """
+    Main function, combines metadata for a Twitter CSV file.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     print('Combine metadata...')
 
     # Read CSV files
@@ -34,6 +44,16 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the combine metadata script.
+    
+    Args:
+        --text, --t: CSV file with text
+        --metadata, --m: CSV file with metadata
+        
+    Examples:
+        >>> python combine-metadata.py --text data/combined.csv --metadata data/metadata.csv
+    """
     parser = argparse.ArgumentParser(description='Generate metadata for a CSV file.')
     parser.add_argument('--text', '--t', type=str, help='CSV file with text', required=True)
     parser.add_argument('--metadata', '--m', type=str, help='CSV file with metadata', required=True)

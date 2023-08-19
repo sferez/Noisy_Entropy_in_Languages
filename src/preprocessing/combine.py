@@ -1,5 +1,9 @@
 """
-Combine all the data into one file from a directory
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Combine Twitter CSV files into one.
 """
 
 # ---------------------------------------------------- IMPORTS ------------------------------------------------------- #
@@ -14,6 +18,12 @@ from tqdm import tqdm
 # ---------------------------------------------------- SCRIPT -------------------------------------------------------- #
 
 def main():
+    """
+    Main function, combines CSV files into one.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     full_paths = []
     for root, dirs, files in os.walk(input_):
         for file in files:
@@ -37,6 +47,16 @@ def main():
 # ---------------------------------------------------- MAIN ---------------------------------------------------------- #
 
 if __name__ == "__main__":
+    """
+    Command Line Interface of the combine Twitter CSV files script.
+    
+    Args:
+        --input, --i: Directory
+        --output, --o: Final file name (Default: combined.csv)
+        
+    Examples:
+        >>> python combine.py --input data/ --output combined.csv
+    """
     parser = argparse.ArgumentParser(description='Combine CSV files')
 
     parser.add_argument('--input', '--i', type=str, help='Directory', required=True)

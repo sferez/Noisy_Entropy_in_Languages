@@ -1,6 +1,10 @@
-'''
-Tokenize computer language data.
-'''
+"""
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Tokenize a Programming Language CSV file.
+"""
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
 
@@ -25,11 +29,30 @@ vocab = set()
 
 
 def generate_ngrams(tokens, n):
+    """
+    Generate n-grams from a list of tokens.
+    :param tokens: list of tokens
+    :type tokens: list
+    :param n: n-gram size
+    :type n: int
+    :return: list of n-grams
+    :rtype: list
+    >>> generate_ngrams(['def', 'main', '(', ')', ':', 'return', '0'], 3)
+    >>> ['def main (', 'main ( )', '( ) :', ') : return', ': return 0']
+    """
     n_grams = ngrams(tokens, n)
     return [" ".join(gram) for gram in n_grams]
 
 
 def process_file(fp):
+    """
+    Process a CSV file and generate tokens and vocab files.
+    :param fp: CSV file
+    :type fp: str
+    :return: None
+    :rtype: None
+    >>> process_file('data.csv')
+    """
     print('Processing...')
     df = pd.read_csv(fp)
     df['tokens'] = df['tokens'].apply(lambda x: literal_eval(x))
@@ -62,6 +85,16 @@ def process_file(fp):
 
 
 def process_file_chunk(fp, num_lines):
+    """
+    Process a CSV file by chunks and generate tokens and vocab files.
+    :param fp: CSV file
+    :type fp: str
+    :param num_lines: number of lines
+    :type num_lines: int
+    :return: None
+    :rtype: None
+    >>> process_file_chunk('data.csv', 100_000)
+    """
     print('Processing in chunks...')
     csv_writer = csv.writer(
         open(fp.replace('.csv', f'_tokens_{ngrams_}-gram{"_char" if char else ""}_ppm.txt'), 'w'))
@@ -99,6 +132,12 @@ def process_file_chunk(fp, num_lines):
 
 
 def main():
+    """
+    Main function of the tokenize-code.py script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     if os.path.isfile(input_):  # Single file
         num_lines = int(subprocess.check_output(f"wc -l {input_}", shell=True).split()[0]) - 1
         if num_lines > CHUNKSIZE:
@@ -118,6 +157,20 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the tokenize-code.py script.
+    
+    Args:
+        --input, --i: CSV file or directory
+        --char, --c: Character-level tokenization (default: False)
+        --ngrams, --n: Generate n-grams (default: 1)
+        
+    Examples:
+        >>> python tokenize-code.py --input data.csv
+        >>> python tokenize-code.py --input data.csv --char
+        >>> python tokenize-code.py --input data.csv --ngrams 3
+        >>> python tokenize-code.py --input data.csv --char --ngrams 3
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV File', required=True)
     parser.add_argument('--char', '--c', action=argparse.BooleanOptionalAction, help='Character-level tokenization',

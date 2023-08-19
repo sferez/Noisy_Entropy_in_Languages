@@ -1,5 +1,9 @@
 """
-Perform data cleaning on the raw linguistic data (tweets).
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Clean Twitter CSV files.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -20,11 +24,29 @@ from pandas.errors import ParserError
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
 
 def remove_emoticons(text):
+    """
+    Remove emoticons from a text using a regex.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_emoticons('I am so happy :)')
+    >>> 'I am so happy '
+    """
     emoticon_pattern = re.compile(u'(' + u'|'.join(k for k in EMOTICONS_EMO) + u')')
     return emoticon_pattern.sub(r'', text)
 
 
 def remove_emoji(text):
+    """
+    Remove emojis from a text using a regex.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_emoji('I am so happy 😊')
+    >>> 'I am so happy '
+    """
     emoji_pattern = re.compile("["
                                u"\U0001F600-\U0001F64F"  # emoticons
                                u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -37,33 +59,97 @@ def remove_emoji(text):
 
 
 def remove_urls(text):
+    """
+    Remove urls from a text using a regex.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_urls('I am so happy https://www.google.com')
+    >>> 'I am so happy '
+    """
     result = re.sub(r"http\S+", "", text)
     # result = re.sub(r'(https?://\S+|www\.\S+)', '', text)
     return result
 
+
 def remove_twitter_urls(text):
+    """
+    Remove twitter urls from a text using a regex.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_urls('I am so happy pic.twitter.com/123')
+    >>> 'I am so happy '
+    """
     clean = re.sub(r"pic.twitter\S+", "", text)
-    return (clean)
+    return clean
 
 
 def give_emoji_free_text(text):
+    """
+    Remove emojis from a text using the emoji library.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> give_emoji_free_text('I am so happy 😊')
+    >>> 'I am so happy '
+    """
     return emoji.replace_emoji(text, replace="")
 
 
 def remove_mentions(text):
+    """
+    Remove mentions from a text using a regex.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_mentions('I am so happy @user')
+    >>> 'I am so happy '
+    """
     return re.sub(r'@\w+', '', text)
 
 
 def to_lowercase(text):
+    """
+    Convert a text to lowercase.
+    :param text: text to convert
+    :type text: str
+    :return: converted text
+    :rtype: str
+    >>> to_lowercase('I am so happy')
+    >>> 'i am so happy'
+    """
     return text.lower()
 
 
 def remove_punctuation(text):
+    """
+    Remove punctuation from a text.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_punctuation('I am so happy!')
+    >>> 'I am so happy'
+    """
     special_chars = "«».`—'“’"
     return text.translate(str.maketrans('', '', string.punctuation + special_chars))
 
 
 def remove_extra_spaces(text):
+    """
+    Remove extra spaces from a text.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_extra_spaces('I am so    happy')
+    >>> 'I am so happy'
+    """
     text = text.replace('  ', ' ')  # 2 spaces
     text = text.replace('   ', ' ')  # 3 spaces
     text = text.replace('    ', ' ')  # 4 spaces
@@ -73,10 +159,28 @@ def remove_extra_spaces(text):
 
 
 def remove_accents(text):
+    """
+    Remove accents from a text using the unidecode library.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_accents('Ceci est un résumé')
+    >>> 'Ceci est un resume'
+    """
     return unidecode(text)
 
 
 def remove_rt(text):
+    """
+    Remove RT from a text.
+    :param text: text to clean
+    :type text: str
+    :return: cleaned text
+    :rtype: str
+    >>> remove_rt('RT : I am so happy')
+    >>> 'I am so happy'
+    """
     if text.startswith('RT : ') and mentions:
         return text[5:]
     elif text.startswith('RT ') and not mentions:
@@ -85,6 +189,14 @@ def remove_rt(text):
 
 
 def process_file(fp):
+    """
+    Process a CSV file and save the cleaned version.
+    :param fp: file path
+    :type fp: str
+    :return: None
+    :rtype: None
+    >>> process_file('data.csv')
+    """
     try:
         df = pd.read_csv(fp, encoding='utf-8')
     except ParserError:
@@ -131,6 +243,12 @@ def process_file(fp):
 
 
 def main():
+    """
+    Main function of the data cleaning script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     print('Cleaning data...')
     if not os.path.exists(output_):
         os.makedirs(output_)
@@ -149,6 +267,26 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the Twitter data cleaning script.
+    
+    Args:
+        --input, --i: Directory containing the raw data, or CSV File
+        --output, --o: Directory to save the scraping-cleaned data.
+        --punctuation, --p: Keep punctuation (default: False)
+        --accents, --a: Keep accents (default: False)
+        --emojis, --e: Keep emojis (default: False)
+        --mentions, --m: Keep mentions (default: False)
+        --urls, --u: Keep urls (default: False)
+        --spaces, --s: Keep extra spaces (default: False)
+        --rt, --r: Keep RT Tags (default: False)
+        --lowercase, --l: Keep all cases (default: False)
+        
+    Examples:
+        >>> python clean-tweets.py --input data.csv --output data-cleaned
+        >>> python clean-tweets.py --input data.csv --output data-cleaned --punctuation
+        >>> python clean-tweets.py --input data.csv --output data-cleaned --punctuation --accents --emojis
+    """
     parser = argparse.ArgumentParser(description='Perform data cleaning on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory containing the raw data, or CSV File',
                         required=True)
@@ -162,8 +300,8 @@ if __name__ == '__main__':
     parser.add_argument('--urls', '--u', action=argparse.BooleanOptionalAction, help='Keep urls', default=False)
     parser.add_argument('--spaces', '--s', action=argparse.BooleanOptionalAction, help='Keep extra spaces',
                         default=False)
-    parser.add_argument('--rt', '--r', action=argparse.BooleanOptionalAction, help='Keep RT', default=False)
-    parser.add_argument('--lowercase', '--l', action=argparse.BooleanOptionalAction, help='Keep lowercase',
+    parser.add_argument('--rt', '--r', action=argparse.BooleanOptionalAction, help='Keep RT Tags', default=False)
+    parser.add_argument('--lowercase', '--l', action=argparse.BooleanOptionalAction, help='Keep all cases',
                         default=False)
 
     args = parser.parse_args()

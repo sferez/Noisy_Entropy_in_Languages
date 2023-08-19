@@ -1,5 +1,9 @@
 """
-Filter the raw data to only keep tweets in specified languages.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Filter the Twitter data to only keep tweets in specified languages.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -18,6 +22,14 @@ LANGUAGES = ['en', 'es', 'fr', 'it', 'de']
 
 
 def process_file(fp):
+    """
+    Process a CSV file and remove tweets that are not in the specified languages.
+    :param fp: file path
+    :type fp: str
+    :return: None
+    :rtype: None
+    >>> process_file('data.csv')
+    """
     df = pd.read_csv(fp)
 
     if 'lang' in df.columns:
@@ -33,6 +45,12 @@ def process_file(fp):
 
 
 def main():
+    """
+    Main function of the filter-language.py script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     print(f'Filtering data with languages: {languages}')
 
     if os.path.isfile(input_):
@@ -48,6 +66,17 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the filter-language.py script.
+    
+    Args:
+        --input, --i: Directory containing the raw data, or CSV File
+        --languages, --l: Languages to keep (Default: en es fr it de)
+        
+    Examples:
+        >>> python filter-language.py --input data.csv
+        >>> python filter-language.py --input data.csv --languages en fr
+    """
     parser = argparse.ArgumentParser(description='Filter the raw data to only keep tweets in specified languages.')
     parser.add_argument('--input', '--i', type=str, help='Directory containing the raw data, or CSV File',
                         required=True)

@@ -1,7 +1,11 @@
-'''
-Clean computer language code from comments, strings, and other non-code elements.
-'''
-import gc
+"""
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Clean code by allowing to detect and remove variables, functions, numbers, strings and comments.
+"""
+
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
 
 # External
@@ -98,6 +102,15 @@ comments = {
 # ------------------------------------------------- FUNCTIONS ------------------------------------------------- #
 
 def rm_comments(tokens):
+    """
+    Remove comments from a list of tokens and replace them by #COMMENTS#.
+    :param tokens: list of tokens
+    :type tokens: list
+    :return: list of tokens
+    :rtype: list
+    >>> rm_comments(['def', 'hello', '(', ')', ':', '#', 'comment', 'return', '0'])
+    >>> ['def', 'hello', '(', ')', ':', '#COMMENTS#', 'return', '0']
+    """
     if debug:
         for i in range(len(tokens)):
             if (tokens[i].startswith(comments[lang]) or tokens[i].endswith(comments[lang])) and tokens[i] not in exclude[
@@ -115,6 +128,15 @@ def rm_comments(tokens):
 
 
 def rm_strings(tokens):
+    """
+    Remove strings from a list of tokens and replace them by #STR#.
+    :param tokens: list of tokens
+    :type tokens: list
+    :return: list of tokens
+    :rtype: list
+    >>> rm_strings(['print', '(', '"', 'hello', '"', ')'])
+    >>> ['print', '(', '#STR#', ')']
+    """
     if debug:
         for i in range(len(tokens)):
             if (tokens[i].startswith(('"', "'", "f'", 'f"', "b'", 'b"', 'r"', "r'")) or tokens[i].endswith(('"', "'"))) and tokens[i] not in \
@@ -129,6 +151,15 @@ def rm_strings(tokens):
 
 
 def rm_numbers(tokens):
+    """
+    Remove numbers from a list of tokens and replace them by #NUM#.
+    :param tokens: list of tokens
+    :type tokens: list
+    :return: list of tokens
+    :rtype: list
+    >>> rm_numbers(['x', '=', '1', '+', '2'])
+    >>> ['x', '=', '#NUM#', '+', '#NUM#']
+    """
     if debug:
         for i in range(len(tokens)):
             if tokens[i].isdigit() and tokens[i] not in exclude[lang]:
@@ -141,6 +172,15 @@ def rm_numbers(tokens):
 
 
 def rm_variables_and_func(tokens):
+    """
+    Remove variables and functions from a list of tokens and replace them by #VAR# and #FUNC#.
+    :param tokens: list of tokens
+    :type tokens: list
+    :return: list of tokens
+    :rtype: list
+    >>> rm_variables_and_func(['x', '=', '1', '+', '2'])
+    >>> ['#VAR#', '=', '1', '+', '2']
+    """
     for i in range(len(tokens)):
         if tokens[i] in op_before[lang] and i - 1 >= 0:
             if tokens[i - 1] not in variables and tokens[i - 1] not in exclude[lang]:
@@ -161,6 +201,14 @@ def rm_variables_and_func(tokens):
 
 
 def process_file(file):
+    """
+    Process a file by removing variables, functions, numbers, strings and comments.
+    :param file: file path
+    :type file: str
+    :return: None
+    :rtype: None
+    >>> process_file('data.tsv')
+    """
     output_dir = f'clean{"_STR" if not string else ""}{"_NUM" if not number else ""}{"_VAR" if not var else ""}{"_COMMENTS" if not comments_ else ""}'
     total_lines = sum(1 for _ in open(file))
     with open(file) as f:
@@ -190,6 +238,12 @@ def process_file(file):
 
 
 def main():
+    """
+    Main function of the clean code script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     print(f'Cleaning {lang}:')
     if os.path.isfile(input_):  # Single file
         print(f'Processing {input_}...')
@@ -228,8 +282,25 @@ def main():
 
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the clean code script.
+    
+    Args:
+        --input, --i: Directory or TSV File
+        --lang, --l: Language: Java, Python, C++
+        --debug, --d: Debug, get replacements details in output file (default: False)
+        --var, --v: Keep variables (default: False)
+        --number, --num: Keep numbers (default: False)
+        --comments, --com: Keep comments (default: False)
+        --string, --s: Keep strings (default: False)
+        
+    Examples:
+        >>> python clean-code.py --input data.tsv --lang Python
+        >>> python clean-code.py --input data.tsv --lang Python --debug
+        >>> python clean-code.py --input data.tsv --lang Python --debug --var --num
+    """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input', '--i', type=str, help='Directory or CSV File', required=True)
+    parser.add_argument('--input', '--i', type=str, help='Directory or TSV File', required=True)
     parser.add_argument('--lang', '--l', type=str, help='Language: Java, Python, C++', required=True)
     parser.add_argument('--debug', '--d', action=argparse.BooleanOptionalAction,
                         help='Debug, get replacements details in output file', default=False)

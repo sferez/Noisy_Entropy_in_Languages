@@ -1,6 +1,9 @@
 """
-Generate metadata for a CSV file.
-Metadata will be the raw dataset without the text column.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+
+Generate metadata for a Twitter CSV file, metadata will be the raw dataset without the text column.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -13,6 +16,12 @@ import argparse
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
+    """
+    Main function of the generate-metadata.py script.
+    :return: None
+    :rtype: None
+    >>> main()
+    """
     print('Generating metadata...')
 
     df = pd.read_csv(input_)
@@ -24,6 +33,15 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of the generate-metadata.py script.
+    
+    Args:
+        --input, --i: CSV File
+        
+    Examples:
+        >>> python generate-metadata.py --input data.csv
+    """
     parser = argparse.ArgumentParser(description='Generate metadata for a CSV file.')
     parser.add_argument('--input', '--i', type=str, help='CSV file', required=True)
 
