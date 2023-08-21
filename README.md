@@ -51,7 +51,9 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Political Structure**: Repeated patterns in politics converge public opinion; low entropy.
 - **Comparison**: Entropy Rate comparison between Donald Trump and Elon Musk.
 
-![TrumpMusk](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/muskTrump.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/muskTrump.png" alt="TrumpMusk" width=60%>
+</p>
 
 #### Cluster Analysis:
 - **Symbols and Structure**: Accents, emojis increase entropy; punctuation reduces it, defying traditional beliefs.
@@ -63,7 +65,9 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Language Evolution**: Decline in entropy signifies societal adaptation, convergence in viewpoints.
 - **Trend Analysis**: Entropy Rate trend over time of the Covid-19 French dataset.
 
-![CovidTrend](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/covid.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/covid.png" alt="CovidTrend" width=60%>
+</p>
 
 #### Entropy in Programming Languages:
 - **Universality**: Common features in C++, Python, Java.
@@ -100,7 +104,9 @@ For the Computer Language data, CodeNet was used as the main source. CodeNet is 
 
 Due to different License restrictions, the dataset was not created by scratch using GitHub data. Instead, the dataset was downloaded from the official website and used as is.
 
-![datasets](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/datasets.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/datasets.png" alt="datasets" width=40%>
+</p>
 
 ## Data Acquisition
 
@@ -169,18 +175,21 @@ Learn more about the analysis [here](https://github.com/sferez/Noisy_Entropy_Est
 
 Here is the general workflow of the project:
 
-![Workflow](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/workflow.png)
+<img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/workflow.png" alt="Workflow" width=100%>
 
 Here is the environment of the data acquisition workflow:
 
-![DataWEnvironement](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/dataCollection.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/dataCollection.png" alt="DataEnvironement" width=60%>
+</p>
 
 ## Deliverables
 
 Find the poster [here](https://github.com/sferez/Noisy_Entropy_Estimation/blob/main/deliverables/poster.pdf).
 
-![Poster](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/poster.png)
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/poster.png" alt="Poster" width=50%>
+</p>
 
 ---
 
