@@ -41,5 +41,5 @@ html_static_path = ['_static']
 html_context = {
     'display_github': True,
     'github_user': 'sferez',
-    'github_repo': 'Noisy_Entropy_Estimation',
+    'github_repo': 'Noisy_Entropy_in_Languages',
 }
