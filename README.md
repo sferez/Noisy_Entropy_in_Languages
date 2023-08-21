@@ -1,8 +1,84 @@
-# Noisy_Entropy_Estimation
+# Noisy Entropy in Languages
 
-Project is in development.
+## Exploring Communication Complexity: A Study of Language Patterns in Social Media and Programming Languages
 
-Master's Thesis: Undertook an in-depth study on Noisy Entropy Estimation across multiple languages, utilizing data sourced from Social Media platforms and Computer Language.
+## Introductoin
+
+This master's thesis project, conducted as part of the MSc in Computational Software Techniques in Engineering of Cranfield University, aims to explore the inherent complexities in language that reflect the unpredictability and intricate patterns of human communication.
+
+By leveraging entropy as a quantifiable measure of this complexity, the study captures the pattern and nuances within various forms of interaction, including social media, literature, and programming languages.
+
+### Key Metrics
+- **Languages Studied**: English (EN), French (FR), Spanish (ES)
+- **Programming Languages**: C++, Python, Java
+- **Datasets**: 7 Custom Datasets
+- **Data Collection**: +300 Millions of Tweets Collected, ~80Gb of Data processed
+- **Entropy Estimators**: 3 Families, 7 Plug-In Entropy Estimators
+- **Analysis**: 8 NLP Analyses, 2 Methods of Uncertainty Analysis
+- **Literature**: 5 Books Examined
+- **Global Events Studied**: Covid-19, Ukraine War
+
+### Objectives
+1. **Explore Entropy in Language**: Analyzing major languages on Twitter.
+2. **Analyze Linguistic Chaos in Twitter**: Examine word usage, accents, emojis, punctuation.
+3. **Investigate Literature Noisy Entropy**: Assess noisy characteristics in literature books.
+4. **Map Noisy Environments**: Focus on contexts such as COVID-19 and the Ukraine War.
+5. **Examine Human Emotion**: Uncover emotional patterns and entropy across languages.
+6. **Assess Media Language Styles**: Study news outlets' unique entropy patterns.
+7. **Contrast Personal Communication Tactics**: Compare entropy in public figure tweets.
+8. **Analyze Entropy over Time**: Investigate entropy changes during significant global events.
+9. **Explore Programming Languages Entropy**: Study variables, strings, numbers in programming languages.
+
+### Entropy Estimators
+- **Plug-In Estimators**: Non-parametric approach reflecting complexity at the token level without considering context.
+- **Entropy Rate**: Measures uncertainty per symbol/token, capturing long-term behavior.
+- **Prediction by Partial Matching (PPM)**: Context-based adaptive technique offering a flexible approach.
+
+
+### SOME KEY INSIGHTS
+
+#### Entropy in Noisy Literature:
+- **Character-Level Insights**: Novel estimates of ~4.35 bits, surpassing previous works.
+- **Word-level Insights**: Confirms prior work, observes a 3-bit shift with context consideration.
+
+#### Entropy on Twitter:
+- **Character Complexity**: Aligns with literature; chaos resides in word formation.
+- **Unigram Entropy**: 10-11 bits, highlighted by hapax legomena (2 bits above past studies).
+- **Contextual Shift**: A consistent 3-bit shift reveals logical structure despite noise.
+
+#### Entropy in Personal Communication:
+- **Public Figures**: Contrast in entropy between Musk (technical diversity) and Trump (political discourse).
+- **Political Structure**: Repeated patterns in politics converge public opinion; low entropy.
+- **Comparison**: Entropy Rate comparison between Donald Trump and Elon Musk.
+![TrumpMusk](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/muskTrump.png])
+
+#### Cluster Analysis:
+- **Symbols and Structure**: Accents, emojis increase entropy; punctuation reduces it, defying traditional beliefs.
+- **Emotional Patterns**: Universal low entropy in inherent emotions like love & fear.
+- **Media Bias**: News outlet styles reveal unique entropy, hinting at bias detection capabilities.
+
+#### Entropy over Time:
+- **Global Events**: COVID-19, Ukraine War show unigram entropy convergence, highlights societal response, unity.
+- **Language Evolution**: Decline in entropy signifies societal adaptation, convergence in viewpoints.
+- **Trend Analysis**: Entropy Rate trend over time of the Covid-19 French dataset.
+![CovidTrend](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/covid.png)
+
+#### Entropy in Programming Languages:
+- **Universality**: Common features in C++, Python, Java.
+- **Predictable Structure**: Low Entropy Rate highlights codified patterns and conventions.
+- **Source of Noise**: Variable and function naming contribute most to complexity.
+
+## Overview
+
+- [Introduction](#introduction)
+- [Data](#data)
+- [Data Acquisition](#data-acquisition)
+- [Preprocessing](#preprocessing)
+- [NLP](#nlp)
+- [Entropy Estimation](#entropy-estimation)
+- [Analysis](#analysis)
+- [Workflows](#workflows)
+- [Deliverables](#deliverables)
 
 ## Data
 
@@ -10,7 +86,7 @@ The data use for this project is a mix of Social Media data and Computer Languag
 
 ### Social Media Data
 
-For the Social Media data, Twitter was used as the main source. The data was collected using scraping, streaming and Twitter API.
+For the Social Media data, Twitter was used as the main source. The data was collected using scraping, streaming and Twitter API. A total of around 200-300 million tweets were collected, using different methods.
 
 To comply with Twitter's Terms of Service, the data used in this project is only shared dehydrated. Which means that the data is shared in the form of tweet ids, and not the full tweet.
 
@@ -30,59 +106,75 @@ Learn more about the data collection [here](https://github.com/sferez/Noisy_Entr
 
 ## Preprocessing
 
-In progress...
+Pre-processing of the data includes the following steps:
+- Cleaning
+- Data Manipulation
+- Tokenization
+
+Learn more about the pre-processing [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/preprocessing).
 
 ## NLP
 
-In progress...
+Natural Language Processing (NLP) is used to label the tweets. The labels are then used to filter the data and to perform the analysis on clusters.
 
-## Analysis
+The NLP analysis includes:
+- Emotion Analysis
+- Hate Speech Detection
+- Irony Detection
+- Language Detection
+- Named Entity Recognition
+- Offensive Language Detection
+- Sentiment Analysis
+- Topic Detection
 
-In progress...
+Learn more about the NLP analysis [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/nlp).
 
 ## Entropy Estimation
 
-In progress...
+The entropy estimation used different methods to estimate the entropy of the text. The methods used are:
+- Plug-in Estimators (unigrams)
+  - Maximum Likelihood (ML)
+  - Miller-Maddow (MM)
+  - Chao-Shen (CS)
+  - Schurmann-Grassberger (SG)
+  - Shrinkage (SH)
+  - Laplace
+  - Jeffrey
+  - Minimax
+  - NSB
+- Entropy Rate
+- Prediction by Partial Matching (PPM)
 
-## Structure
+On top of the entropy estimators Bootstrap is used to estimate the confidence interval of the entropy.
 
-Project is structured as follows:
+Learn more about the entropy estimation [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/entropyEstimation).
 
-```
-├── data
-├── src
-│   ├── dataAcquisition
-│   ├── preprocessing
-│   ├── nlp
-│   ├── analysis
-│   ├── entropyEstimation
-├── docs 
-└──
-```
+## Analysis
 
-Data is stored in the following structure:
+The Analysis is designed to generated graphs and extract insights from the performed analysis.
 
-```
-├── data
-│   ├── <scraping> (Scrape from user, hashtag or keyword)
-│   │   ├── <user>
-│   │   │   ├── <user>_<start>_<end>.csv
-│   │   │   ├── <user>_<start>_<end>.csv
-│   │   │   └── ...
-│   │   ├── <user>
-│   │   │   ├── <user>_<start>_<end>.csv
-│   │   │   ├── <user>_<start>_<end>.csv
-│   │   │   └── ...
-│   │   └── ...
-│   ├── <sample-stream> (Stream 1% of tweets)
-│   │   ├── <date>.csv
-│   │   ├── <date>.csv
-│   │   └── ...
-│   ├── <covid-github> (Scrape from Github and rehydrate)
-│   │   ├── <date>.csv
-│   │   ├── <date>.csv
-│   │   └── ...
-│   └──
-└──
-```
+There is two types of analysis:
+- Analysis (Preliminary Analysis and Exploratory Analysis)
+- Results Analysis (Analysis of the results of the entropy estimation)
+
+Learn more about the analysis [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/analysis).
+
+
+
+## Workflows
+
+Here are some examples of workflows that can be used to run the project.
+
+Steps:
+
+## Deliverables
+
+Find the poster [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/poster.pdf).
+![Poster](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/poster.png)
+
+
+---
+
+_Individual Research Project 2022/2023_
+_Copyright © 2023 by Siméon FEREZ. All rights reserved._
 
