@@ -100,6 +100,8 @@ For the Computer Language data, CodeNet was used as the main source. CodeNet is 
 
 Due to different License restrictions, the dataset was not created by scratch using GitHub data. Instead, the dataset was downloaded from the official website and used as is.
 
+![datasets](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/datasets.png)
+
 ## Data Acquisition
 
 Collect data from Twitter using scraping, streaming and Twitter API.
@@ -165,9 +167,13 @@ Learn more about the analysis [here](https://github.com/sferez/Noisy_Entropy_Est
 
 ## Workflows
 
-Here are some examples of workflows that can be used to run the project.
+Here is the general workflow of the project:
 
-Steps:
+![Workflow](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/workflow.png)
+
+Here is the environment of the data acquisition workflow:
+
+![DataWEnvironement](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/dataCollection.png)
 
 ## Deliverables
 
