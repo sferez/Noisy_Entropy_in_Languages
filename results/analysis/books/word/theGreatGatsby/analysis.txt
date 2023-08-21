@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 64812
+Vocabulary size: 6310
+Number of tokens that only appear:
+	1: 3351, 53.11%
+	<=2: 4342, 68.81%
+	<=3: 4803, 76.12%
+	<=4: 5097, 80.78%
+	<=5: 5290, 83.84%
+	<=10: 5706, 90.43%
+	<=100: 6232, 98.76%
+
+Most common tokens:
+    token  count
+10      .   3308
+7       ,   3111
+0     the   2590
+22    and   1633
+84      a   1467
+117     “   1457
+123     ”   1455
+90      i   1393
+127     ’   1346
+4      of   1238
+
+Most common tokens without punctuation:
+    token  count
+0     the   2590
+22    and   1633
+84      a   1467
+90      i   1393
+4      of   1238
+54     to   1212
+19     in    866
+150    he    857
+206   was    770
+106  that    657
+
+Most common tokens without stopwords:
+        token  count
+6      gatsby    268
+734       tom    191
+736     daisy    186
+289      back    109
+487     house     93
+1     project     90
+846      eyes     88
+601    looked     85
+709        mr     84
+1420     time     83

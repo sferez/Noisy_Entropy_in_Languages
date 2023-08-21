@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/books/alice29_tokens_1-gram_char.txt","ML",4.32978841347142
+"data/books/alice29_tokens_1-gram_char.txt","MM",4.33000898080779
+"data/books/alice29_tokens_1-gram_char.txt","Laplace",4.33085568631398
+"data/books/alice29_tokens_1-gram_char.txt","CS",4.32996859790637
+"data/books/alice29_tokens_1-gram_char.txt","shrink",4.33026366193863
+"data/books/alice29_tokens_1-gram_char.txt","Jeffreys",4.33032531057075
+"data/books/alice29_tokens_1-gram_char.txt","SG",4.32981298690438
+"data/books/alice29_tokens_1-gram_char.txt","minimax",4.33844264904548

@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/books/bible_tokens_1-gram.txt","ML",8.6161094602922
+"data/books/bible_tokens_1-gram.txt","MM",8.62955351242516
+"data/books/bible_tokens_1-gram.txt","Laplace",8.77952717442049
+"data/books/bible_tokens_1-gram.txt","CS",8.66577101238266
+"data/books/bible_tokens_1-gram.txt","shrink",8.61664327540092
+"data/books/bible_tokens_1-gram.txt","Jeffreys",8.69970124646074
+"data/books/bible_tokens_1-gram.txt","SG",8.61611915552944
+"data/books/bible_tokens_1-gram.txt","minimax",8.62552724449326

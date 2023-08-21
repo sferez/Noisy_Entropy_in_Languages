@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 689369
+Vocabulary size: 24936
+Number of tokens that only appear:
+	1: 10304, 41.32%
+	<=2: 13971, 56.03%
+	<=3: 15925, 63.86%
+	<=4: 17229, 69.09%
+	<=5: 18149, 72.78%
+	<=10: 20627, 82.72%
+	<=100: 24352, 97.66%
+
+Most common tokens:
+    token  count
+7       ,  48760
+0     the  41034
+32      .  29971
+4      of  19933
+20    and  14930
+125     a  14521
+53     to  13726
+17     in  11199
+179    he   9646
+741   was   8619
+
+Most common tokens without punctuation:
+    token  count
+0     the  41034
+4      of  19933
+20    and  14930
+125     a  14521
+53     to  13726
+17     in  11199
+179    he   9646
+741   was   8619
+219  that   7921
+36     it   6659
+
+Most common tokens without stopwords:
+        token  count
+559    marius   1374
+199      jean   1186
+200   valjean   1120
+339   cosette   1023
+146      made    785
+1347     time    759
+128   chapter    744
+186       day    681
+492       rue    664
+265    father    600

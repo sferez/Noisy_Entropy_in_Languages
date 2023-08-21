@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","ML",4.37392014645796
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","MM",4.3742074657494
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","Laplace",4.37605024543933
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","CS",4.37416818729493
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","shrink",4.37456306011163
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","Jeffreys",4.37499122157964
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","SG",4.37395436236911
+"data/books/Romeo_and_Juliette_tokens_1-gram_char.txt","minimax",4.38673358463337

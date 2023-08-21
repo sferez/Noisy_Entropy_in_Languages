@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","ML",9.6703064498364
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","MM",9.6761744635231
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","Laplace",9.75208203315404
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","CS",9.69125404236433
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","shrink",9.67042488455776
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","Jeffreys",9.71181296608144
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","SG",9.67030813905156
+"data/scraping-cleaned/en_news/en_news_tokens_1-gram.txt","minimax",9.67448655996263

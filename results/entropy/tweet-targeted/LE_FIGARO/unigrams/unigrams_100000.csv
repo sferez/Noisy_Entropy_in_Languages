@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","ML",10.5382943478222
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","MM",10.5607564823136
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","Laplace",10.8136411658572
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","CS",10.6268972031483
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","shrink",10.5386177088935
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.6802153429892
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","SG",10.5382974001945
+"data/scraping-cleaned/le_figaro_2007-08-01_2023-01-01_tokens_1-gram.txt","minimax",10.5436525860611

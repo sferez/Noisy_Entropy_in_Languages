@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/books/theGreatGatsby_tokens_1-gram.txt","ML",8.84315343657068
+"data/books/theGreatGatsby_tokens_1-gram.txt","MM",8.91337162928938
+"data/books/theGreatGatsby_tokens_1-gram.txt","Laplace",9.35048795442894
+"data/books/theGreatGatsby_tokens_1-gram.txt","CS",9.05977336151754
+"data/books/theGreatGatsby_tokens_1-gram.txt","shrink",8.85086750912903
+"data/books/theGreatGatsby_tokens_1-gram.txt","Jeffreys",9.1149688337379
+"data/books/theGreatGatsby_tokens_1-gram.txt","SG",8.84324650710886
+"data/books/theGreatGatsby_tokens_1-gram.txt","minimax",8.86669167059259

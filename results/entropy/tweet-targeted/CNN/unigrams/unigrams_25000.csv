@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","ML",9.29386607793226
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","MM",9.30505569722735
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","Laplace",9.42678094098645
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","CS",9.32925780660968
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","shrink",9.29418796051263
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","Jeffreys",9.36167417018045
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","SG",9.29387162731709
+"data/scraping-cleaned/cnn_2007-02-09_2023-01-01_tokens_1-gram.txt","minimax",9.30089353777219

@@ -1,0 +1,1 @@
+"Prediction: #FUNC# = ord ( #STR# ) #NEWLINE# #VAR# = { } #NEWLINE# #VAR# = #STR# #NEWLINE# for #FUNC# - #VAR# + #NUM# ) ) #FUNC# , #FUNC# in #VAR# ] #NEWLINE# #VAR# -= ( #FUNC# , #FUNC# in zip ( set ( #FUNC# [ #NUM# * #FUNC# = int ("

@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","ML",10.6471536300537
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","MM",10.6615385499918
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","Laplace",10.8268656227832
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","CS",10.7020048987887
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","shrink",10.6474385566986
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","Jeffreys",10.7392241653778
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","SG",10.6471559174964
+"data/scraping-cleaned/nytimes_2007-03-05_2023-01-01_tokens_1-gram.txt","minimax",10.65180661494

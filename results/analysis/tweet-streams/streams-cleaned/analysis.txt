@@ -1,0 +1,13 @@
+
+General informations
+Number of tweets: 19919907
+Time range: 2023-05-23 07:41:22 to 2023-06-13 17:40:02
+
+Tweets per user
+Number of users: 8977811
+Mean number of tweets per user: 2.2187933116435623
+Median number of tweets per user: 1.0
+Min number of tweets per user: 1
+Max number of tweets per user: 3075
+Number of users with more than 10 tweets: 207608
+Number of users with more than 100 tweets: 879

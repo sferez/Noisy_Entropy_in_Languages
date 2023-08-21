@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","ML",9.47762246765401
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","MM",9.49483294557763
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","Laplace",9.67343702174815
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","CS",9.54119829551518
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","shrink",9.47841463661589
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","Jeffreys",9.5782334170858
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","SG",9.47763076793396
+"data/scraping-cleaned/realDonaldTrump_2009-03-01_2021-01-09_tokens_1-gram.txt","minimax",9.48609588900954

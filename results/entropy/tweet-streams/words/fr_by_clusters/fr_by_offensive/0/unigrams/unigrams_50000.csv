@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/fr_by_offensive/0_tokens_1-gram.txt","ML",8.07390731974986
+"data/fr_by_offensive/0_tokens_1-gram.txt","MM",8.08457344029758
+"data/fr_by_offensive/0_tokens_1-gram.txt","Laplace",8.2423337513422
+"data/fr_by_offensive/0_tokens_1-gram.txt","CS",8.13009089398033
+"data/fr_by_offensive/0_tokens_1-gram.txt","shrink",8.07400690905724
+"data/fr_by_offensive/0_tokens_1-gram.txt","Jeffreys",8.15974100756214
+"data/fr_by_offensive/0_tokens_1-gram.txt","SG",8.07391082825793
+"data/fr_by_offensive/0_tokens_1-gram.txt","minimax",8.08034794573548

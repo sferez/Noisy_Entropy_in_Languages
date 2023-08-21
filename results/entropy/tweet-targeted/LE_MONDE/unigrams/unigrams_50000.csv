@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","ML",10.1360108688977
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","MM",10.1519052496776
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","Laplace",10.3194739588341
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","CS",10.1839634348548
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","shrink",10.1363472661518
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.2299313087802
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","SG",10.136014726008
+"data/scraping-cleaned/lemondefr_2009-03-01_2023-01-01_tokens_1-gram.txt","minimax",10.1418112679137

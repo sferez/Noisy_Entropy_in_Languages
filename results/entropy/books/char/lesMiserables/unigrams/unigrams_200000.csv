@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/books/les_miserables_tokens_1-gram_char.txt","ML",4.30572198462293
+"data/books/les_miserables_tokens_1-gram_char.txt","MM",4.30574060955017
+"data/books/les_miserables_tokens_1-gram_char.txt","Laplace",4.30592216909254
+"data/books/les_miserables_tokens_1-gram_char.txt","CS",4.30574798580228
+"data/books/les_miserables_tokens_1-gram_char.txt","shrink",4.30576142628872
+"data/books/les_miserables_tokens_1-gram_char.txt","Jeffreys",4.30582246291516
+"data/books/les_miserables_tokens_1-gram_char.txt","SG",4.30572441679238
+"data/books/les_miserables_tokens_1-gram_char.txt","minimax",4.30978127614655

@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 728521545
+Vocabulary size: 139103
+Number of tokens that only appear:
+	1: 10692, 7.69%
+	<=2: 71889, 51.68%
+	<=3: 84743, 60.92%
+	<=4: 95560, 68.70%
+	<=5: 102521, 73.70%
+	<=10: 120392, 86.55%
+	<=100: 135826, 97.64%
+
+Most common tokens:
+     token      count
+37  #FUNC#  177743726
+3        ;   61643148
+8        )   47744432
+6        (   47744189
+17   #NUM#   35638599
+7        ,   29480871
+5    #VAR#   28613482
+16       =   21186016
+54       [   20866156
+55       ]   20866132
+
+Most common tokens without special tokens:
+   token     count
+3      ;  61643148
+8      )  47744432
+6      (  47744189
+7      ,  29480871
+16     =  21186016
+54     [  20866156
+55     ]  20866132
+13     }  19969725
+9      {  19966174
+4    int  16647807
+
+Most common tokens without punctuation:
+      token     count
+4       int  16647807
+23       <<   8550269
+20   return   7739657
+70       if   7087148
+71       >>   6106519
+19       ++   4851176
+31     long   4410034
+15      for   4397590
+39    const   3886587
+176      ==   3832725

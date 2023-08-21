@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","ML",9.26000190844904
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","MM",9.29208779375551
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","Laplace",9.56050275503898
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","CS",9.36493459668987
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","shrink",9.26263847559884
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","Jeffreys",9.41658298850354
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","SG",9.26002779116054
+"data/scraping-cleaned/barackobama_2007-05-08_2023-01-01_tokens_1-gram.txt","minimax",9.27375947187595

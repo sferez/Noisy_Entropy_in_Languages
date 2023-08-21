@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","ML",4.90593123163644
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","MM",4.90638494031265
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","Laplace",4.91671066177933
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","CS",4.90761036936276
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","shrink",4.90593536677942
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","Jeffreys",4.91134703473732
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","SG",4.90593166728786
+"data/code/Java/clean_w_ALL/Java_clean_w_ALL_tokens_1-gram.txt","minimax",4.90866988149467

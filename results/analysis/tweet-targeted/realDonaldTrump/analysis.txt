@@ -1,0 +1,73 @@
+
+General informations
+Number of tweets: 53576
+Time range: 2009-05-04 18:54:25 to 2021-01-08 15:44:28
+
+Tweets per user
+Number of users: 5
+Mean number of tweets per user: 10715.2
+Median number of tweets per user: 2.0
+Min number of tweets per user: 1
+Max number of tweets per user: 53557
+Number of users with more than 10 tweets: 2
+Number of users with more than 100 tweets: 1
+
+Lenghts statistics:
+	Mean number of tokens per tweet: 23.259276541735105
+	Median number of tokens per tweet: 21.0
+	Std number of tokens per tweet: 14.007174475668672
+	Q1 number of tokens per tweet: 15.0
+	Q3 number of tokens per tweet: 28.0
+	Min number of tokens per tweet: 1
+	Max number of tokens per tweet: 78
+
+Vocabulary statistics:
+Total number of tokens: 1206388
+Vocabulary size: 33419
+Number of tokens that only appear:
+	1: 16802, 50.28%
+	<=2: 20789, 62.21%
+	<=3: 22861, 68.41%
+	<=4: 24270, 72.62%
+	<=5: 25195, 75.39%
+	<=10: 27761, 83.07%
+	<=100: 32249, 96.50%
+
+Most common tokens:
+    token  count
+9       .  54520
+17    the  44377
+22      ,  38899
+181     "  33483
+41      !  32064
+13     to  25500
+1     and  20336
+45      a  18866
+20     of  17450
+71     is  15728
+
+Most common tokens without punctuation:
+   token  count
+17   the  44377
+13    to  25500
+1    and  20336
+45     a  18866
+20    of  17450
+71    is  15728
+16    in  15279
+44   for  12484
+43   you  11336
+10     i  10676
+
+Most common tokens without stopwords:
+         token  count
+18       great   7455
+158      trump   6156
+116  president   4472
+32     country   2271
+39     america   2165
+284        big   2079
+474     donald   1893
+255       time   1885
+805       make   1829
+57        news   1751

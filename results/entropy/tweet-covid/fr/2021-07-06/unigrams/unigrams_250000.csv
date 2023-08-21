@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","ML",9.87224900227212
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","MM",9.94067443856905
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","Laplace",10.4195373681572
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","CS",10.0869229090571
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","shrink",9.87690172262137
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","Jeffreys",10.16476630111
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","SG",9.87228354732527
+"data/2021_by_fr/2021-07-06_tokens_1-gram.txt","minimax",9.88734134122352

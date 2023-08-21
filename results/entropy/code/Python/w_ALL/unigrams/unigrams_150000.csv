@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","ML",4.33684206145165
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","MM",4.33822444118537
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","Laplace",4.37497086182659
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","CS",4.34888800317987
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","shrink",4.33684384598403
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","Jeffreys",4.35605136362915
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","SG",4.33684231984454
+"data/code/Python/clean_w_ALL/Python_clean_w_ALL_tokens_1-gram.txt","minimax",4.33912552448294

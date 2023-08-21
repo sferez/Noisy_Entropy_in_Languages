@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 37996
+Vocabulary size: 4112
+Number of tokens that only appear:
+	1: 2235, 54.35%
+	<=2: 2874, 69.89%
+	<=3: 3165, 76.97%
+	<=4: 3338, 81.18%
+	<=5: 3458, 84.10%
+	<=10: 3715, 90.35%
+	<=100: 4053, 98.57%
+
+Most common tokens:
+   token  count
+8      ,   2849
+32     .   2805
+0    the    876
+98     ’    871
+6    and    805
+89     i    659
+53    to    626
+80     a    543
+4     of    518
+18    in    393
+
+Most common tokens without punctuation:
+    token  count
+0     the    876
+6     and    805
+89      i    659
+53     to    626
+80      a    543
+4      of    518
+18     in    393
+13     is    371
+294  that    369
+33    you    367
+
+Most common tokens without stopwords:
+       token  count
+5      romeo    320
+282     thou    278
+7     juliet    193
+345      thy    170
+97   capulet    163
+229     love    148
+155    nurse    148
+299     thee    138
+141     lady    117
+109    friar    105

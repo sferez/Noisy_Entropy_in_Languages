@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","ML",9.56385156166333
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","MM",9.6025105049527
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","Laplace",9.9472631236639
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","CS",9.69940121906076
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","shrink",9.56511541143012
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","Jeffreys",9.76409945370587
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","SG",9.56386837681593
+"data/scraping-cleaned/sanchezcastejon_2009-08-01_2023-01-01_tokens_1-gram.txt","minimax",9.57530374695286

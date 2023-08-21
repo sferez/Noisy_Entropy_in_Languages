@@ -1,0 +1,1 @@
+"Prediction: ] + . array ( [ #FUNC# ( #FUNC# == #NUM# and #FUNC# == #NUM# or #FUNC# != #NUM# : #FUNC# = ( #FUNC# , #FUNC# = #NUM# ) / ( #FUNC# - #FUNC# , - #NUM# + for - #VAR# ( #FUNC# ) - ( #FUNC# [ #STR# ]"

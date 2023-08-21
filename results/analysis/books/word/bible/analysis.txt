@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 949327
+Vocabulary size: 17694
+Number of tokens that only appear:
+	1: 6357, 35.93%
+	<=2: 8612, 48.67%
+	<=3: 9910, 56.01%
+	<=4: 10739, 60.69%
+	<=5: 11434, 64.62%
+	<=10: 13378, 75.61%
+	<=100: 16969, 95.90%
+
+Most common tokens:
+   token  count
+14     ,  70714
+2    the  64192
+7    and  51763
+20    of  34782
+9      .  26398
+94    to  13660
+34  that  12927
+1     in  12724
+31     :  12651
+42    he  10422
+
+Most common tokens without punctuation:
+     token  count
+2      the  64192
+7      and  51763
+20      of  34782
+94      to  13660
+34    that  12927
+1       in  12724
+42      he  10422
+176  shall   9840
+64    unto   8997
+96     for   8996
+
+Most common tokens without stopwords:
+         token  count
+205       lord   7830
+282       thou   5474
+392        thy   4600
+4          god   4443
+398       thee   3826
+2836    israel   2565
+121       hath   2264
+1299      king   2259
+743      house   2024
+424   children   1802

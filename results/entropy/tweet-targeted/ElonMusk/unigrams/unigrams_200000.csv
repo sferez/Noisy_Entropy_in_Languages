@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","ML",10.0622463657102
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","MM",10.1088684409456
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","Laplace",10.4306342554022
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","CS",10.1922933897082
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","shrink",10.0659742350649
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.2562645388569
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","SG",10.062272521504
+"data/scraping-cleaned/elonmusk_2011-12-01_2023-01-01_tokens_1-gram.txt","minimax",10.0750957214681

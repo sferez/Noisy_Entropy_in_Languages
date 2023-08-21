@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 33626
+Vocabulary size: 2772
+Number of tokens that only appear:
+	1: 1284, 46.32%
+	<=2: 1700, 61.33%
+	<=3: 1934, 69.77%
+	<=4: 2080, 75.04%
+	<=5: 2176, 78.50%
+	<=10: 2417, 87.19%
+	<=100: 2726, 98.34%
+
+Most common tokens:
+   token  count
+29     ,   2418
+6    the   1631
+53     '   1113
+48     `   1108
+95     .    976
+30   and    846
+18    to    721
+52     a    627
+37   she    537
+44    it    528
+
+Most common tokens without punctuation:
+     token  count
+6      the   1631
+30     and    846
+18      to    721
+52       a    627
+37     she    537
+44      it    528
+22      of    507
+249   said    462
+12       i    401
+15   alice    386
+
+Most common tokens without stopwords:
+        token  count
+15      alice    386
+122      time     68
+1701    queen     68
+2119     king     61
+286     began     58
+2249     mock     56
+2309   turtle     56
+1878   hatter     55
+2313  gryphon     54
+458      head     48

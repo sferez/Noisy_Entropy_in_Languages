@@ -1,0 +1,73 @@
+
+General informations
+Number of tweets: 17848
+Time range: 2011-12-01 09:55:11 to 2022-12-31 22:19:51
+
+Tweets per user
+Number of users: 1
+Mean number of tweets per user: 17848.0
+Median number of tweets per user: 17848.0
+Min number of tweets per user: 17848
+Max number of tweets per user: 17848
+Number of users with more than 10 tweets: 1
+Number of users with more than 100 tweets: 1
+
+Lenghts statistics:
+	Mean number of tokens per tweet: 14.097545943523084
+	Median number of tokens per tweet: 10.0
+	Std number of tokens per tweet: 13.338109052601009
+	Q1 number of tokens per tweet: 4.0
+	Q3 number of tokens per tweet: 21.0
+	Min number of tokens per tweet: 1
+	Max number of tokens per tweet: 80
+
+Vocabulary statistics:
+Total number of tokens: 243208
+Vocabulary size: 15720
+Number of tokens that only appear:
+	1: 7039, 44.78%
+	<=2: 9362, 59.55%
+	<=3: 10615, 67.53%
+	<=4: 11406, 72.56%
+	<=5: 11950, 76.02%
+	<=10: 13399, 85.24%
+	<=100: 15408, 98.02%
+
+Most common tokens:
+    token  count
+10      .  11538
+29      ,   8288
+8      to   5737
+2     the   5463
+108    is   4507
+16      a   4311
+49     of   3838
+15     in   2908
+27      !   2631
+270     &   2579
+
+Most common tokens without punctuation:
+    token  count
+8      to   5737
+2     the   5463
+108    is   4507
+16      a   4311
+49     of   3838
+15     in   2908
+176   for   2453
+113  will   2028
+141    be   1977
+59   that   1842
+
+Most common tokens without stopwords:
+        token  count
+433     tesla   1366
+40      great    566
+446      time    417
+5       model    416
+178       car    414
+3868  twitter    399
+1136     high    368
+1436        3    364
+346      make    363
+475      year    333

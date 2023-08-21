@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","ML",9.4103096505581
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","MM",9.41679726651422
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","Laplace",9.51584541359803
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","CS",9.44448376897891
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","shrink",9.41039344928601
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","Jeffreys",9.46393365821498
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","SG",9.41031074317671
+"data/scraping-cleaned/ukraine_russia_en_tokens_1-gram.txt","minimax",9.41394805299668

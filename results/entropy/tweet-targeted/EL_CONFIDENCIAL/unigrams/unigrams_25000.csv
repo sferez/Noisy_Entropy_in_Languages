@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","ML",7.50290691576373
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","MM",7.5187381391971
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","Laplace",7.73276762363685
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","CS",7.58586244751546
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","shrink",7.50308245935487
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","Jeffreys",7.62063352736579
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","SG",7.50291659284581
+"data/scraping-cleaned/elconfidencial_2008-11-01_2023-01-01_tokens_1-gram.txt","minimax",7.51320945839619

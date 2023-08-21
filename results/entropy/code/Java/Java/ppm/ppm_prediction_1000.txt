@@ -1,0 +1,1 @@
+"Prediction: import #FUNC# . #FUNC# . #FUNC# ; import #FUNC# . util . Arrays ; import #FUNC# . util . Collections ; import #FUNC# . util . #FUNC# ; public class #FUNC# { public static void main ( String [ ] #VAR# ) { long #VAR# = #FUNC# / #NUM# *"

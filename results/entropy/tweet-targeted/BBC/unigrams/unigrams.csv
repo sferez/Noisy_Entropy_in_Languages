@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","ML",10.9318111342032
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","MM",10.9502260444541
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","Laplace",11.1391442603683
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","CS",10.9950629358974
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","shrink",10.9324239148957
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","Jeffreys",11.0384878918994
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","SG",10.931814394994
+"data/scraping-cleaned/bbcnews_2007-01-08_2023-01-01_tokens_1-gram.txt","minimax",10.9371077112231

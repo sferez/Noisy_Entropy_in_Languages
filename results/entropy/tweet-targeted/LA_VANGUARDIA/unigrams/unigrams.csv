@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","ML",10.3836209830641
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","MM",10.4041402567503
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","Laplace",10.6395456515001
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","CS",10.4645846248221
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","shrink",10.3838760457136
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.5152665769597
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","SG",10.383623928529
+"data/scraping-cleaned/lavanguardia_2009-09-01_2023-01-01_tokens_1-gram.txt","minimax",10.3889190139508

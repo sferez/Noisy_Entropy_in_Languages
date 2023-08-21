@@ -1,0 +1,63 @@
+
+General informations
+Number of tweets: 3506969
+
+Vocabulary statistics:
+Total number of tokens: 276074672
+Vocabulary size: 69
+Number of tokens that only appear:
+	1: 0, 0.00%
+	<=2: 0, 0.00%
+	<=3: 0, 0.00%
+	<=4: 0, 0.00%
+	<=5: 0, 0.00%
+	<=10: 0, 0.00%
+	<=100: 0, 0.00%
+
+Most common tokens:
+   token     count
+5         47448802
+2      e  28624299
+9      a  27202770
+4      o  20335322
+7      s  15572240
+12     n  15153636
+8      i  14076790
+18     r  13692170
+0      l  11283613
+10     d  10074059
+
+Most common tokens without punctuation:
+   token     count
+5         47448802
+2      e  28624299
+9      a  27202770
+4      o  20335322
+7      s  15572240
+12     n  15153636
+8      i  14076790
+18     r  13692170
+0      l  11283613
+10     d  10074059
+
+Most common tokens without stopwords:
+   token     count
+5         47448802
+18     r  13692170
+14     p   5817327
+20     b   2833051
+3      g   2813662
+35     f   1658549
+33     x    437652
+38     0    400796
+26     2    308956
+22     1    308415
+
+Lenghts statistics:
+	Mean number of tokens per tweet: 79.21088103866508
+	Median number of tokens per tweet: 71.0
+	Std number of tokens per tweet: 54.44813106547912
+	Q1 number of tokens per tweet: 34.0
+	Q3 number of tokens per tweet: 121.0
+	Min number of tokens per tweet: 1
+	Max number of tokens per tweet: 544

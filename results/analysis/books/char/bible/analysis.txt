@@ -1,0 +1,51 @@
+
+Vocabulary statistics:
+Total number of tokens: 4250846
+Vocabulary size: 52
+Number of tokens that only appear:
+	1: 1, 1.92%
+	<=2: 3, 5.77%
+	<=3: 3, 5.77%
+	<=4: 3, 5.77%
+	<=5: 3, 5.77%
+	<=10: 3, 5.77%
+	<=100: 6, 11.54%
+
+Most common tokens:
+   token   count
+2         750880
+7      e  412160
+5      t  317696
+6      h  282657
+14     a  275701
+10     o  243143
+4      n  225026
+3      i  193926
+19     s  189997
+13     r  170301
+
+Most common tokens without punctuation:
+   token   count
+2         750880
+7      e  412160
+5      t  317696
+6      h  282657
+14     a  275701
+10     o  243143
+4      n  225026
+3      i  193926
+19     s  189997
+13     r  170301
+
+Most common tokens without stopwords:
+   token   count
+2         750880
+13     r  170301
+21     f   83534
+18     w   65478
+9      g   55279
+8      b   48853
+26     p   43248
+0      1   27087
+17     2   18976
+27     3   12259

@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","ML",10.0746296317662
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","MM",10.1087488182802
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","Laplace",10.4823526757618
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","CS",10.2219499035462
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","shrink",10.0752217495215
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","Jeffreys",10.2868099898086
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","SG",10.0746355087792
+"data/covid-clean/2020_by_es/2020-09-14_tokens_1-gram.txt","minimax",10.0820431425021

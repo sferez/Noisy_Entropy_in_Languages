@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","ML",10.492979313548
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","MM",10.51308208128
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","Laplace",10.6778102436682
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","CS",10.5424953050244
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","shrink",10.4941832927046
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.5881397382376
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","SG",10.4929871794037
+"data/scraping-cleaned/france24_2007-03-01_2023-01-01_tokens_1-gram.txt","minimax",10.5004096130023

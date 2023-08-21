@@ -1,0 +1,73 @@
+
+General informations
+Number of tweets: 314065
+Time range: 2022-01-01 00:19:09 to 2023-06-28 23:39:18
+
+Tweets per user
+Number of users: 27890
+Mean number of tweets per user: 11.260846181427034
+Median number of tweets per user: 1.0
+Min number of tweets per user: 1
+Max number of tweets per user: 222147
+Number of users with more than 10 tweets: 1040
+Number of users with more than 100 tweets: 89
+
+Lenghts statistics:
+	Mean number of tokens per tweet: 31.48727492716476
+	Median number of tokens per tweet: 32.0
+	Std number of tokens per tweet: 16.53356372788492
+	Q1 number of tokens per tweet: 17.0
+	Q3 number of tokens per tweet: 46.0
+	Min number of tokens per tweet: 1
+	Max number of tokens per tweet: 176
+
+Vocabulary statistics:
+Total number of tokens: 9578627
+Vocabulary size: 187950
+Number of tokens that only appear:
+	1: 98531, 52.42%
+	<=2: 122077, 64.95%
+	<=3: 133721, 71.15%
+	<=4: 140928, 74.98%
+	<=5: 146218, 77.80%
+	<=10: 159268, 84.74%
+	<=100: 181754, 96.70%
+
+Most common tokens:
+   token   count
+7     de  430195
+17     ,  308563
+35     .  267541
+3     la  259063
+37     a  236203
+29    le  189581
+13   les  183899
+32    et  162224
+33    en  127436
+72   des  121369
+
+Most common tokens without punctuation:
+   token   count
+7     de  430195
+3     la  259063
+37     a  236203
+29    le  189581
+13   les  183899
+32    et  162224
+33    en  127436
+72   des  121369
+24    du   88801
+21   que   86329
+
+Most common tokens without stopwords:
+          token  count
+23        c'est  46002
+954      guerre  38367
+3254    kremlin  37879
+637      russie  37639
+6         putin  37582
+1935  l'ukraine  37458
+2776    ukraine  36097
+9672      minsk  35647
+8396       kiev  35485
+3767   #ukraine  29052

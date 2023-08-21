@@ -1,0 +1,1 @@
+"Prediction: + #STR# ) ** #VAR# #NEWLINE# #DEDENT# while #NUM# : #NEWLINE# #INDENT# return #FUNC# , #NUM# #NEWLINE# #DEDENT# else : #NEWLINE# #INDENT# count + #NUM# == from #VAR# import * #NEWLINE# #FUNC# = input ( ) . strip ( ) for #FUNC# in range ( ord ( #STR# ) ;"

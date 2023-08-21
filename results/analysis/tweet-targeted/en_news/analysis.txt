@@ -1,0 +1,73 @@
+
+General informations
+Number of tweets: 904358
+Time range: 2007-01-08 09:49:15 to 2022-12-31 23:55:04
+
+Tweets per user
+Number of users: 6
+Mean number of tweets per user: 150726.33333333334
+Median number of tweets per user: 177313.5
+Min number of tweets per user: 2610
+Max number of tweets per user: 223348
+Number of users with more than 10 tweets: 6
+Number of users with more than 100 tweets: 6
+
+Lenghts statistics:
+	Mean number of tokens per tweet: 16.541846259998806
+	Median number of tokens per tweet: 13.0
+	Std number of tokens per tweet: 10.3277557273777
+	Q1 number of tokens per tweet: 10.0
+	Q3 number of tokens per tweet: 20.0
+	Min number of tokens per tweet: 1
+	Max number of tokens per tweet: 125
+
+Vocabulary statistics:
+Total number of tokens: 14568184
+Vocabulary size: 170470
+Number of tokens that only appear:
+	1: 75227, 44.13%
+	<=2: 97011, 56.91%
+	<=3: 108490, 63.64%
+	<=4: 115685, 67.86%
+	<=5: 120838, 70.89%
+	<=10: 134504, 78.90%
+	<=100: 160208, 93.98%
+
+Most common tokens:
+     token   count
+245    the  469616
+8        .  389478
+48       ,  377961
+51      to  359152
+13      in  304504
+29      of  285437
+49       a  276191
+76       :  230636
+4328     "  183224
+22     and  171206
+
+Most common tokens without punctuation:
+    token   count
+245   the  469616
+51     to  359152
+13     in  304504
+29     of  285437
+49      a  276191
+22    and  171206
+4     for  149072
+160    on  139961
+189    is   96231
+91     at   79041
+
+Most common tokens without stopwords:
+           token  count
+420    president  29057
+2724       trump  28471
+464       police  24553
+22159         ..  21501
+5961        live  19231
+28050         uk  17559
+1936       world  16864
+178        house  16097
+5           news  15258
+877        video  15046

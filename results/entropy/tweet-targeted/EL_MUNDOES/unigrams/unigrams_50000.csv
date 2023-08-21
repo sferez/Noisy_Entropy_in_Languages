@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","ML",9.87344585010467
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","MM",9.89852406054526
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","Laplace",10.1660674250527
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","CS",9.97235415057308
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","shrink",9.87385455341239
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.0246329582516
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","SG",9.87345212361961
+"data/scraping-cleaned/elmundoes_2008-04-01_2023-01-01_tokens_1-gram.txt","minimax",9.88095514107058

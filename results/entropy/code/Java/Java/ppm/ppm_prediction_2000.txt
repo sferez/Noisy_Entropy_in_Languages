@@ -1,0 +1,1 @@
+"Prediction: { private String [ #VAR# ] [ #FUNC# . #VAR# ] == Double . || #VAR# -= #VAR# ; println ( #VAR# - #NUM# ) { #FUNC# [ #FUNC# [ this . #FUNC# / this ( Integer acd { applyImpl ( #FUNC# / #VAR# -= #VAR# ; #VAR# #FUNC# ;"

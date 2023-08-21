@@ -1,0 +1,1 @@
+"Prediction: && #VAR# ++ >= #NUM# << #NUM# ) #VAR# ) import #FUNC# . util . #FUNC# ; public class #FUNC# { final #FUNC# #VAR# = new #FUNC# ( System . #FUNC# ) ; while ( true ) { int #FUNC# = #VAR# + #VAR# * #VAR# ; #FUNC# . print"

@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","ML",3.60446421321134
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","MM",3.60469804075063
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","Laplace",3.6113566410998
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","CS",3.60621646755196
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","shrink",3.60446511181665
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","Jeffreys",3.60792987446413
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","SG",3.60446435276474
+"data/code/C++/clean_w_STR/C++_clean_w_STR_tokens_1-gram.txt","minimax",3.60619139092594

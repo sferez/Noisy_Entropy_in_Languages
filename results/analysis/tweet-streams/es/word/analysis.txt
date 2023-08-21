@@ -1,0 +1,63 @@
+
+General informations
+Number of tweets: 3506969
+
+Lenghts statistics:
+	Mean number of tokens per tweet: 16.015975646164502
+	Median number of tokens per tweet: 14.0
+	Std number of tokens per tweet: 11.380335954983657
+	Q1 number of tokens per tweet: 7.0
+	Q3 number of tokens per tweet: 23.0
+	Min number of tokens per tweet: 1
+	Max number of tokens per tweet: 122
+
+Vocabulary statistics:
+Total number of tokens: 54452795
+Vocabulary size: 623123
+Number of tokens that only appear:
+	1: 341652, 54.83%
+	<=2: 416015, 66.76%
+	<=3: 451605, 72.47%
+	<=4: 473748, 76.03%
+	<=5: 489430, 78.54%
+	<=10: 529212, 84.93%
+	<=100: 599246, 96.17%
+
+Most common tokens:
+   token    count
+51    de  2197584
+16     ,  1700352
+1    que  1575210
+7     la  1416814
+36     .  1220567
+12     a  1195991
+5     el  1169999
+28   ...  1143995
+25     y  1105736
+14    en   995651
+
+Most common tokens without punctuation:
+    token    count
+51     de  2197584
+1     que  1575210
+7      la  1416814
+12      a  1195991
+5      el  1169999
+25      y  1105736
+14     en   995651
+44     no   767106
+189   los   537502
+45     es   528413
+
+Most common tokens without stopwords:
+        token  count
+279      solo  97479
+308       hoy  93070
+328       asi  91436
+95       anos  67924
+239    quiero  67868
+437       ver  65322
+119      hace  62079
+393      vida  61625
+226   siempre  60944
+1096    ahora  60713

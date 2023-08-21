@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","ML",11.0710476109098
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","MM",11.0889949916603
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","Laplace",11.2663549529593
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","CS",11.1299832946017
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","shrink",11.0716710933461
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","Jeffreys",11.1715069239627
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","SG",11.0710508831045
+"data/scraping-cleaned/reuters_2007-03-01_2023-01-01_tokens_1-gram.txt","minimax",11.076261917626

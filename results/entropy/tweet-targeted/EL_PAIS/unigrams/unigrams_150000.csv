@@ -1,0 +1,9 @@
+"file","method","entropy"
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","ML",10.3061517454475
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","MM",10.3226260049036
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","Laplace",10.5261406124192
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","CS",10.3751479424021
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","shrink",10.3063415895447
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","Jeffreys",10.4189175373856
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","SG",10.3061538498758
+"data/scraping-cleaned/el_pais_2007-08-01_2023-01-01_tokens_1-gram.txt","minimax",10.3107692389333

@@ -1,0 +1,60 @@
+
+Vocabulary statistics:
+Total number of tokens: 177870063
+Vocabulary size: 144387
+Number of tokens that only appear:
+	1: 20178, 13.97%
+	<=2: 44585, 30.88%
+	<=3: 63671, 44.10%
+	<=4: 78673, 54.49%
+	<=5: 86514, 59.92%
+	<=10: 109447, 75.80%
+	<=100: 135950, 94.16%
+
+Most common tokens:
+   token     count
+18     ;  14131619
+7      (  14041894
+12     )  14041894
+24     .   8328793
+16     =   6974724
+31     }   5971600
+3      {   5971567
+9      [   5535193
+10     ]   5535193
+14   int   4778662
+
+Most common tokens without special tokens:
+   token     count
+18     ;  14131619
+7      (  14041894
+12     )  14041894
+24     .   8328793
+16     =   6974724
+31     }   5971600
+3      {   5971567
+9      [   5535193
+10     ]   5535193
+14   int   4778662
+
+Most common tokens without punctuation:
+      token    count
+14      int  4778662
+32        i  4351738
+60        0  2424591
+17        1  1886678
+112  return  1855692
+51      new  1802766
+0    public  1734869
+15        a  1704859
+61        n  1604409
+58       if  1603130
+
+Lenghts statistics:
+	Mean number of tokens per code: 510.7811720030875
+	Median number of tokens per code: 205.0
+	Std number of tokens per code: 1481.6417402744844
+	Q1 number of tokens per code: 124.0
+	Q3 number of tokens per code: 451.0
+	Min number of tokens per code: 34
+	Max number of tokens per code: 50891
