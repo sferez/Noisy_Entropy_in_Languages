@@ -2,8 +2,21 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Clean code by allowing to detect and remove variables, functions, numbers, strings and comments.
 
-Clean code by allowing to detect and remove variables, functions, numbers, strings and comments.
+CLI Arguments:
+    - --input, --i: Directory or TSV File
+    - --lang, --l: Language: Java, Python, C++
+    - --debug, --d: Debug, get replacements details in output file (default: False)
+    - --var, --v: Keep variables (default: False)
+    - --number, --num: Keep numbers (default: False)
+    - --comments, --com: Keep comments (default: False)
+    - --string, --s: Keep strings (default: False)
+
+Examples:
+    >>> python clean_code.py --input data.tsv --lang Python
+    >>> python clean_code.py --input data.tsv --lang Python --debug
+    >>> python clean_code.py --input data.tsv --lang Python --debug --var --num
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -104,10 +117,12 @@ comments = {
 def rm_comments(tokens):
     """
     Remove comments from a list of tokens and replace them by #COMMENTS#.
+
     :param tokens: list of tokens
     :type tokens: list
     :return: list of tokens
     :rtype: list
+
     >>> rm_comments(['def', 'hello', '(', ')', ':', '#', 'comment', 'return', '0'])
     >>> ['def', 'hello', '(', ')', ':', '#COMMENTS#', 'return', '0']
     """
@@ -130,10 +145,12 @@ def rm_comments(tokens):
 def rm_strings(tokens):
     """
     Remove strings from a list of tokens and replace them by #STR#.
+
     :param tokens: list of tokens
     :type tokens: list
     :return: list of tokens
     :rtype: list
+
     >>> rm_strings(['print', '(', '"', 'hello', '"', ')'])
     >>> ['print', '(', '#STR#', ')']
     """
@@ -153,10 +170,12 @@ def rm_strings(tokens):
 def rm_numbers(tokens):
     """
     Remove numbers from a list of tokens and replace them by #NUM#.
+
     :param tokens: list of tokens
     :type tokens: list
     :return: list of tokens
     :rtype: list
+
     >>> rm_numbers(['x', '=', '1', '+', '2'])
     >>> ['x', '=', '#NUM#', '+', '#NUM#']
     """
@@ -174,10 +193,12 @@ def rm_numbers(tokens):
 def rm_variables_and_func(tokens):
     """
     Remove variables and functions from a list of tokens and replace them by #VAR# and #FUNC#.
+
     :param tokens: list of tokens
     :type tokens: list
     :return: list of tokens
     :rtype: list
+
     >>> rm_variables_and_func(['x', '=', '1', '+', '2'])
     >>> ['#VAR#', '=', '1', '+', '2']
     """
@@ -203,10 +224,12 @@ def rm_variables_and_func(tokens):
 def process_file(file):
     """
     Process a file by removing variables, functions, numbers, strings and comments.
+
     :param file: file path
     :type file: str
     :return: None
     :rtype: None
+
     >>> process_file('data.tsv')
     """
     output_dir = f'clean{"_STR" if not string else ""}{"_NUM" if not number else ""}{"_VAR" if not var else ""}{"_COMMENTS" if not comments_ else ""}'
@@ -240,8 +263,10 @@ def process_file(file):
 def main():
     """
     Main function of the clean code script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print(f'Cleaning {lang}:')
@@ -295,9 +320,9 @@ if __name__ == '__main__':
         --string, --s: Keep strings (default: False)
         
     Examples:
-        >>> python clean-code.py --input data.tsv --lang Python
-        >>> python clean-code.py --input data.tsv --lang Python --debug
-        >>> python clean-code.py --input data.tsv --lang Python --debug --var --num
+        >>> python clean_code.py --input data.tsv --lang Python
+        >>> python clean_code.py --input data.tsv --lang Python --debug
+        >>> python clean_code.py --input data.tsv --lang Python --debug --var --num
     """
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', '--i', type=str, help='Directory or TSV File', required=True)

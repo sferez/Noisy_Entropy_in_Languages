@@ -1,5 +1,17 @@
 """
-This script calculates the entropy of a given vocabulary using the NSB method.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Run the NSB entropy estimation for the given tokens and vocabulary.
+
+CLI Arguments:
+    - --tokens, --t: Path to list of tokens
+    - --vocab, --v: Path to list of vocabulary
+
+Examples:
+    >>> python3 src/entropyEstimation/nsb.py --tokens tokens.txt
+    >>> python3 src/entropyEstimation/nsb.py --tokens tokens.txt --vocab vocab.txt
+
 """
 
 # ------------------------------------------------ IMPORTS ------------------------------------------------ #
@@ -8,7 +20,6 @@ This script calculates the entropy of a given vocabulary using the NSB method.
 from collections import Counter
 import numpy as np
 import argparse
-import os
 from nsb import make_nxkx, S, dS
 
 
@@ -16,6 +27,14 @@ from nsb import make_nxkx, S, dS
 
 
 def process_file():
+    """
+    Process the file containing the tokens and return the counts of each token and the list of all tokens.
+
+    :return: counts, all_tokens
+    :rtype: Counter, list
+
+    >>> process_file()
+    """
     global vocab
     with open(tokens, 'r') as f:
         all_tokens = f.read().splitlines()  # Assuming each line in vocab.txt is a separate token.
@@ -34,6 +53,16 @@ def process_file():
 
 
 def nsb_entropy(counts):
+    """
+    Calculate the nsb entropy of the given counts.
+
+    :param counts: counts of each token
+    :type counts: Counter
+    :return: entropy, std
+    :rtype: float, float
+
+    >>> nsb_entropy(Counter(['a', 'a', 'b', 'b', 'b']))
+    """
     histogram = list(counts.values())
     nxkx = make_nxkx(np.array(histogram), len(histogram))
     entropy = S(nxkx, sum(histogram), len(histogram))
@@ -51,6 +80,14 @@ def nsb_entropy(counts):
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
+    """
+    Main function of nsb.py
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     counts, all_tokens = process_file()
 
     entropy, std = nsb_entropy(counts)
@@ -63,6 +100,17 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of nsb.py
+    
+    Args:
+        --tokens, --t: Path to list of tokens
+        --vocab, --v: Path to list of vocabulary
+            
+    Examples:
+        >>> python3 src/entropyEstimation/nsb.py --tokens tokens.txt
+        >>> python3 src/entropyEstimation/nsb.py --tokens tokens.txt --vocab vocab.txt
+    """
     parser = argparse.ArgumentParser(description='Calculate the nsb entropy of a given vocabulary.')
     parser.add_argument('--tokens', '--t', type=str, help='Path to list of tokens')
     parser.add_argument('--vocab', '--v', type=str, help='Path to vocabulary file', default=None)

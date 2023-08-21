@@ -1,10 +1,20 @@
 """
-Hydrate tweets from a dataframe with tweet_id
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Hydrate tweets from a csv file with tweet_id
+
+CLI Arguments:
+    - --input, --i: Directory or CSV file
+    - --env: Environment file to get twitter credentials, consumer_key, consumer_secret, access_token, access_token_secret
+
+Example:
+    >>> python hydrate_tweets.py --input data.csv --env .env
 """
 
 # ------------------------------------------- IMPORTS -------------------------------------------
 
-# General imports
+# External
 import os
 import pandas as pd
 import csv
@@ -13,7 +23,7 @@ import argparse
 from twarc import Twarc2
 from pathlib import Path
 
-# Local imports
+# Internal
 from utils import get_metadata
 from env import get_consumer_key, get_consumer_secret, get_access_token, get_access_token_secret
 
@@ -21,6 +31,16 @@ from env import get_consumer_key, get_consumer_secret, get_access_token, get_acc
 # ------------------------------------------- FUNCTIONS -------------------------------------------
 
 def process_file(fp):
+    """
+    Process a csv file with tweet_id and hydrate it
+
+    :param fp: File path
+    :type fp: str
+    :return: None
+    :rtype: None
+
+    >>> process_file('data.csv')
+    """
     df = pd.read_csv(fp)
     tweet_id_df = df[['tweet_id']].dropna().astype(int)
 
@@ -47,6 +67,14 @@ def process_file(fp):
 # ------------------------------------------- SCRIPT -------------------------------------------
 
 def main():
+    """
+    Main function of hydrate_tweets.py
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     if os.path.isfile(input_):
         fp = input_
         process_file(fp)
@@ -62,6 +90,16 @@ def main():
 # ------------------------------------------- MAIN -------------------------------------------
 
 if __name__ == '__main__':
+    """
+    Command line arguments of hydrate_tweets.py
+    
+    Args:
+        --input, --i: Directory or CSV file
+        --env: Environment file to get twitter credentials, consumer_key, consumer_secret, access_token, access_token_secret
+        
+    Example:
+        >>> python hydrate_tweets.py --input data.csv --env .env
+    """
     parser = argparse.ArgumentParser(description='Hydrate tweets from a csv file with tweet_id')
 
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV file', required=True)

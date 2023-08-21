@@ -2,8 +2,13 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Generate metadata for a Twitter CSV file, metadata will be the raw dataset without the text column.
 
-Generate metadata for a Twitter CSV file, metadata will be the raw dataset without the text column.
+CLI Arguments:
+    - --input, --i: CSV File
+
+Examples:
+    >>> python generate_metadata.py --input data.csv
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -17,9 +22,11 @@ import argparse
 
 def main():
     """
-    Main function of the generate-metadata.py script.
+    Main function of the generate_metadata.py script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print('Generating metadata...')
@@ -34,13 +41,13 @@ def main():
 
 if __name__ == '__main__':
     """
-    Command Line Interface of the generate-metadata.py script.
+    Command Line Interface of the generate_metadata.py script.
     
     Args:
         --input, --i: CSV File
         
     Examples:
-        >>> python generate-metadata.py --input data.csv
+        >>> python generate_metadata.py --input data.csv
     """
     parser = argparse.ArgumentParser(description='Generate metadata for a CSV file.')
     parser.add_argument('--input', '--i', type=str, help='CSV file', required=True)

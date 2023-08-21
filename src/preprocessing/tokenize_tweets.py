@@ -2,8 +2,17 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Tokenize a Twitter CSV file.
 
-Tokenize a Twitter CSV file.
+CLI Arguments:
+    - --input, --i: Directory or CSV File
+    - --ngrams, --n: Generate n-grams (default: 1)
+    - --chars, --c: Use characters instead of words (default: False)
+
+Examples:
+    >>> python tokenize_tweets.py --input data
+    >>> python tokenize_tweets.py --input data --ngrams 2
+    >>> python tokenize_tweets.py --input data --ngrams 2 --chars
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -30,12 +39,14 @@ CHUNKSIZE = 100000
 def generate_ngrams(tokens, n):
     """
     Generate n-grams from a list of tokens.
+
     :param tokens: list of tokens
     :type tokens: list
     :param n: n-gram
     :type n: int
     :return: list of n-grams
     :rtype: list
+
     >>> generate_ngrams(['I', 'am', 'so', 'happy'], 2)
     >>> ['I am', 'am so', 'so happy']
     """
@@ -46,10 +57,12 @@ def generate_ngrams(tokens, n):
 def process_file(fp):
     """
     Process a Twitter CSV file.
+
     :param fp: file path
     :type fp: str
     :return: None
     :rtype: None
+
     >>> process_file('data.csv')
     """
     print(f'Tokenizing {fp}...')
@@ -84,12 +97,14 @@ def process_file(fp):
 def process_file_chunk(fp, num_lines):
     """
     Process a Twitter CSV file by chunks.
+
     :param fp: file path
     :type fp: str
     :param num_lines: number of lines
     :type num_lines: int
     :return: None
     :rtype: None
+
     >>> process_file_chunk('data.csv', 100_000)
     """
     vocab = set()
@@ -128,9 +143,11 @@ def process_file_chunk(fp, num_lines):
 
 def main():
     """
-    Main function of the tokenize-tweets.py script.
+    Main function of the tokenize_tweets.py script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print(f'Tokenizing data with {ngrams_}-grams tokens...')
@@ -157,7 +174,7 @@ def main():
 
 if __name__ == '__main__':
     """
-    Command Line Interface of the tokenize-tweets.py script.
+    Command Line Interface of the tokenize_tweets.py script.
     
     Args:
         --input, --i: Directory or CSV File
@@ -165,9 +182,9 @@ if __name__ == '__main__':
         --chars, --c: Use characters instead of words (default: False)
         
     Examples:
-        >>> python tokenize-tweets.py --input data
-        >>> python tokenize-tweets.py --input data --ngrams 2
-        >>> python tokenize-tweets.py --input data --ngrams 2 --chars
+        >>> python tokenize_tweets.py --input data
+        >>> python tokenize_tweets.py --input data --ngrams 2
+        >>> python tokenize_tweets.py --input data --ngrams 2 --chars
     """
     parser = argparse.ArgumentParser(description='Perform tokenization on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV file', required=True)

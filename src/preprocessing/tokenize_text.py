@@ -2,8 +2,17 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Tokenize the raw linguistic data txt files.
 
-Tokenize the raw linguistic data txt files.
+CLI Arguments:
+    - --input, --i: Directory or txt file
+    - --ngrams, --n: Generate n-grams (default: 1)
+    - --chars, --c: Use characters instead of words (default: False)
+
+Examples:
+    >>> python tokenize_text.py --input data.txt
+    >>> python tokenize_text.py --input data.txt --ngrams 2
+    >>> python tokenize_text.py --input data.txt --ngrams 2 --chars
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -22,12 +31,14 @@ import csv
 def generate_ngrams(tokens, n):
     """
     Generate n-grams from a list of tokens.
+
     :param tokens: list of tokens
     :type tokens: list
     :param n: n-gram
     :type n: int
     :return: list of n-grams
     :rtype: list
+
     >>> generate_ngrams(['I', 'am', 'so', 'happy'], 2)
     >>> ['I am', 'am so', 'so happy']
     """
@@ -38,10 +49,12 @@ def generate_ngrams(tokens, n):
 def process_file(fp):
     """
     Process a txt file by tokenizing it.
+
     :param fp: file path
     :type fp: str
     :return: None
     :rtype: None
+
     >>> process_file('data.txt')
     """
     print(f'Tokenizing {fp}...')
@@ -78,9 +91,11 @@ def process_file(fp):
 
 def main():
     """
-    Main function of the tokenize-text.py script.
+    Main function of the tokenize_text.py script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print(f'Tokenizing data with {ngrams_}-grams tokens...')
@@ -99,7 +114,7 @@ def main():
 
 if __name__ == '__main__':
     """
-    Command Line Interface of the tokenize-text.py script.
+    Command Line Interface of the tokenize_text.py script.
     
     Args:
         --input, --i: Directory or txt file
@@ -107,9 +122,9 @@ if __name__ == '__main__':
         --chars, --c: Use characters instead of words (default: False)
         
     Examples:
-        >>> python tokenize-text.py --input data.txt
-        >>> python tokenize-text.py --input data.txt --ngrams 2
-        >>> python tokenize-text.py --input data.txt --ngrams 2 --chars
+        >>> python tokenize_text.py --input data.txt
+        >>> python tokenize_text.py --input data.txt --ngrams 2
+        >>> python tokenize_text.py --input data.txt --ngrams 2 --chars
     """
     parser = argparse.ArgumentParser(description='Perform tokenization on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory or txt file', required=True)

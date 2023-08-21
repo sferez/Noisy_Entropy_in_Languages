@@ -1,9 +1,13 @@
 """
-Run the preliminary analysis on a dataset to explore the data.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Performs a preliminary analysis of the text files.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
 
+# External
 import os
 import string
 import pandas as pd
@@ -16,7 +20,6 @@ import nltk
 # -------------------------------------------------- GLOBALS -------------------------------------------------- #
 
 sns.set_theme(style="darkgrid")
-
 filename = ""
 
 
@@ -24,10 +27,35 @@ filename = ""
 
 
 def is_punctuation(token):
+    """
+    Check if a token is a punctuation symbol.
+
+    :param token: The token to check.
+    :type token: str
+    :return: True if the token is a punctuation symbol, False otherwise.
+    :rtype: bool
+
+    >>> is_punctuation("!")
+    >>> True
+    """
     return True if token in string.punctuation or token in ("...", '`', "'", "—", '”', '“', "’") else False
 
 
 def plot_token_frequencies(df, vocab_size, save=False):
+    """
+    Plot the percentage of tokens that fall into each category.
+
+    :param df: The DataFrame containing the tokens and their frequencies.
+    :type df: pd.DataFrame
+    :param vocab_size: The size of the vocabulary.
+    :type vocab_size: int
+    :param save: Whether to save the plot or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_token_frequencies(pd.DataFrame({'token': ['a', 'b', 'c'], 'count': [1, 2, 3]}), 3)
+    """
     # Calculate the percentage of tokens that fall into each category
     categories = [1, 2, 3, 4, 5, 10, 100]
     percentages = [len(df[df["count"] <= cat]) / vocab_size * 100 for cat in categories]
@@ -50,6 +78,18 @@ def plot_token_frequencies(df, vocab_size, save=False):
 
 
 def analyse_tokens(token_file, save=False):
+    """
+    Perform a preliminary analysis of the tokens.
+
+    :param token_file: The path to the file containing the tokens.
+    :type token_file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> analyse_tokens('token.txt')
+    """
     nltk.download('stopwords')
     stopwords = nltk.corpus.stopwords.words()
 
@@ -204,6 +244,18 @@ def analyse_tokens(token_file, save=False):
 
 
 def run_text_analysis(file, save=False):
+    """
+    Run the analysis of the text files.
+
+    :param file: The path to the file containing the tokens.
+    :type file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> run_text_analysis('text.txt')
+    """
     global filename
     if save:
         os.makedirs(f'../../Final/Analysis/{os.path.basename(file).split(".")[0]}', exist_ok=True)

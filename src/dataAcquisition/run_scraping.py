@@ -1,34 +1,24 @@
 """
-Script to run scraping.py with arguments from command line.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Scraping Twitter with Seleniu and create a csv file with the data.
 
-Personalities (Class 1):
-    @elonmusk start: 2010-01-01
-    @billgates start: 2009-01-01
-    @barackobama start: 2007-01-01
-    @emmanuelmacron start: 2013-01-01
-    @sanchezcastejon start: 2009-01-01
+CLI Arguments:
+    - --start, --s: Start date
+    - --end, --e: End date (default: today)
+    - --interval, --i: Interval (default: 1)
+    - --env: Environment file with Chrome driver path and Twitter credentials
+    - --from_account, --a: From account
+    - --hashtag, --h: Hashtag to search
+    - --word, --w: Word to search
+    - --headless: Headless mode (default: False)
+    - --only_id: Only collect tweet_id (default: False)
 
-News (Class 2):
-    # English
-    @BBCNews start: 2007-01-01
-    @CNN start: 2007-01-01
-    @nytimes start: 2007-01-01
-    @guardian start: 2007-01-01
-    @Reuters start: 2007-01-01
-
-    # French
-    1. Le Monde (@lemondefr)
-    2. Le Figaro (@Le_Figaro)
-    3. Libération (@libe)
-    4. France 24 (@FRANCE24)
-    5. L'Express (@lexpress)
-
-    # Spanish
-    1. El País (@el_pais)
-    2. El Mundo (@elmundoes)
-    3. La Vanguardia (@lavanguardia)
-    4. ABC.es (@abc_es)
-    5. El Confidencial (@elconfidencial)
+Examples:
+    >>>python3 run_scraping.py --start 2021-01-01 --end 2021-01-31 --env scraping.env --from_account elonmusk
+    >>>python3 run_scraping.py --start 2021-01-01 --end 2021-01-31 --env scraping.env --hashtag bitcoin
+    >>>python3 run_scraping.py --start 2021-01-01 --end 2021-01-31 --env scraping.env --word ukraine
 """
 
 # ---------------------------------------------------- IMPORTS ------------------------------------------------------- #
@@ -42,12 +32,19 @@ import sys
 # Internal
 from scraping import scraping
 from utils import init_driver
-import traceback
 
 
 # ---------------------------------------------------- SCRIPT -------------------------------------------------------- #
 
 def main():
+    """
+    Main function of run_scraping.py
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     print(f'Scraping from {start} to {end}')
     driver = init_driver(headless=headless, show_images=False, env=env)
     if mode == 'account':
@@ -74,6 +71,25 @@ def main():
 
 
 if __name__ == "__main__":
+    """
+    Command line arguments of run_scraping.py
+    
+    Args:
+        --start, --s: Start date
+        --end, --e: End date (default: today)
+        --interval, --i: Interval (default: 1)
+        --env: Environment file with Chrome driver path and Twitter credentials
+        --from_account, --a: From account
+        --hashtag, --h: Hashtag to search
+        --word, --w: Word to search
+        --headless: Headless mode (default: False)
+        --only_id: Only collect tweet_id (default: False)
+        
+    Examples:
+        >>>python3 run_scraping.py --start 2021-01-01 --end 2021-01-31 --env scraping.env --from_account elonmusk
+        >>>python3 run_scraping.py --start 2021-01-01 --end 2021-01-31 --env scraping.env --hashtag bitcoin
+        >>>python3 run_scraping.py --start 2021-01-01 --end 2021-01-31 --env scraping.env --word ukraine
+    """
     parser = argparse.ArgumentParser(description='Scraping Twitter')
 
     parser.add_argument('--start', '--s', type=str, help='Start date', required=True)

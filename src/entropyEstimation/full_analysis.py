@@ -1,5 +1,23 @@
 """
-Run the full analysis of the entropy estimation project.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Run the full analysis of the entropy estimation project, including unigram entropy estimation, PPM entropy estimation, and Hrate entropy estimation.
+
+CLI Arguments:
+    - --tokens, --t: Path to list of tokens
+    - --vocab, --v: Path to vocabulary file, if not provided, all tokens will be considered as vocabulary
+    - --use_vocab, --uv: Whether to use vocabulary for unigram entropy estimation (default: False)
+    - --unigrams, --u: Skip unigram entropy estimation
+    - --ppm, --p: Skip PPM entropy estimation
+    - --hrate, --h: Skip Hrate entropy estimation
+    - --fast, --f: Skip PPM entropy estimation, and uncertainty analysis
+    - --output_dir, --o: Path to output directory (default: results/<file_name>)
+
+Examples:
+    >>> python3 src/entropyEstimation/full_analysis.py --tokens tokens.txt --vocab vocab.txt
+    >>> python3 src/entropyEstimation/full_analysis.py --tokens tokens.txt --vocab vocab.txt  --fast
+    >>> python3 src/entropyEstimation/full_analysis.py --tokens tokens.txt --vocab vocab.txt  --unigrams
 """
 
 # ------------------------------------------------ IMPORTS ------------------------------------------------ #
@@ -19,6 +37,18 @@ hrate_max_tokens = [100_000]
 # ----------------------------------------------- FUNCTIONS ----------------------------------------------- #
 
 def run_unigram_entropy(tokens, vocab):
+    """
+    Run the unigram entropy estimation for the given tokens and vocabulary.
+
+    :param tokens: tokens file
+    :type tokens: str
+    :param vocab: vocab file
+    :type vocab: str
+    :return: None
+    :rtype: None
+
+    >>> run_unigram_entropy('tokens.txt', 'vocab.txt')
+    """
     print('Estimating unigram entropy...')
     for max_tokens in unigram_max_tokens:
         print(f'  max_tokens: {max_tokens}')
@@ -32,6 +62,18 @@ def run_unigram_entropy(tokens, vocab):
 
 
 def run_ppm_entropy(tokens, vocab):
+    """
+    Run the PPM entropy estimation for the given tokens and vocabulary.
+
+    :param tokens: tokens file
+    :type tokens: str
+    :param vocab: vocab file
+    :type vocab: str
+    :return: None
+    :rtype: None
+
+    >>> run_ppm_entropy('tokens.txt', 'vocab.txt')
+    """
     tokens_ = tokens.replace('.txt', '_ppm.txt')
     print('Estimating PPM entropy...')
     print('  Decay: None')
@@ -46,6 +88,16 @@ def run_ppm_entropy(tokens, vocab):
 
 
 def run_hrate_entropy(tokens):
+    """
+    Run the Hrate entropy estimation for the given tokens.
+
+    :param tokens: tokens file
+    :type tokens: str
+    :return: None
+    :rtype: None
+
+    >>> run_hrate_entropy('tokens.txt')
+    """
     print('Estimating Hrate entropy...')
     for max_tokens in hrate_max_tokens:
         print(f'  max_tokens: {max_tokens}')
@@ -55,6 +107,14 @@ def run_hrate_entropy(tokens):
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 
 def main():
+    """
+    Main function of full_analysis.py
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     print('Running full analysis...')
     if not skip_unigrams:
         run_unigram_entropy(tokens, vocab)
@@ -67,6 +127,24 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of full_analysis.py
+    
+    Args:
+        --tokens, --t: Path to list of tokens
+        --vocab, --v: Path to vocabulary file, if not provided, all tokens will be considered as vocabulary
+        --use_vocab, --uv: Whether to use vocabulary for unigram entropy estimation (default: False)
+        --unigrams, --u: Skip unigram entropy estimation
+        --ppm, --p: Skip PPM entropy estimation
+        --hrate, --h: Skip Hrate entropy estimation
+        --fast, --f: Skip PPM entropy estimation, and uncertainty analysis 
+        --output_dir, --o: Path to output directory (default: results/<file_name>)
+        
+    Examples:
+        >>> python3 src/entropyEstimation/full_analysis.py --tokens tokens.txt --vocab vocab.txt
+        >>> python3 src/entropyEstimation/full_analysis.py --tokens tokens.txt --vocab vocab.txt  --fast
+        >>> python3 src/entropyEstimation/full_analysis.py --tokens tokens.txt --vocab vocab.txt  --unigrams
+    """
     parser = argparse.ArgumentParser(description='Run the full analysis of the entropy estimation project.')
     parser.add_argument('--tokens', '--t', type=str, help='Path to list of tokens')
     parser.add_argument('--vocab', '--v', type=str, help='Path to vocabulary')

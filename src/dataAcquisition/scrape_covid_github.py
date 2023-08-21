@@ -1,13 +1,26 @@
 """
-Scrape covid data from github https://github.com/thepanacealab/covid19_twitter
-Scrape the dailies and rehydrate them
-"""
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Scrape covid data from github public repository and rehydrate it with twarc
 
-LANGUAGES = ['en', 'fr', 'es', 'de', 'it']
+
+CLI Arguments:
+    - --start, --s: Start date for scraping, format YYYY-MM-DD, min 2020-03-22
+    - --end, --e: End date for scraping, format YYYY-MM-DD, max 2023-04-12 (Default: 2023-04-12)
+    - --env: Environment file to get twitter credentials, consumer_key, consumer_secret, access_token, access_token_secret
+    - --max: Max number of tweets to get (Default: 500_000)
+    - --languages, --l: Languages to keep (Default: en fr es de it)
+
+Examples:
+    >>>python3 scrape_covid_github.py --env .env
+    >>>python3 scrape_covid_github.py --start 2020-03-22 --end 2020-03-23 --env .env
+    >>>python3 scrape_covid_github.py --start 2020-03-22 --end 2020-03-23 --max 1000 --env .env
+"""
 
 # ------------------------------------------- IMPORTS -------------------------------------------
 
-# General imports
+# External imports
 import datetime
 import wget
 import gzip
@@ -19,14 +32,27 @@ import csv
 from tqdm import tqdm
 import argparse
 
-# Local imports
+# Internal imports
 from utils import get_metadata
 from env import get_consumer_key, get_consumer_secret, get_access_token, get_access_token_secret
+
+# ------------------------------------------- GLOBALS -------------------------------------------
+
+
+LANGUAGES = ['en', 'fr', 'es', 'de', 'it']
 
 
 # ------------------------------------------- SCRIPT -------------------------------------------
 
 def main():
+    """
+    Scrape covid data from github public repository and rehydrate it with twarc
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     for date in range((end_date - start_date).days):
         date = (start_date + datetime.timedelta(days=date)).strftime("%Y-%m-%d")
 
@@ -74,6 +100,21 @@ def main():
 # ------------------------------------------- MAIN -------------------------------------------
 
 if __name__ == '__main__':
+    """
+    Command line arguments of the scrape_covid_github.py script
+    
+    Args:
+        --start, --s: Start date for scraping, format YYYY-MM-DD, min 2020-03-22
+        --end, --e: End date for scraping, format YYYY-MM-DD, max 2023-04-12 (Default: 2023-04-12)
+        --env: Environment file to get twitter credentials, consumer_key, consumer_secret, access_token, access_token_secret
+        --max: Max number of tweets to get (Default: 500_000)
+        --languages, --l: Languages to keep (Default: en fr es de it)
+        
+    Examples:
+        >>>python3 scrape_covid_github.py --env .env
+        >>>python3 scrape_covid_github.py --start 2020-03-22 --end 2020-03-23 --env .env
+        >>>python3 scrape_covid_github.py --start 2020-03-22 --end 2020-03-23 --max 1000 --env .env
+    """
     parser = argparse.ArgumentParser(
         description='Scrape covid data from github repo https://github.com/thepanacealab/covid19_twitter and '
                     'rehydrate it')

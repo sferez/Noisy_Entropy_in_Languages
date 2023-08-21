@@ -2,8 +2,24 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Clean Twitter CSV files.
 
-Clean Twitter CSV files.
+CLI Arguments:
+    - --input, --i: Directory containing the raw data, or CSV File
+    - --output, --o: Directory to save the scraping-cleaned data.
+    - --punctuation, --p: Keep punctuation (default: False)
+    - --accents, --a: Keep accents (default: False)
+    - --emojis, --e: Keep emojis (default: False)
+    - --mentions, --m: Keep mentions (default: False)
+    - --urls, --u: Keep urls (default: False)
+    - --spaces, --s: Keep extra spaces (default: False)
+    - --rt, --r: Keep RT Tags (default: False)
+    -- -lowercase, --l: Keep all cases (default: False)
+
+Examples:
+    >>> python clean_tweets.py --input data.csv --output data-cleaned
+    >>> python clean_tweets.py --input data.csv --output data-cleaned --punctuation
+    >>> python clean_tweets.py --input data.csv --output data-cleaned --punctuation --accents --emojis
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -26,10 +42,12 @@ from pandas.errors import ParserError
 def remove_emoticons(text):
     """
     Remove emoticons from a text using a regex.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_emoticons('I am so happy :)')
     >>> 'I am so happy '
     """
@@ -40,10 +58,12 @@ def remove_emoticons(text):
 def remove_emoji(text):
     """
     Remove emojis from a text using a regex.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_emoji('I am so happy 😊')
     >>> 'I am so happy '
     """
@@ -61,10 +81,12 @@ def remove_emoji(text):
 def remove_urls(text):
     """
     Remove urls from a text using a regex.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_urls('I am so happy https://www.google.com')
     >>> 'I am so happy '
     """
@@ -76,10 +98,12 @@ def remove_urls(text):
 def remove_twitter_urls(text):
     """
     Remove twitter urls from a text using a regex.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_urls('I am so happy pic.twitter.com/123')
     >>> 'I am so happy '
     """
@@ -90,10 +114,12 @@ def remove_twitter_urls(text):
 def give_emoji_free_text(text):
     """
     Remove emojis from a text using the emoji library.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> give_emoji_free_text('I am so happy 😊')
     >>> 'I am so happy '
     """
@@ -103,10 +129,12 @@ def give_emoji_free_text(text):
 def remove_mentions(text):
     """
     Remove mentions from a text using a regex.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_mentions('I am so happy @user')
     >>> 'I am so happy '
     """
@@ -116,10 +144,12 @@ def remove_mentions(text):
 def to_lowercase(text):
     """
     Convert a text to lowercase.
+
     :param text: text to convert
     :type text: str
     :return: converted text
     :rtype: str
+
     >>> to_lowercase('I am so happy')
     >>> 'i am so happy'
     """
@@ -129,10 +159,12 @@ def to_lowercase(text):
 def remove_punctuation(text):
     """
     Remove punctuation from a text.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_punctuation('I am so happy!')
     >>> 'I am so happy'
     """
@@ -143,10 +175,12 @@ def remove_punctuation(text):
 def remove_extra_spaces(text):
     """
     Remove extra spaces from a text.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_extra_spaces('I am so    happy')
     >>> 'I am so happy'
     """
@@ -161,10 +195,12 @@ def remove_extra_spaces(text):
 def remove_accents(text):
     """
     Remove accents from a text using the unidecode library.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_accents('Ceci est un résumé')
     >>> 'Ceci est un resume'
     """
@@ -174,10 +210,12 @@ def remove_accents(text):
 def remove_rt(text):
     """
     Remove RT from a text.
+
     :param text: text to clean
     :type text: str
     :return: cleaned text
     :rtype: str
+
     >>> remove_rt('RT : I am so happy')
     >>> 'I am so happy'
     """
@@ -191,10 +229,12 @@ def remove_rt(text):
 def process_file(fp):
     """
     Process a CSV file and save the cleaned version.
+
     :param fp: file path
     :type fp: str
     :return: None
     :rtype: None
+
     >>> process_file('data.csv')
     """
     try:
@@ -245,8 +285,10 @@ def process_file(fp):
 def main():
     """
     Main function of the data cleaning script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print('Cleaning data...')
@@ -283,9 +325,9 @@ if __name__ == '__main__':
         --lowercase, --l: Keep all cases (default: False)
         
     Examples:
-        >>> python clean-tweets.py --input data.csv --output data-cleaned
-        >>> python clean-tweets.py --input data.csv --output data-cleaned --punctuation
-        >>> python clean-tweets.py --input data.csv --output data-cleaned --punctuation --accents --emojis
+        >>> python clean_tweets.py --input data.csv --output data-cleaned
+        >>> python clean_tweets.py --input data.csv --output data-cleaned --punctuation
+        >>> python clean_tweets.py --input data.csv --output data-cleaned --punctuation --accents --emojis
     """
     parser = argparse.ArgumentParser(description='Perform data cleaning on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory containing the raw data, or CSV File',

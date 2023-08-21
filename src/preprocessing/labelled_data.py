@@ -2,8 +2,14 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Label a Twitter CSV file by adding a class column.
 
-Label a Twitter CSV file by adding a class column.
+CLI Arguments:
+    - --input, --i: CSV file or directory
+    - --class_, --c: Class to labelled the data
+
+Examples:
+    >>> python labelled_data.py --input data.csv --class_ 1
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -20,10 +26,12 @@ from tqdm import tqdm
 def process_file(fp):
     """
     Label a CSV file by adding a class column.
+
     :param fp: CSV file
     :type fp: str
     :return: None
     :rtype: None
+
     >>> process_file('data.csv')
     """
     df = pd.read_csv(fp)
@@ -36,9 +44,11 @@ def process_file(fp):
 
 def main():
     """
-    Main function of the labelled-data.py script.
+    Main function of the labelled_data.py script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print('Labelling data...')
@@ -58,14 +68,14 @@ def main():
 
 if __name__ == '__main__':
     """
-    Command Line Interface of the labelled-data.py script.
+    Command Line Interface of the labelled_data.py script.
     
     Args:
         --input, --i: CSV file or directory
         --class_, --c: Class to labelled the data
         
     Examples:
-        >>> python labelled-data.py --input data.csv --class_ 1
+        >>> python labelled_data.py --input data.csv --class_ 1
     """
     parser = argparse.ArgumentParser(description='Perform data cleaning on the raw linguistic data.')
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV file', required=True)

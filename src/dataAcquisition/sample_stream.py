@@ -1,7 +1,17 @@
 """
-Script to get a sample of the Twitter stream, using the Twitter API v2.
-Gather 1% of the real-time stream of Tweets based on a sample of all Tweets.
-Filter by language and save the data in a csv file.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Script to get a sample of the Twitter stream, using the Twitter API v2. Gather 1% of the real-time stream of Tweets based on a sample of all Tweets. Filter by language and save the data in a csv file.
+
+CLI Arguments:
+    - --env: Environment file to get twitter credentials, consumer_key, consumer_secret, access_token, access_token_secret
+    - --iter_max: Maximum number of tweets to get per language (Default: 1_000_000)
+    - --languages: Languages to keep (Default: en fr es de it)
+
+Examples:
+    >>>python3 sample_stream.py --env stream.env
+    >>>python3 sample_stream.py --env stream.env --iter_max 1000 --languages en fr
 """
 
 # ------------------------------------------- IMPORTS ----------------------------------------------------- #
@@ -27,6 +37,15 @@ LANGUAGES = ['en', 'fr', 'es', 'de', 'it']
 # ------------------------------------------- FUNCTIONS ------------------------------------------------------ #
 
 def create_url():
+    """
+    Create the url to get the sample stream
+
+    :return: url
+    :rtype: str
+
+    >>> create_url()
+    >>> 'https://api.twitter.com/2/tweets/sample/stream?tweet.fields=lang,created_at&expansions=author_id&user.fields=&place.fields=&media.fields='
+    """
     # Add the parameters you want to the URL
     tweet_fields = "tweet.fields=lang,created_at"
     expansions = "expansions=author_id"
@@ -40,6 +59,14 @@ def create_url():
 def bearer_oauth(r):
     """
     Method required by bearer token authentication.
+
+    :param r: request
+    :type r: requests
+    :return: request
+    :rtype: requests
+
+    >>> bearer_oauth(requests)
+    >>> requests
     """
     r.headers["Authorization"] = f"Bearer {bearer_token}"
     r.headers["User-Agent"] = "v2SampledStreamPython"
@@ -47,6 +74,15 @@ def bearer_oauth(r):
 
 
 def check_date():
+    """
+    Check if the date has changed, if so, close the current csv file and open a new one
+
+    :return: None
+    :rtype: None
+
+    >>> check_date()
+    >>> None
+    """
     current_date = datetime.datetime.now().strftime("%Y-%m-%d")
     global date, csv_file, csv_writer, iter_
     if current_date != date:
@@ -61,6 +97,16 @@ def check_date():
 
 
 def connect_to_endpoint(url):
+    """
+    Connect to the endpoint and get the data
+
+    :param url: url to connect to
+    :type url: str
+    :return: None
+    :rtype: None
+
+    >>> connect_to_endpoint('https://api.twitter.com/2/tweets/sample/stream?tweet.fields=lang,created_at&expansions=author_id&user.fields=&place.fields=&media.fields=')
+    """
     global iter_
     response = requests.request("GET", url, auth=bearer_oauth, stream=True)
     if response.status_code != 200:
@@ -119,6 +165,14 @@ def connect_to_endpoint(url):
 # ------------------------------------------- MAIN ----------------------------------------------------------- #
 
 def main():
+    """
+    Main function of the sample_stream.py script
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     url = create_url()
     timeout = 0
     while True:
@@ -139,6 +193,18 @@ def main():
 
 
 if __name__ == "__main__":
+    """
+    Command line arguments of the sample_stream.py script
+    
+    Args:
+        --env: Environment file to get twitter credentials, consumer_key, consumer_secret, access_token, access_token_secret
+        --iter_max: Maximum number of tweets to get per language (Default: 1_000_000)
+        --languages: Languages to keep (Default: en fr es de it)
+        
+    Examples:
+        >>>python3 sample_stream.py --env stream.env
+        >>>python3 sample_stream.py --env stream.env --iter_max 1000 --languages en fr
+    """
     parser = argparse.ArgumentParser(description='Sample Twitter Stream, get 1% of current tweets')
 
     parser.add_argument('--iter_max', type=int, default=1_000_000, help='Maximum number of tweets to get per language')

@@ -1,5 +1,8 @@
 """
-Create a dataframe from the results of the analysis.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Load the results of the analysis into dataframes.
 """
 
 # ----------------------------------------------- IMPORTS ----------------------------------------------- #
@@ -73,6 +76,22 @@ topic_id = {
 
 
 def process_ppm(ppm_dir):
+    """
+    Process the ppm results.
+    Return order:
+    - ppm_entropy
+    - ppm_infor_content
+    - ppm_model_order
+    - ppm_distribution
+
+    :param ppm_dir: The directory containing the ppm results.
+    :type ppm_dir: str
+    :return: A tuple containing the processed dataframes.
+    :rtype: tuple
+
+    >>> process_ppm('results/ppm')
+    >>> (ppm_entropy, ppm_infor_content, ppm_model_order, ppm_distribution)
+    """
     ppm_entropy = pd.DataFrame()
     ppm_infor_content = pd.DataFrame()
     ppm_model_order = pd.DataFrame()
@@ -116,6 +135,17 @@ def process_ppm(ppm_dir):
 
 
 def process_unigrams(unigram_dir):
+    """
+    Process the unigrams results.
+
+    :param unigram_dir: The directory containing the unigrams results.
+    :type unigram_dir: str
+    :return: The processed dataframe.
+    :rtype: pandas.DataFrame
+
+    >>> process_unigrams('results/unigrams')
+    >>> unigram_data
+    """
     unigram_data = pd.DataFrame()
 
     if os.path.exists(unigram_dir) and 'unigrams' in unigram_dir:
@@ -134,6 +164,17 @@ def process_unigrams(unigram_dir):
 
 
 def process_hrate(hrate_dir):
+    """
+    Process the hrate results.
+
+    :param hrate_dir: The directory containing the hrate results.
+    :type hrate_dir: str
+    :return: The processed dataframe.
+    :rtype: pandas.DataFrame
+
+    >>> process_hrate('results/hrate')
+    >>> hrate_data
+    """
     hrate_data = pd.DataFrame()
     if os.path.exists(hrate_dir) and 'hrate' in hrate_dir:
         for file in os.listdir(hrate_dir):
@@ -148,9 +189,15 @@ def process_hrate(hrate_dir):
 def process_label(label, label_type):
     """
     Process a label to get the correct label name.
+
     :param label: The label to process.
+    :type label: str
     :param label_type: The type of label to process.
+    :type label_type: str
     :return: The processed label.
+    :rtype: str
+
+    >>> process_label('0', 'emotion')
     """
     if label_type == 'emotion':
         return emotion_id[int(label)]
@@ -174,14 +221,20 @@ def process_single_analysis(directory):
     """
     Process the results of a single analysis.
     Return order:
-        - ppm_entropy
-        - ppm_infor_content
-        - ppm_model_order
-        - ppm_distribution
-        - unigram_data
-        - hrate_data
+    - ppm_entropy
+    - ppm_infor_content
+    - ppm_model_order
+    - ppm_distribution
+    - unigram_data
+    - hrate_data
+
     :param directory: The directory containing the results of the analysis.
+    :type directory: str
     :return: A tuple containing the processed dataframes.
+    :rtype: tuple
+
+    >>> process_single_analysis('results/elonmusk')
+    >>> (ppm_entropy, ppm_infor_content, ppm_model_order, ppm_distribution, unigram_data, hrate_data)
     """
     ppm_entropy, ppm_infor_content, ppm_model_order, ppm_distribution = process_ppm(os.path.join(directory, 'ppm'))
     unigram_data = process_unigrams(os.path.join(directory, 'unigrams'))
@@ -194,24 +247,31 @@ def process_multiple_analysis(main_dir, label_type):
     """
     Process the results of multiple analyses.
     label_type:
-        - sentiment
-        - topic
-        - emotion
-        - offensive
-        - hate
-        - date
-        - irony
-        - file
+    - sentiment
+    - topic
+    - emotion
+    - offensive
+    - hate
+    - date
+    - irony
+    - file
     Return order:
-        - ppm_entropy
-        - ppm_infor_content
-        - ppm_model_order
-        - ppm_distribution
-        - unigram_data
-        - hrate_data
+    - ppm_entropy
+    - ppm_infor_content
+    - ppm_model_order
+    - ppm_distribution
+    - unigram_data
+    - hrate_data
+
     :param main_dir: The directory containing the results of the analyses.
+    :type main_dir: str
     :param label_type: The type of label used for the analyses.
+    :type label_type: str
     :return: A tuple containing the processed dataframes.
+    :rtype: tuple
+
+    >>> process_multiple_analysis('results', 'sentiment')
+    >>> (ppm_entropy, ppm_infor_content, ppm_model_order, ppm_distribution, unigram_data, hrate_data)
     """
     if label_type not in ['sentiment', 'topic', 'emotion', 'offensive', 'hate', 'date', 'irony', 'file']:
         raise Exception(

@@ -1,6 +1,9 @@
 """
-File inspired from Scweet (https://github.com/Altimis/Scweet.git)
-Customized for the purpose of this project
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:credits: Scweet: An extensive toolbox to scrape Twitter, written in Python.
+:description: Twitter scraping module.
 """
 
 # -------------------------------------------- IMPORTS --------------------------------------------------------------- #
@@ -9,7 +12,6 @@ Customized for the purpose of this project
 import csv
 import os
 import datetime
-import argparse
 from time import sleep
 import random
 import pandas as pd
@@ -28,14 +30,62 @@ def scraping(since, until=None, words=None, to_account=None, from_account=None, 
              save_dir="outputs", filter_replies=False, proximity=False,
              geocode=None, minreplies=None, minlikes=None, minretweets=None, driver=None, env=None, only_id=False):
     """
-    scrape data from twitter using requests, starting from <since> until <until>. The program make a search between each <since> and <until_local>
-    until it reaches the <until> date if it's given, else it stops at the actual date.
+    :Function: Scraping tweets from Twitter.
 
-    return:
-    data : df containing all tweets scraped with the associated features.
-    save a csv file containing all tweets scraped with the associated features.
+    :param since: date from which we start scraping
+    :type since: str
+    :param until: date until which we scrape
+    :type until: str
+    :param words: list of words to search for
+    :type words: list
+    :param to_account: account to which we search for tweets
+    :type to_account: str
+    :param from_account: account from which we search for tweets
+    :type from_account: str
+    :param mention_account: account to which we search for tweets
+    :type mention_account: str
+    :param interval: interval of time between two searches
+    :type interval: int
+    :param lang: language of the tweets
+    :type lang: str
+    :param headless: headless mode
+    :type headless: bool
+    :param limit: limit of tweets to scrape
+    :type limit: int
+    :param display_type: type of display
+    :type display_type: str
+    :param resume: resume scraping from previous work
+    :type resume: bool
+    :param proxy: proxy to use
+    :type proxy: str
+    :param hashtag: hashtag to search for
+    :type hashtag: str
+    :param save_dir: directory to save the scraped tweets
+    :type save_dir: str
+    :param filter_replies: filter replies
+    :type filter_replies: bool
+    :param proximity: proximity search
+    :type proximity: bool
+    :param geocode: geocode
+    :type geocode: str
+    :param minreplies: minimum number of replies
+    :type minreplies: int
+    :param minlikes: minimum number of likes
+    :type minlikes: int
+    :param minretweets: minimum number of retweets
+    :type minretweets: int
+    :param driver: driver to use
+    :type driver: selenium.webdriver
+    :param env: environment to use
+    :type env: str
+    :param only_id: only scrape tweet ids
+    :type only_id: bool
+    :return: scraped tweets
+    :rtype: pd.DataFrame
+
+    >>> scraping(since='2020-01-01', until='2020-01-02', words=['covid', 'corona'], interval=1, save_dir='outputs')
+    >>> scraping(since='2020-01-01', until='2020-01-02', to_account='@elonmusk', interval=1, save_dir='outputs')
     """
-
     # ------------------------- Variables :
     # header of csv
     if only_id:

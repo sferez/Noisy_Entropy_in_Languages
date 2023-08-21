@@ -1,5 +1,20 @@
 """
-This script calculates the entropy of a given vocabulary.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Use PPM entropy estimation to estimate the entropy of a given corpus.
+
+CLI Arguments:
+    - --tokens: Path to list of tokens
+    - --vocab: Path to list of vocabulary
+    - --max_train: Maximum number of training samples to consider
+    - --decay: Whether to use the decay version of the algorithm
+    - --output_dir: Path to output directory
+
+Examples:
+    >>> python3 src/entropyEstimation/ppm.py --tokens tokens.txt --vocab vocab.txt
+    >>> python3 src/entropyEstimation/ppm.py --tokens tokens.txt --vocab vocab.txt --decay
+    >>> python3 src/entropyEstimation/ppm.py --tokens tokens.txt --vocab vocab.txt --max_train 5000
 """
 
 # ------------------------------------------------ IMPORTS ------------------------------------------------ #
@@ -11,6 +26,14 @@ import os
 
 # ------------------------------------------------- MAIN ------------------------------------------------- #
 def main():
+    """
+    Main function of ppm.py
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     if output_dir:
         result_dir = f'results/{output_dir}/ppm'
     else:
@@ -24,6 +47,21 @@ def main():
 # -------------------------------------------------- CLI -------------------------------------------------- #
 
 if __name__ == '__main__':
+    """
+    Command Line Interface of ppm.py
+    
+    Args:
+        --tokens: Path to list of tokens
+        --vocab: Path to list of vocabulary
+        --max_train: Maximum number of training samples to consider
+        --decay: Whether to use the decay version of the algorithm
+        --output_dir: Path to output directory
+        
+    Examples:
+        >>> python3 src/entropyEstimation/ppm.py --tokens tokens.txt --vocab vocab.txt
+        >>> python3 src/entropyEstimation/ppm.py --tokens tokens.txt --vocab vocab.txt --decay
+        >>> python3 src/entropyEstimation/ppm.py --tokens tokens.txt --vocab vocab.txt --max_train 5000 
+    """
     parser = argparse.ArgumentParser(description='Calculate the entropy of a given vocabulary.')
     parser.add_argument('--tokens', '--t', type=str, help='Path to list of tokens')
     parser.add_argument('--vocab', '--v', type=str, help='Path to list of vocabulary')

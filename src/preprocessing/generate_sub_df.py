@@ -2,9 +2,18 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:dsecription: Generate sub-datasets for a Twitter CSV file. Sub-datasets will be grouped by a column and will contain tweet_id and text columns.
 
-Generate sub-datasets for a Twitter CSV file.
-Sub-datasets will be grouped by a column and will contain tweet_id and text columns.
+CLI Arguments:
+    - --input, --i: CSV file
+    - --group-by, --gb: Column to group by
+    - --unit, --u: If group-by is "timestamp" choose between "D" (day), "M" (month), "Y" (year)
+    - --min-size, --ms: Minimum size of a sub-dataset (default: 100)
+
+Examples:
+    >>> python generate_sub_df.py --input data.csv --group-by lang
+    >>> python generate_sub_df.py --input data.csv --group-by timestamp --unit D
+    >>> python generate_sub_df.py --input data.csv --group-by timestamp --unit D --min-size 1000
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
@@ -22,10 +31,12 @@ from tqdm import tqdm
 def process_file(file):
     """
     Process a CSV file and generate sub-datasets grouped by a column.
+
     :param file: CSV file
     :type file: str
     :return: None
     :rtype: None
+
     >>> process_file('data.csv')
     """
     print(f'Processing {file}...')
@@ -66,9 +77,11 @@ def process_file(file):
 
 def main():
     """
-    Main function of the generate-sub-df.py script.
+    Main function of the generate_sub_df.py script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     print(f'Generating sub-datasets for {input_} grouped by {group_by}...')
@@ -88,7 +101,7 @@ def main():
 
 if __name__ == '__main__':
     """
-    Command Line Interface of the generate-sub-df.py script.
+    Command Line Interface of the generate_sub_df.py script.
     
     Args:
         --input, --i: CSV file
@@ -97,9 +110,9 @@ if __name__ == '__main__':
         --min-size, --ms: Minimum size of a sub-dataset (default: 100)
         
     Examples:
-        >>> python generate-sub-df.py --input data.csv --group-by lang
-        >>> python generate-sub-df.py --input data.csv --group-by timestamp --unit D
-        >>> python generate-sub-df.py --input data.csv --group-by timestamp --unit D --min-size 1000
+        >>> python generate_sub_df.py --input data.csv --group-by lang
+        >>> python generate_sub_df.py --input data.csv --group-by timestamp --unit D
+        >>> python generate_sub_df.py --input data.csv --group-by timestamp --unit D --min-size 1000
     """
     parser = argparse.ArgumentParser(description='Generate sub-datasets for a CSV file.')
     parser.add_argument('--input', '--i', type=str, help='CSV file', required=True)

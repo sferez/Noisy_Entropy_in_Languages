@@ -1,5 +1,17 @@
 """
-Run analysis on a directory of files.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Run the full analysis of the entropy estimation project, including unigram entropy estimation, PPM entropy estimation, and Hrate entropy estimation on a directory of files.
+
+CLI Arguments:
+    - --input_dir: Path to directory containing files to analyze
+    - --fast: Whether to use the fast version of the algorithm
+    - --vocab: Path to vocabulary file, if not provided, all tokens will be considered as vocabulary
+
+Examples:
+    >>> python3 src/entropyEstimation/run_dir.py --input_dir data/ --fast
+    >>> python3 src/entropyEstimation/run_dir.py --input_dir data/ --vocab vocab.txt
 """
 
 # --------------------------------------------- IMPORTS --------------------------------------------- #
@@ -13,6 +25,14 @@ import argparse
 
 
 def main():
+    """
+    Main function of full_analysis.py
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     if os.path.isdir(os.path.join(dir)):
         all_files = os.listdir(os.path.join(dir))
 
@@ -42,13 +62,25 @@ def main():
                 print(vocab)
                 print(output_dir)
                 os.system(
-                    f'python3 src/entropyEstimation/full-analysis.py --t {tokens} --v {vocab} --o {output_dir} {"--f" if fast else ""} {"--uv" if global_vocab else ""}')
+                    f'python3 src/entropyEstimation/full_analysis.py --t {tokens} --v {vocab} --o {output_dir} {"--f" if fast else ""} {"--uv" if global_vocab else ""}')
                 print("------------------------------------------------------------")
 
 
 # ----------------------------------------------- CLI ----------------------------------------------- #
 
 if __name__ == "__main__":
+    """
+    Command Line Interface of full_analysis.py
+    
+    Args:
+        --input_dir: Path to directory containing files to analyze
+        --fast: Whether to use the fast version of the algorithm
+        --vocab: Path to vocabulary file, if not provided, all tokens will be considered as vocabulary
+            
+    Examples:
+        >>> python3 src/entropyEstimation/run_dir.py --input_dir data/ --fast
+        >>> python3 src/entropyEstimation/run_dir.py --input_dir data/ --vocab vocab.txt
+    """
     parser = argparse.ArgumentParser(description="Run analysis on a directory of files.")
     parser.add_argument('--input_dir', '--i', type=str, help="Directory containing files to analyze.")
     parser.add_argument('--fast', '--f', action=argparse.BooleanOptionalAction, default=False, help='Fast mode')

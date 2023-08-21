@@ -1,20 +1,20 @@
 """
-Run the preliminary analysis on a dataset to explore the data.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Performs a preliminary analysis of the tweets.
 """
 
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
 
+# External
 import os
-import re
 import string
-
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from datetime import datetime
 from wordcloud import WordCloud
 from collections import Counter
-from nltk.corpus import stopwords
 import nltk
 import numpy as np
 
@@ -86,6 +86,16 @@ filename = ""
 # -------------------------------------------------- FUNCTIONS -------------------------------------------------- #
 
 def load_data(file):
+    """
+    Load the data from the given file.
+
+    :param file: The file to load.
+    :type file: str
+    :return: The loaded data.
+    :rtype: pd.DataFrame
+
+    >>> load_data('data.csv')
+    """
     global filename
     df = pd.read_csv(file)
     filename = os.path.basename(file)
@@ -99,6 +109,18 @@ def load_data(file):
 
 
 def general_informations(df, save=False):
+    """
+    Print general informations about the data.
+
+    :param df: The data to analyse.
+    :type df: pd.DataFrame
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> general_informations(df, save=True)
+    """
     print(f'Number of tweets: {len(df)}')
     if 'timestamp' in df.columns:
         print('Time range:', df['timestamp'].min().strftime('%Y-%m-%d %H:%M:%S'), 'to',
@@ -114,6 +136,18 @@ def general_informations(df, save=False):
 
 
 def tweets_per_user(df, save=False):
+    """
+    Print statistics about the number of tweets per user.
+
+    :param df: The data to analyse.
+    :type df: pd.DataFrame
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> tweets_per_user(df, save=True)
+    """
     if 'user_id' not in df.columns:
         return
     # Count the number of tweets per user
@@ -156,6 +190,18 @@ def tweets_per_user(df, save=False):
 
 
 def plot_distribution_label(df, save=False):
+    """
+    Plot the distribution of the labels.
+
+    :param df: The data to analyse.
+    :type df: pd.DataFrame
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_distribution_label(df, save=True)
+    """
     for col in ['sentiment', 'emotion', 'offensive', 'hate', 'irony', 'topic', 'lang']:
         if col in df.columns:
             plt.figure(figsize=(10, 6))
@@ -174,6 +220,18 @@ def plot_distribution_label(df, save=False):
 
 
 def plot_tweets_over_time(df, save=False):
+    """
+    Plot the number of tweets over time.
+
+    :param df: The data to analyse.
+    :type df: pd.DataFrame
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_tweets_over_time(df, save=True)
+    """
     if 'timestamp' not in df.columns:
         return
     df['date'] = df['timestamp'].dt.date
@@ -202,10 +260,35 @@ def plot_tweets_over_time(df, save=False):
 
 
 def is_punctuation(token):
+    """
+       Check if a token is a punctuation symbol.
+
+       :param token: The token to check.
+       :type token: str
+       :return: True if the token is a punctuation symbol, False otherwise.
+       :rtype: bool
+
+       >>> is_punctuation("!")
+       >>> True
+       """
     return True if token in string.punctuation or token in ("...", '`', "'", "—", '”', '“', "’") else False
 
 
 def plot_token_frequencies(df, vocab_size, save=False):
+    """
+    Plot the percentage of tokens that fall into each category.
+
+    :param df: The DataFrame containing the tokens and their frequencies.
+    :type df: pd.DataFrame
+    :param vocab_size: The size of the vocabulary.
+    :type vocab_size: int
+    :param save: Whether to save the plot or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_token_frequencies(pd.DataFrame({'token': ['a', 'b', 'c'], 'count': [1, 2, 3]}), 3)
+    """
     # Calculate the percentage of tokens that fall into each category
     categories = [1, 2, 3, 4, 5, 10, 100]
     percentages = [len(df[df["count"] <= cat]) / vocab_size * 100 for cat in categories]
@@ -228,6 +311,18 @@ def plot_token_frequencies(df, vocab_size, save=False):
 
 
 def analyse_tokens(token_file, save=False):
+    """
+    Perform a preliminary analysis of the tokens.
+
+    :param token_file: The path to the file containing the tokens.
+    :type token_file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> analyse_tokens('token.txt')
+    """
     nltk.download('stopwords')
     stopwords = nltk.corpus.stopwords.words()
 
@@ -377,6 +472,18 @@ def analyse_tokens(token_file, save=False):
 
 
 def analyse_ppm(ppm_file, save=False):
+    """
+    Perform a preliminary analysis of the ppm file.
+
+    :param ppm_file: The path to the file containing the ppm.
+    :type ppm_file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> analyse_ppm('ppm.txt')
+    """
     with open(ppm_file, 'r') as f:
         line = f.read().splitlines()
 
@@ -435,6 +542,17 @@ def analyse_ppm(ppm_file, save=False):
 
 
 def map_sentiment(sentiment):
+    """
+    Map the sentiment to an integer.
+
+    :param sentiment: The sentiment to map.
+    :type sentiment: str
+    :return: The mapped sentiment.
+    :rtype: int
+
+    >>> map_sentiment('Neutral')
+    >>> 0
+    """
     if sentiment == 'Neutral':
         return 0
     elif sentiment == 'Positive':
@@ -444,6 +562,18 @@ def map_sentiment(sentiment):
 
 
 def plot_sentiment_over_time(df, save=False):
+    """
+    Plot the average sentiment over time.
+
+    :param df: The data to analyse.
+    :type df: pd.DataFrame
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_sentiment_over_time(df, save=True)
+    """
     if 'sentiment' not in df.columns or 'timestamp' not in df.columns:
         return
     df['date'] = df['timestamp'].dt.date
@@ -471,6 +601,18 @@ def plot_sentiment_over_time(df, save=False):
 
 
 def plot_by_day(df, save=False):
+    """
+    Plot the number of tweets by day of the week.
+
+    :param df: The data to analyse.
+    :type df: pd.DataFrame
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_by_day(df, save=True)
+    """
     if 'timestamp' not in df.columns:
         return
     # Create a new column for hour of the day
@@ -497,6 +639,18 @@ def plot_by_day(df, save=False):
 
 
 def run_tweet_analysis(file, save=False):
+    """
+    Run the analysis on the given file.
+
+    :param file: The file to analyse.
+    :type file: str
+    :param save: Whether to save the results or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> run_tweet_analysis('data.csv', save=True)
+    """
     if save:
         os.makedirs(f'../../Final/Analysis/{os.path.basename(file).split(".")[0]}', exist_ok=True)
         open(f'../../Final/Analysis/{os.path.basename(file).split(".")[0]}/analysis.txt', 'w').close()

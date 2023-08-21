@@ -1,9 +1,14 @@
 """
-File inspired from Scweet (https://github.com/Altimis/Scweet.git)
-Customized for the purpose of this project
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:credits: Scweet: An extensive toolbox to scrape Twitter, written in Python.
+:description: Utility functions for the Twitter scraping.
 """
 
-import re
+# ----------------------------------------------- IMPORTS ----------------------------------------------- #
+
+# External
 import time
 from time import sleep
 import random
@@ -17,7 +22,10 @@ import requests
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
+# Internal
 from env import get_username, get_password, get_email, get_chromedriver_path
+
+# ---------------------------------------------- CONSTANTS ---------------------------------------------- #
 
 red = "\033[0;91m"
 green = "\033[0;92m"
@@ -25,7 +33,20 @@ yellow = "\033[0;93m"
 blue = "\033[0;94m"
 
 
+# ---------------------------------------------- FUNCTIONS ---------------------------------------------- #
+
 def check_for_error(driver):
+    """
+    :Function: Check if the page contains an error, or if the rate limit is exceeded
+
+    :param driver: Selenium driver
+    :type driver: selenium.webdriver.chrome.webdriver.WebDriver
+    :return: True if the page contains an error, False otherwise
+    :rtype: bool
+
+    >>> check_for_error(driver)
+    >>> False
+    """
     try:
         driver.find_element(By.XPATH, './/span[contains(text(), "Something went wrong")]')
         return True
@@ -34,13 +55,19 @@ def check_for_error(driver):
 
 
 def get_data(card, only_id=False):
-    """Extract data from tweet card"""
+    """
+    :Function: Extract data from a tweet card, and return it as a tuple
 
-    # try:
-    #     username = card.find_element(by=By.XPATH, value='.//span').text
-    # except:
-    #     return
+    :param card: Tweet card
+    :type card: selenium.webdriver.remote.webelement.WebElement
+    :param only_id: If True, only return the tweet id
+    :type only_id: bool
+    :return: Tuple containing the tweet id, user id, post date and text
+    :rtype: tuple
 
+    >>> get_data(card)
+    >>> (123456789, 123456789, '2021-01-01T00:00:00.000Z', 'This is a tweet')
+    """
     # tweet url
     try:
         element = card.find_element(by=By.XPATH, value='.//a[contains(@href, "/status/")]')
@@ -57,6 +84,7 @@ def get_data(card, only_id=False):
     if only_id:
         return [tweet_id]
 
+    # user id
     try:
         handle = card.find_element(by=By.XPATH, value='.//span[contains(text(), "@")]').text
     except:
@@ -67,11 +95,13 @@ def get_data(card, only_id=False):
     except:
         user_id = ""
 
+    # date
     try:
         postdate = card.find_element(by=By.XPATH, value='.//time').get_attribute('datetime')
     except:
         postdate = ""
 
+    # text
     try:
         text = card.find_element(by=By.XPATH, value='.//div[2]/div[2]/div[2]').text
         if text.startswith("Replying to"):
@@ -85,44 +115,29 @@ def get_data(card, only_id=False):
     except:
         text = ""
 
-    # try:
-    #     reply_cnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="reply"]').text
-    # except:
-    #     reply_cnt = 0
-    #
-    # try:
-    #     retweet_cnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="retweet"]').text
-    # except:
-    #     retweet_cnt = 0
-    #
-    # try:
-    #     like_cnt = card.find_element(by=By.XPATH, value='.//div[@data-testid="like"]').text
-    # except:
-    #     like_cnt = 0
-
-    # get a string of all emojis contained in the tweet
-    # try:
-    #     emoji_tags = card.find_elements(by=By.XPATH, value='.//img[contains(@src, "emoji")]')
-    # except:
-    #     emoji_tags = ""
-    # emoji_list = []
-    # for tag in emoji_tags:
-    #     try:
-    #         filename = tag.get_attribute('src')
-    #         emoji = chr(int(re.search(r'svg\/([a-z0-9]+)\.svg', filename).group(1), base=16))
-    #     except AttributeError:
-    #         continue
-    #     if emoji:
-    #         emoji_list.append(emoji)
-    # emojis = ' '.join(emoji_list)
-
     tweet = (tweet_id, user_id, postdate, text)
     return tweet
 
 
 def init_driver(headless=True, proxy=None, show_images=False, option=None, env=None):
-    """ initiate a chromedriver or firefoxdriver instance
-        --option : other option to add (str)
+    """
+    :Function: Initiate a chromedriver or firefoxdriver instance
+
+    :param headless: If True, run the driver in headless mode
+    :type headless: bool
+    :param proxy: Proxy to use
+    :type proxy: str
+    :param show_images: If True, show images
+    :type show_images: bool
+    :param option: Other option to add
+    :type option: str
+    :param env: Environment
+    :type env: env.Env
+    :return: Selenium driver
+    :rtype: selenium.webdriver.chrome.webdriver.WebDriver
+
+    >>> init_driver(headless=True, proxy=None, show_images=False, option=None, env=None)
+    >>> <selenium.webdriver.chrome.webdriver.WebDriver (session="123456789")>
     """
 
     options = ChromeOptions()
@@ -159,6 +174,23 @@ def init_driver(headless=True, proxy=None, show_images=False, option=None, env=N
 
 
 def get_page(driver, path, retries=3, wait_time=10):
+    """
+    :Function: Get a page with retries
+
+    :param driver: Selenium driver
+    :type driver: selenium.webdriver.chrome.webdriver.WebDriver
+    :param path: Path to the page
+    :type path: str
+    :param retries: Number of retries
+    :type retries: int
+    :param wait_time: Time to wait between retries
+    :type wait_time: int
+    :return: Path to the page
+    :rtype: str
+
+    >>> get_page(driver, path, retries=3, wait_time=10)
+    >>> 'https://twitter.com/search?q=...'
+    """
     for _ in range(retries):
         try:
             driver.get(path)
@@ -172,7 +204,47 @@ def get_page(driver, path, retries=3, wait_time=10):
 def log_search_page(driver, since, until_local, lang, display_type, words, to_account, from_account, mention_account,
                     hashtag, filter_replies, proximity,
                     geocode, minreplies, minlikes, minretweets):
-    """ Search for this query between since and until_local"""
+    """
+    :Function: Get the path to the search page
+
+    :param driver: Selenium driver
+    :type driver: selenium.webdriver.chrome.webdriver.WebDriver
+    :param since: Since date
+    :type since: str
+    :param until_local: Until date
+    :type until_local: str
+    :param lang: Language
+    :type lang: str
+    :param display_type: Display type
+    :type display_type: str
+    :param words: Words
+    :type words: list
+    :param to_account: To account
+    :type to_account: str
+    :param from_account: From account
+    :type from_account: str
+    :param mention_account: Mention account
+    :type mention_account: str
+    :param hashtag: Hashtag
+    :type hashtag: str
+    :param filter_replies: If True, filter replies
+    :type filter_replies: bool
+    :param proximity: If True, proximity
+    :type proximity: bool
+    :param geocode: Geocode
+    :type geocode: str
+    :param minreplies: Minimum number of replies
+    :type minreplies: int
+    :param minlikes: Minimum number of likes
+    :type minlikes: int
+    :param minretweets: Minimum number of retweets
+    :type minretweets: int
+    :return: Path to the page
+    :rtype: str
+
+    >>> log_search_page(driver, since, until_local, lang, display_type, words, to_account, from_account, mention_account, hashtag, filter_replies, proximity, geocode, minreplies, minlikes, minretweets)
+    >>> 'https://twitter.com/search?q=...'
+    """
     # format the <from_account>, <to_account> and <hash_tags>
     from_account = "(from%3A" + from_account + ")%20" if from_account is not None else ""
     to_account = "(to%3A" + to_account + ")%20" if to_account is not None else ""
@@ -240,6 +312,17 @@ def log_search_page(driver, since, until_local, lang, display_type, words, to_ac
 
 
 def get_last_date_from_csv(path):
+    """
+    :Function: Get the last date from a csv file
+
+    :param path: Path to the csv file
+    :type path: str
+    :return: Last date
+    :rtype: str
+
+    >>> get_last_date_from_csv(path)
+    >>> '2021-01-01T00:00:00.000Z'
+    """
     df = pd.read_csv(path)
     r = datetime.datetime.strftime(max(pd.to_datetime(df["timestamp"])), '%Y-%m-%dT%H:%M:%S.000Z')
     del df
@@ -247,6 +330,23 @@ def get_last_date_from_csv(path):
 
 
 def log_in(driver, env, timeout=20, wait=4):
+    """
+    :Function: Log in to Twitter
+
+    :param driver: Selenium driver
+    :type driver: selenium.webdriver.chrome.webdriver.WebDriver
+    :param env: Environment
+    :type env: env.Env
+    :param timeout: Timeout
+    :type timeout: int
+    :param wait: Wait time
+    :type wait: int
+    :return: None
+    :rtype: None
+
+    >>> log_in(driver, env, timeout=20, wait=4)
+    >>> None
+    """
     email = get_email(env)  # const.EMAIL
     password = get_password(env)  # const.PASSWORD
     username = get_username(env)  # const.USERNAME
@@ -285,8 +385,35 @@ def log_in(driver, env, timeout=20, wait=4):
 
 def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limit, scroll, last_position,
                   only_id=False):
-    """ scrolling function for tweets crawling"""
+    """
+    :Function: Scrolling function for tweets crawling
 
+    :param driver: Selenium driver
+    :type driver: selenium.webdriver.chrome.webdriver.WebDriver
+    :param data: Data
+    :type data: list
+    :param writer: CSV writer
+    :type writer: csv.writer
+    :param tweet_ids: Tweet ids
+    :type tweet_ids: set
+    :param scrolling: If True, keep scrolling
+    :type scrolling: bool
+    :param tweet_parsed: Number of tweets parsed
+    :type tweet_parsed: int
+    :param limit: Limit
+    :type limit: int
+    :param scroll: Scroll
+    :type scroll: int
+    :param last_position: Last position
+    :type last_position: int
+    :param only_id: If True, only return the tweet id
+    :type only_id: bool
+    :return: Selenium driver, data, CSV writer, tweet ids, scrolling, number of tweets parsed, scroll, last position
+    :rtype: selenium.webdriver.chrome.webdriver.WebDriver, list, csv.writer, set, bool, int, int, int
+
+    >>> keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limit, scroll, last_position, only_id=False)
+    >>> (driver, data, writer, tweet_ids, scrolling, tweet_parsed, scroll, last_position)
+    """
     while scrolling and tweet_parsed < limit:
         sleep(random.uniform(0.5, 1.5))
         # get the card of tweets
@@ -330,99 +457,20 @@ def keep_scroling(driver, data, writer, tweet_ids, scrolling, tweet_parsed, limi
     return driver, data, writer, tweet_ids, scrolling, tweet_parsed, scroll, last_position
 
 
-def get_users_follow(users, headless, env, follow=None, verbose=1, wait=2, limit=float('inf')):
-    """ get the following or followers of a list of users """
-
-    # initiate the driver
-    driver = init_driver(headless=headless, env=env, firefox=True)
-    sleep(wait)
-    # log in (the env.env file should contain the username and password)
-    # driver.get('https://www.twitter.com/login')
-    log_in(driver, env, wait=wait)
-    sleep(wait)
-    # followers and following dict of each user
-    follows_users = {}
-
-    for user in users:
-        # if the login fails, find the new log in button and log in again.
-        if check_exists_by_link_text("Log in", driver):
-            print("Login failed. Retry...")
-            login = driver.find_element_by_link_text("Log in")
-            sleep(random.uniform(wait - 0.5, wait + 0.5))
-            driver.execute_script("arguments[0].click();", login)
-            sleep(random.uniform(wait - 0.5, wait + 0.5))
-            sleep(wait)
-            log_in(driver, env)
-            sleep(wait)
-        # case 2
-        if check_exists_by_xpath('//input[@name="session[username_or_email]"]', driver):
-            print("Login failed. Retry...")
-            sleep(wait)
-            log_in(driver, env)
-            sleep(wait)
-        print("Crawling " + user + " " + follow)
-        driver.get('https://twitter.com/' + user + '/' + follow)
-        sleep(random.uniform(wait - 0.5, wait + 0.5))
-        # check if we must keep scrolling
-        scrolling = True
-        last_position = driver.execute_script("return window.pageYOffset;")
-        follows_elem = []
-        follow_ids = set()
-        is_limit = False
-        while scrolling and not is_limit:
-            # get the card of following or followers
-            # this is the primaryColumn attribute that contains both followings and followers
-            primaryColumn = driver.find_element(by=By.XPATH, value='//div[contains(@data-testid,"primaryColumn")]')
-            # extract only the Usercell
-            page_cards = primaryColumn.find_elements(by=By.XPATH, value='//div[contains(@data-testid,"UserCell")]')
-            for card in page_cards:
-                # get the following or followers element
-                element = card.find_element(by=By.XPATH, value='.//div[1]/div[1]/div[1]//a[1]')
-                follow_elem = element.get_attribute('href')
-                # append to the list
-                follow_id = str(follow_elem)
-                follow_elem = '@' + str(follow_elem).split('/')[-1]
-                if follow_id not in follow_ids:
-                    follow_ids.add(follow_id)
-                    follows_elem.append(follow_elem)
-                if len(follows_elem) >= limit:
-                    is_limit = True
-                    break
-                if verbose:
-                    print(follow_elem)
-            print("Found " + str(len(follows_elem)) + " " + follow)
-            scroll_attempt = 0
-            while not is_limit:
-                sleep(random.uniform(wait - 0.5, wait + 0.5))
-                driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-                sleep(random.uniform(wait - 0.5, wait + 0.5))
-                curr_position = driver.execute_script("return window.pageYOffset;")
-                if last_position == curr_position:
-                    scroll_attempt += 1
-                    # end of scroll region
-                    if scroll_attempt >= 2:
-                        scrolling = False
-                        break
-                    else:
-                        sleep(random.uniform(wait - 0.5, wait + 0.5))  # attempt another scroll
-                else:
-                    last_position = curr_position
-                    break
-
-        follows_users[user] = follows_elem
-
-    return follows_users
-
-
-def check_exists_by_link_text(text, driver):
-    try:
-        driver.find_element_by_link_text(text)
-    except NoSuchElementException:
-        return False
-    return True
-
-
 def check_exists_by_xpath(xpath, driver):
+    """
+    :Function: Check if an element exists in the page
+
+    :param xpath: Xpath of the element
+    :type xpath: str
+    :param driver: Selenium driver
+    :type driver: selenium.webdriver.chrome.webdriver.WebDriver
+    :return: True if the element exists, False otherwise
+    :rtype: bool
+
+    >>> check_exists_by_xpath(xpath, driver)
+    >>> True
+    """
     timeout = 3
     try:
         driver.find_element(by=By.XPATH, value=xpath)
@@ -434,6 +482,7 @@ def check_exists_by_xpath(xpath, driver):
 def memoize(func):
     """
     :Function: Memoize the function to avoid recomputing the same value, leverage the cache
+
     :param func: Function to memoize
     :type func: function
     :return: Wrapper function
@@ -470,6 +519,17 @@ def memoize(func):
 
 @memoize
 def get_user_id(username):
+    """
+    :Function: Get the user id from the username, using tweeterid.com
+
+    :param username: Username
+    :type username: str
+    :return: User id
+    :rtype: int
+
+    >>> get_user_id("elonmusk")
+    >>> 44196397
+    """
     url = "https://tweeterid.com/ajax.php"
 
     payload = f'input={username}'
@@ -497,9 +557,16 @@ def get_user_id(username):
 def get_metadata(ids, twarc_session):
     """
     :Function: Get the metadata of the tweets
+
     :param ids:  List of tweet ids
+    :type ids: list
     :param twarc_session: Twarc session
+    :type twarc_session: twarc.Twarc
     :return: List of tweets
+    :rtype: list
+
+    >>> get_metadata(ids, twarc_session)
+    >>> [{'id': 123456789, 'text': 'This is a tweet'}, {'id': 123456789, 'text': 'This is a tweet'}]
     """
     tweet_fields = "lang,created_at,geo"
     expansions = "author_id,geo.place_id"

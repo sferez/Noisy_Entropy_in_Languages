@@ -2,8 +2,14 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Combine Twitter CSV files into one.
 
-Combine Twitter CSV files into one.
+CLI Arguments:
+    - --input, --i: Directory
+    - --output, --o: Final file name (Default: combined.csv)
+
+Examples:
+    >>> python combine.py --input data/ --output combined.csv
 """
 
 # ---------------------------------------------------- IMPORTS ------------------------------------------------------- #
@@ -20,8 +26,10 @@ from tqdm import tqdm
 def main():
     """
     Main function, combines CSV files into one.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     full_paths = []

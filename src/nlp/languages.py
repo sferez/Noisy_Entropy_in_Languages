@@ -1,11 +1,27 @@
 """
-Language NLP detection
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:credits: TweetNLP: Cutting-Edge Natural Language Processing for Social Media. Camacho-Collados, J., Rezaee, K., Riahi, T., Ushio, A., Loureiro, D., Antypas, D., Boisson, J., Espinosa-Anke, L., Liu, F., Martinez-Cámara, E., & others (2022).
+:description: Apply NLP language detection to a Twitter CSV file.
 
-Based on TweetNLP: Cutting-Edge Natural Language Processing for Social Media.
-Camacho-Collados, J., Rezaee, K., Riahi, T., Ushio, A., Loureiro, D., Antypas, D., Boisson, J., Espinosa-Anke, L.,
-Liu, F., Martinez-Cámara, E., & others (2022).
-In Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: System Demonstrations.
-Association for Computational Linguistics.
+Languages:
+    - English (en)
+    - French (fr)
+    - German (de)
+    - Italian (it)
+    - Spanish (es)
+    - ...
+
+CLI Arguments:
+    - --input, --i: Directory or CSV File
+    - --fast, --fa: Use fast language detection (default: False)
+    - --force, --fo: Force detection (default: False)
+
+Examples:
+    >>> python languages.py --input data.csv
+    >>> python languages.py --input data.csv --fast
+    >>> python languages.py --input data.csv --force
 """
 
 # ----------------------------------------------- IMPORTS ----------------------------------------------- #
@@ -19,7 +35,7 @@ from tqdm import tqdm
 
 # ---------------------------------------------- CONSTANTS ---------------------------------------------- #
 
-# List of languages to use for detection (can be changed)
+# List of languages to use for detection
 LANGUAGES = [Language.ENGLISH, Language.FRENCH, Language.GERMAN, Language.ITALIAN, Language.SPANISH]
 
 
@@ -27,6 +43,17 @@ LANGUAGES = [Language.ENGLISH, Language.FRENCH, Language.GERMAN, Language.ITALIA
 
 
 def detect_language(text):
+    """
+    Detects the language of a text using the Lingua model and returns the corresponding ISO 639-1 code.
+
+    :param text: text to detect
+    :type text: str
+    :return: ISO 639-1 code
+    :rtype: str
+
+    >>> detect_language('I am so happy, I love you')
+    >>> 'en'
+    """
     result = detector.detect_language_of(text)
     if result:
         conf = detector.compute_language_confidence(text, result)
@@ -36,6 +63,16 @@ def detect_language(text):
 
 
 def process_file(fp):
+    """
+    Detects the language of a CSV file and adds a 'lang' column.
+
+    :param fp: file path
+    :type fp: str
+    :return: None
+    :rtype: None
+
+    >>> process_file('data.csv')
+    """
     df = pd.read_csv(fp)
 
     if 'lang' in df.columns:
@@ -54,6 +91,14 @@ def process_file(fp):
 
 
 def main():
+    """
+    Main function of the language detection script.
+
+    :return: None
+    :rtype: None
+
+    >>> main()
+    """
     print(f'Language detection on {input_}...')
 
     if os.path.isfile(input_):  # Single file
@@ -72,6 +117,19 @@ def main():
 
 
 if __name__ == "__main__":
+    """
+    Command Line Interface of the language detection script.
+    
+    Args:
+        --input, --i: Directory or CSV File
+        --fast, --fa: Use fast language detection (default: False)
+        --force, --fo: Force detection (default: False)
+        
+    Examples:
+        >>> python languages.py --input data.csv
+        >>> python languages.py --input data.csv --fast
+        >>> python languages.py --input data.csv --force
+    """
     parser = argparse.ArgumentParser(description='Apply NLP language detection to a CSV file.')
 
     parser.add_argument('--input', '--i', type=str, help='Directory or CSV File', required=True)

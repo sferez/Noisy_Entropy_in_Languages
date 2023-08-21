@@ -2,8 +2,15 @@
 :author: Siméon FEREZ
 :version: 1.0.0
 :copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:decription: Combine multiple vocab files into one.
 
-Combine multiple vocab files into one.
+CLI Arguments:
+    - --input, --i: Directory
+    - --output, --o: Final file name (Default: vocab-combined.txt)
+
+Examples:
+    >>> python combine_vocab.py --input data
+    >>> python combine_vocab.py --input data --output final_vocab.txt
 """
 
 # ---------------------------------------------------- IMPORTS ------------------------------------------------------- #
@@ -22,9 +29,11 @@ vocab = set()
 
 def main():
     """
-    Main function of the combine-vocab.py script.
+    Main function of the combine_vocab.py script.
+
     :return: None
     :rtype: None
+
     >>> main()
     """
     global i
@@ -56,15 +65,15 @@ def main():
 
 if __name__ == "__main__":
     """
-    Command Line Interface of the combine-vocab.py script.
+    Command Line Interface of the combine_vocab.py script.
     
     Args:
         --input, --i: Directory
         --output, --o: Final file name (Default: vocab-combined.txt)
         
     Examples:
-        >>> python combine-vocab.py --input data
-        >>> python combine-vocab.py --input data --output final_vocab.txt
+        >>> python combine_vocab.py --input data
+        >>> python combine_vocab.py --input data --output final_vocab.txt
     """
     parser = argparse.ArgumentParser(description='Combine CSV files')
 

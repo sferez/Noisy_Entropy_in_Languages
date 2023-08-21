@@ -1,24 +1,26 @@
 """
-Run the preliminary analysis on a dataset to explore the data.
+:author: Siméon FEREZ
+:version: 1.0.0
+:copyright: Copyright © 2023 by Siméon FEREZ. All rights reserved. This work may not be reproduced, in whole or in part, without the written permission of the author.
+:description: Performs a preliminary analysis of the code files.
 """
-import gc
+
 # -------------------------------------------------- IMPORTS -------------------------------------------------- #
 
+# External
+import gc
 import os
 import string
-
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 from collections import Counter
-import nltk
 
 # -------------------------------------------------- GLOBALS -------------------------------------------------- #
 
 sns.set_theme(style="darkgrid")
-
 filename = ""
 
 
@@ -26,13 +28,51 @@ filename = ""
 
 
 def is_punctuation(token):
+    """
+    Check if a token is a punctuation symbol.
+
+    :param token: The token to check.
+    :type token: str
+    :return: True if the token is a punctuation symbol, False otherwise.
+    :rtype: bool
+
+    >>> is_punctuation("!")
+    >>> True
+    """
     return True if token in string.punctuation or token in ("...", '`', "'", "—", '”', '“', "’") else False
 
 
 def is_special_token(token):
-    return True if token in ("#VAR#", "#STR#", "#FUNC#", "#COMMENT#", "#NUM#", "#NEWLINE#", "#INDENT#", "#DEDENT#") else False
+    """
+    Check if a token is a special token.
+
+    :param token: The token to check.
+    :type token: str
+    :return: True if the token is a special token, False otherwise.
+    :rtype: bool
+
+    >>> is_special_token("#VAR#")
+    >>> True
+    """
+    return True if token in (
+        "#VAR#", "#STR#", "#FUNC#", "#COMMENT#", "#NUM#", "#NEWLINE#", "#INDENT#", "#DEDENT#") else False
+
 
 def plot_token_frequencies(df, vocab_size, save=False):
+    """
+    Plot the percentage of tokens that fall into each category.
+
+    :param df: The DataFrame containing the tokens and their frequencies.
+    :type df: pd.DataFrame
+    :param vocab_size: The size of the vocabulary.
+    :type vocab_size: int
+    :param save: Whether to save the plot or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> plot_token_frequencies(pd.DataFrame({'token': ['a', 'b', 'c'], 'count': [1, 2, 3]}), 3)
+    """
     # Calculate the percentage of tokens that fall into each category
     categories = [1, 2, 3, 4, 5, 10, 100]
     percentages = [len(df[df["count"] <= cat]) / vocab_size * 100 for cat in categories]
@@ -55,7 +95,18 @@ def plot_token_frequencies(df, vocab_size, save=False):
 
 
 def analyse_tokens(token_file, save=False):
+    """
+    Perform a preliminary analysis of the tokens.
 
+    :param token_file: The path to the file containing the tokens.
+    :type token_file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> analyse_tokens('token.txt')
+    """
     # Load all the tokens
     with open(token_file, 'r') as f:
         tokens = f.read().splitlines()
@@ -146,7 +197,6 @@ def analyse_tokens(token_file, save=False):
         plt.savefig(f'../../Final/Analysis/{filename[:-4]}/wordcloud.png')
     plt.show()
 
-
     # Remove special token
     df['is_special'] = df['token'].apply(is_special_token)
     df = df[df['is_special'] == False]
@@ -205,6 +255,18 @@ def analyse_tokens(token_file, save=False):
 
 
 def analyse_ppm(ppm_file, save=False):
+    """
+    Perform a preliminary analysis of the ppm file.
+
+    :param ppm_file: The path to the file containing the ppm.
+    :type ppm_file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> analyse_ppm('ppm.txt')
+    """
     with open(ppm_file, 'r') as f:
         line = f.read().splitlines()
 
@@ -269,6 +331,18 @@ def analyse_ppm(ppm_file, save=False):
 
 
 def run_code_analysis(file, save=False):
+    """
+    Run the analysis of the code files.
+
+    :param file: The path to the file containing the code.
+    :type file: str
+    :param save: Whether to save the plots or not.
+    :type save: bool
+    :return: None
+    :rtype: None
+
+    >>> run_code_analysis('code.csv')
+    """
     global filename
     if save:
         os.makedirs(f'../../Final/Analysis/{os.path.basename(file).split(".")[0]}', exist_ok=True)
