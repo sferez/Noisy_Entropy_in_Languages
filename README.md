@@ -50,6 +50,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Public Figures**: Contrast in entropy between Musk (technical diversity) and Trump (political discourse).
 - **Political Structure**: Repeated patterns in politics converge public opinion; low entropy.
 - **Comparison**: Entropy Rate comparison between Donald Trump and Elon Musk.
+
 ![TrumpMusk](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/muskTrump.png)
 
 #### Cluster Analysis:
@@ -61,6 +62,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Global Events**: COVID-19, Ukraine War show unigram entropy convergence, highlights societal response, unity.
 - **Language Evolution**: Decline in entropy signifies societal adaptation, convergence in viewpoints.
 - **Trend Analysis**: Entropy Rate trend over time of the Covid-19 French dataset.
+
 ![CovidTrend](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/covid.png)
 
 #### Entropy in Programming Languages:
