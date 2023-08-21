@@ -12,6 +12,14 @@ This folder contains the following functionalities:
 - [Hydrate Tweets](#hydrate-tweets) - Hydrate a csv file containing tweet_id
 - [Dehydrate Tweets](#dehydrate-tweets) - Dehydrate a csv file containing tweet_id
 
+## Requirements
+
+- Python
+
+Main libraries:
+- Selenium 
+- Twarc
+
 ## Setup
 
 Have a .env file with the following variables:
@@ -233,13 +241,6 @@ Command example:
 python3 src/dataAcquisition/dehydrate-tweets.py --input_dir data/scraping --output_dir data/scraping_dehydrated
 ```
 
-
-## Class:
-
-1 - Personalities
-2 - News and Media
-3 - Stream
-4 - Covid-19
 
 ## Data Storage
 
