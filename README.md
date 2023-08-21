@@ -52,7 +52,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Comparison**: Entropy Rate comparison between Donald Trump and Elon Musk.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/muskTrump.png" alt="TrumpMusk" width=60%>
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_in_Languages/main/deliverables/muskTrump.png" alt="TrumpMusk" width=60%>
 </p>
 
 #### Cluster Analysis:
@@ -66,7 +66,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Trend Analysis**: Entropy Rate trend over time of the Covid-19 French dataset.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/covid.png" alt="CovidTrend" width=60%>
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_in_Languages/main/deliverables/covid.png" alt="CovidTrend" width=60%>
 </p>
 
 #### Entropy in Programming Languages:
@@ -96,7 +96,7 @@ For the Social Media data, Twitter was used as the main source. The data was col
 
 To comply with Twitter's Terms of Service, the data used in this project is only shared dehydrated. Which means that the data is shared in the form of tweet ids, and not the full tweet.
 
-A script to hydrate the data is provided in the [dataAcquisition](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/dataAcquisition) folder, as well as a script to dehydrate the data.
+A script to hydrate the data is provided in the [dataAcquisition](https://github.com/sferez/Noisy_Entropy_in_Languages/tree/main/src/dataAcquisition) folder, as well as a script to dehydrate the data.
 
 ### Computer Language Data
 
@@ -105,14 +105,14 @@ For the Computer Language data, CodeNet was used as the main source. CodeNet is 
 Due to different License restrictions, the dataset was not created by scratch using GitHub data. Instead, the dataset was downloaded from the official website and used as is.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/datasets.png" alt="datasets" width=40%>
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_in_Languages/main/deliverables/datasets.png" alt="datasets" width=40%>
 </p>
 
 ## Data Acquisition
 
 Collect data from Twitter using scraping, streaming and Twitter API.
 
-Learn more about the data collection [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/dataAcquisition).
+Learn more about the data collection [here](https://github.com/sferez/Noisy_Entropy_in_Languages/tree/main/src/dataAcquisition).
 
 ## Preprocessing
 
@@ -121,7 +121,7 @@ Pre-processing of the data includes the following steps:
 - Data Manipulation
 - Tokenization
 
-Learn more about the pre-processing [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/preprocessing).
+Learn more about the pre-processing [here](https://github.com/sferez/Noisy_Entropy_in_Languages/tree/main/src/preprocessing).
 
 ## NLP
 
@@ -137,7 +137,7 @@ The NLP analysis includes:
 - Sentiment Analysis
 - Topic Detection
 
-Learn more about the NLP analysis [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/nlp).
+Learn more about the NLP analysis [here](https://github.com/sferez/Noisy_Entropy_in_Languages/tree/main/src/nlp).
 
 ## Entropy Estimation
 
@@ -157,7 +157,7 @@ The entropy estimation used different methods to estimate the entropy of the tex
 
 On top of the entropy estimators Bootstrap is used to estimate the confidence interval of the entropy.
 
-Learn more about the entropy estimation [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/entropyEstimation).
+Learn more about the entropy estimation [here](https://github.com/sferez/Noisy_Entropy_in_Languages/tree/main/src/entropyEstimation).
 
 ## Analysis
 
@@ -167,7 +167,7 @@ There is two types of analysis:
 - Analysis (Preliminary Analysis and Exploratory Analysis)
 - Results Analysis (Analysis of the results of the entropy estimation)
 
-Learn more about the analysis [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/analysis).
+Learn more about the analysis [here](https://github.com/sferez/Noisy_Entropy_in_Languages/tree/main/src/analysis).
 
 
 
@@ -175,20 +175,20 @@ Learn more about the analysis [here](https://github.com/sferez/Noisy_Entropy_Est
 
 Here is the general workflow of the project:
 
-<img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/workflow.png" alt="Workflow" width=100%>
+<img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_in_Languages/main/deliverables/workflow.png" alt="Workflow" width=100%>
 
 Here is the environment of the data acquisition workflow:
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/dataCollection.png" alt="DataEnvironement" width=60%>
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_in_Languages/main/deliverables/dataCollection.png" alt="DataEnvironement" width=60%>
 </p>
 
 ## Deliverables
 
-Find the poster [here](https://github.com/sferez/Noisy_Entropy_Estimation/blob/main/deliverables/poster.pdf).
+Find the poster [here](https://github.com/sferez/Noisy_Entropy_in_Languages/blob/main/deliverables/poster.pdf).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/poster.png" alt="Poster" width=50%>
+  <img src="https://raw.githubusercontent.com/sferez/Noisy_Entropy_in_Languages/main/deliverables/poster.png" alt="Poster" width=50%>
 </p>
 
 ---
