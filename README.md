@@ -35,7 +35,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Prediction by Partial Matching (PPM)**: Context-based adaptive technique offering a flexible approach.
 
 
-### SOME KEY INSIGHTS
+### Some Key Findings
 
 #### Entropy in Noisy Literature:
 - **Character-Level Insights**: Novel estimates of ~4.35 bits, surpassing previous works.
@@ -50,7 +50,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Public Figures**: Contrast in entropy between Musk (technical diversity) and Trump (political discourse).
 - **Political Structure**: Repeated patterns in politics converge public opinion; low entropy.
 - **Comparison**: Entropy Rate comparison between Donald Trump and Elon Musk.
-![TrumpMusk](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/muskTrump.png])
+![TrumpMusk](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/muskTrump.png)
 
 #### Cluster Analysis:
 - **Symbols and Structure**: Accents, emojis increase entropy; punctuation reduces it, defying traditional beliefs.
@@ -61,7 +61,7 @@ By leveraging entropy as a quantifiable measure of this complexity, the study ca
 - **Global Events**: COVID-19, Ukraine War show unigram entropy convergence, highlights societal response, unity.
 - **Language Evolution**: Decline in entropy signifies societal adaptation, convergence in viewpoints.
 - **Trend Analysis**: Entropy Rate trend over time of the Covid-19 French dataset.
-![CovidTrend](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/covid.png)
+![CovidTrend](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/covid.png)
 
 #### Entropy in Programming Languages:
 - **Universality**: Common features in C++, Python, Java.
@@ -169,8 +169,9 @@ Steps:
 
 ## Deliverables
 
-Find the poster [here](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/poster.pdf).
-![Poster](https://github.com/sferez/Noisy_Entropy_Estimation/tree/main/src/deliverables/poster.png)
+Find the poster [here](https://github.com/sferez/Noisy_Entropy_Estimation/blob/main/deliverables/poster.pdf).
+
+![Poster](https://raw.githubusercontent.com/sferez/Noisy_Entropy_Estimation/main/deliverables/poster.png)
 
 
 ---
