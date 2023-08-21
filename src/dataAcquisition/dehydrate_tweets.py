@@ -16,6 +16,7 @@ Example:
 
 # External
 import os
+from pandas.errors import ParserError
 import pandas as pd
 from pathlib import Path
 import argparse
@@ -35,12 +36,19 @@ def process_file(fp):
 
     >>> process_file('data.csv')
     """
-    df = pd.read_csv(fp)
-    tweet_id_df = df[['tweet_id']].dropna().astype(int)
-    tweet_id_df.to_csv(fp, index=False)
+    try:
+        df = pd.read_csv(fp, encoding='utf-8')
+    except ParserError:
+        print(f'ParserError: {fp}')
+        df = pd.read_csv(fp, lineterminator='\n', encoding='utf-8')
+
+    df.dropna(subset=['text', 'tweet_id'], inplace=True)
+    df.drop_duplicates(subset=['tweet_id'], inplace=True)
+
+    df['tweet_id'] = df['tweet_id'].apply(lambda x: int(float(x)))
 
     print(f'Dehydrated {fp}')
-    return tweet_id_df
+    return df['tweet_id']
 
 
 # ---------------------------------------------- MAIN ---------------------------------------------- #
