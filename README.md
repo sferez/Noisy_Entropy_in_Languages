@@ -194,5 +194,6 @@ Find the poster [here](https://github.com/sferez/Noisy_Entropy_in_Languages/blob
 ---
 
 _Individual Research Project 2022/2023_
+
 _Copyright © 2023 by Siméon FEREZ. All rights reserved._
 
