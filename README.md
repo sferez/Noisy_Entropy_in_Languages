@@ -209,7 +209,7 @@ Here is the environment of the data acquisition workflow:
 
 ## Deliverables
 
-The master's thesis is available [here]((https://github.com/sferez/Noisy_Entropy_in_Languages/blob/main/deliverables/report.pdf)).
+The master's thesis is available [here](https://github.com/sferez/Noisy_Entropy_in_Languages/blob/main/deliverables/report.pdf).
 
 Find the poster [here](https://github.com/sferez/Noisy_Entropy_in_Languages/blob/main/deliverables/poster.pdf).
 
