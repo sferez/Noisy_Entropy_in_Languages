@@ -2,7 +2,7 @@
 
 ## Exploring Communication Complexity: A Study of Language Patterns in Social Media and Programming Languages
 
-## Introductoin
+## Introduction
 
 This master's thesis project, conducted as part of the MSc in Computational Software Techniques in Engineering of
 Cranfield University, aims to explore the inherent complexities in language that reflect the unpredictability and
